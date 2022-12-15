@@ -1,0 +1,31 @@
+git remote add origin https://github.com/RCreado/GlobeOnline.git
+git branch -M main
+git push -u origin main
+
+C:\Users\deploy03>$ 
+- Open CMD
+ssh-keygen -t ed25519 -C "zrocreado@globe.com.ph"
+- Hit Enter 3x
+
+echo "# GlobeOnline" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:RCreado/GlobeOnline.git
+git push -u origin main
+
+
+Upload to GIT Server
+- Open
+
+*GET PROJECT FROM GIT - PULL Project
+Open Get Bash
+Input and Enter: git pull origin master
+
+*PUSH Uing cmd
+- Open GIT BASH HERE in GO Project
+- ENTER: git add . 
+- ENTER: git commit -m ""
+Example: git commit -m "Update the Script that is failing and added new Browserstack account"
+- ENTER:  git push origin master

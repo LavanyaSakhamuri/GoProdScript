@@ -1,0 +1,37 @@
+{
+  "server": "hub-cloud.browserstack.com",
+  "user": "praveen_P9Kyts",
+  "key": "j2LY8UKqwRC7qZAWW3zZ",
+
+  "capabilities": {
+    "build": "GO-Devops",
+    "name": "Go-Parallel ADA",
+    "browserstack.debug": true,
+    "geoLocation":"PH"
+  },
+
+  "environments": {
+    "env1": {
+     "os": "windows",
+      "browser": "chrome",
+      "browser_version" : "99.0",
+      "os_version" : "10"
+    },
+    "env2": {
+   	  "os": "windows",
+      "browser": "firefox",
+      "os_version" : "10"
+    },
+    "env3": {
+      "os": "OS X",
+      "browser": "safari",
+      "browser_version" : "12.0"
+    },
+    "env4": {
+      "os": "windows",
+      "browser": "edge",
+      "browser_version" : "96.0",
+      "os_version" : "10"
+    }
+  }
+}

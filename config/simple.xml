@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Parallel">
+
+<test name="SCENARIO_1" enabled="true">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="GlobeOnlineFTA.FTA1"/>
+        </classes>
+    </test>
+    
+
+ <!-- 	<test name="SCENARIO_5" enabled="true">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="globeonline_HPW.TestGHPW_Mac"/>
+        </classes>
+    </test>
+    <test name="SCENARIO_1" enabled="true">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env4"/>
+        <classes>
+            <class name="globeonline_HPW.TestMultipleCartWithPromo"/>
+        </classes>
+    </test>   
+    
+
+   <test name="SCENARIO_2" enabled="true">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="globeonline_HPW.TestMultipleCart"/>
+        </classes>
+    </test>
+    <test name="SCENARIO_3" enabled="true">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="globeonline_HPW.TestSingleCart_LTE"/>
+        </classes>
+    </test>
+ 	<test name="SCENARIO_4" enabled="true">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env3"/>
+        <classes>
+            <class name="globeonline_HPW.TestXtremePrepaidWifi_BlackPink"/>
+        </classes>
+    </test>
+     <test name="SCENARIO_6" enabled="true">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="globeonline_HPW.TestDuplicityCheck"/>
+        </classes>
+    </test>-->
+    
+    
+</suite>

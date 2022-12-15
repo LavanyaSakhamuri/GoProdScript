@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Parallel" thread-count="1" parallel="tests">
+
+
+<!--
+ <test name="ADA4" enabled="false">
+ 
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        
+        <classes>
+            <class name="globeOnline_ADA.ADA4"/>
+        </classes>
+ </test>
+ -->
+ 
+ <test name="ADA" enabled="true">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="globeOnline_Accquisition.AcquiADA"/>
+        </classes>
+ </test>
+ <!-- <test name="ADA4" enabled="true">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="globeOnline_ADA.ADA4"/>
+        </classes>
+ </test> -->
+<!-- FTA SCENARIOS
+ <test name="FTA2" enabled="true">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env4"/>
+        <classes>
+            <class name="GlobeOnlineFTA.FTA2"/>
+        </classes>
+ </test>
+
+ <test name="FTA3" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="GlobeOnlineFTA.FTA3"/>
+        </classes>
+ </test>
+
+ <test name="FTA4" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env3"/>
+        <classes>
+            <class name="GlobeOnlineFTA.FTA_4"/>
+        </classes>
+ </test>
+
+ <test name="FTA5" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="GlobeOnlineFTA.FTA5"/>
+        </classes>
+ </test>
+
+
+
+
+
+
+
+
+ <test name="ADA1" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="GlobeOnline_ADA.ADA1"/>
+        </classes>
+ </test>
+
+ <test name="ADA2" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="GlobeOnline_ADA.ADA2"/>
+        </classes>
+ </test>
+ 
+ <test name="ADA3" enabled="false">
+
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="GlobeOnline_ADA.ADA3"/>
+        </classes>
+ </test>
+
+ <test name="ADA4" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env3"/>
+        <classes>
+            <class name="GlobeOnline_ADA.ADA4"/>
+            <class name="GlobeOnline_ADA.ADA5"/>
+        </classes>
+ </test>
+
+ <test name="ADA5" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env4"/>
+        <classes>
+            <class name="GlobeOnline_ADA.ADA5"/>
+        </classes>
+</test>  
+
+ <test name="ADA6" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="GlobeOnline_ADA.ADA6"/>
+        </classes>
+</test>  
+
+<test name="ADA7" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env4"/>
+        <classes>
+            <class name="GlobeOnline_ADA.ADA7"/>
+        </classes>
+</test>  
+
+<test name="ADA8" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="GlobeOnline_ADA.ADA8"/>
+        </classes>
+</test>  
+
+
+
+ <test name="SCENARIO_5" enabled="false">
+
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="globeonline_HPW.TestGHPW_Mac"/>
+        </classes>
+    </test>
+    <test name="SCENARIO_1" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env4"/>
+        <classes>
+            <class name="globeonline_HPW.TestMultipleCartWithPromo"/>
+        </classes>
+    </test>   
+    
+
+   <test name="SCENARIO_2" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="globeonline_HPW.TestMultipleCart"/>
+        </classes>
+    </test>
+    <test name="SCENARIO_3" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="globeonline_HPW.TestSingleCart_LTE"/>
+        </classes>
+    </test>
+ 	<test name="SCENARIO_4" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env3"/>
+        <classes>
+            <class name="globeonline_HPW.TestXtremePrepaidWifi_BlackPink"/>
+        </classes>
+    </test>
+     <test name="SCENARIO_6" enabled="false">
+        <parameter name="config" value="parallel.Lambda.json"/>
+        <parameter name="environment" value="env1"/>
+        <classes>
+            <class name="globeonline_HPW.TestDuplicityCheck"/>
+        </classes>
+    </test>
+      -->
+    
+</suite>

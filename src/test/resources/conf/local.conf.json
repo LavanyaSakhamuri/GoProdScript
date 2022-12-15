@@ -1,0 +1,13 @@
+{
+  "capabilities": {
+    "build": "GO-Local",
+    "name": "local_test",
+    "local": true
+  },
+
+  "environments": {
+    "chrome": {
+      "browser": "chrome"
+    }
+  }
+}

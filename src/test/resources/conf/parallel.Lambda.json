@@ -1,0 +1,36 @@
+{
+  "server": "hub.lambdatest.com",
+  "user": "zysubramanian",
+  "key": "BhxScSh8bW9NFo2W6f4GTTJKwSwMGgdB2Ct1b0d4IlpnSS9v7b",
+
+  "capabilities": {
+    "build": "GO-Prod_ADA_DryRun_Lavanya",
+    "idleTimeout": "360",
+    "console":"true",
+    "network":"true",
+    "geoLocation":"PH"
+  },
+
+  "environments": {
+    "env1": {
+     "platform": "Windows 10",
+      "browserName": "chrome",
+      "version" : "99.0"
+    },
+    "env2": {
+   	 "platform": "Windows 10",
+      "browserName": "Firefox",
+      "version" : "99.0"
+    },
+    "env3": {
+   	 "platform": "MacOS Big sur",
+      "browserName": "Safari",
+      "version" : "14.0"
+    },
+    "env4": {
+     "platform": "Windows 10",
+      "browserName": "MicrosoftEdge",
+      "version" : "99.0"
+    }
+  }
+}

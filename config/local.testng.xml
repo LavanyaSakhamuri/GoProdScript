@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Local">
+    <test name="LocalTest">
+        <parameter name="config" value="local.conf.json"/>
+        <parameter name="environment" value="chrome"/>   
+		<parameter name="D:\latest updated code nov 18\NISHITA\Globe_Updated_git\Globe_Updated_git\GlobeOnline\chromedriver.exe" value="chrome"/>
+       <classes>
+
+         <!-- <class name="globeOnline_ReservationAccquisition.ReservationAcquiADA"/>-->
+               <class name="globeOnline_Accquisition.AcquiADA"/>
+        </classes>
+    </test>
+</suite>

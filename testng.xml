@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+  <test thread-count="5" name="Test">
+    <classes>
+      <class name="com.browserstack.TestSingleCart_LTE"/>
+      <class name="com.browserstack.TestMultipleCart"/>
+      <class name="com.browserstack.LocalTest"/>
+      <class name="com.browserstack.SingleTest"/>
+      <class name="com.browserstack.TestDuplicityCheck"/>
+      <class name="com.browserstack.BrowserStackTestNGTest"/>
+      <class name="com.browserstack.TestXtremePrepaidWifi_BlackPink"/>
+      <class name="com.browserstack.TestGHPW_Mac"/>
+      <class name="com.browserstack.TestMultipleCartWithPromo"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

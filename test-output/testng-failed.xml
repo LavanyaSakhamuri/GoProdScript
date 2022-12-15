@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Local]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="LocalTest(failed)">
+    <parameter name="environment" value="chrome"/>
+    <parameter name="D:\latest updated code nov 18\NISHITA\Globe_Updated_git\Globe_Updated_git\GlobeOnline\chromedriver.exe" value="chrome"/>
+    <parameter name="config" value="local.conf.json"/>
+    <classes>
+      <class name="globeOnline_Accquisition.AcquiADA">
+        <methods>
+          <include name="setUp"/>
+          <include name="AcquiADAScenario"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- globeOnline_Accquisition.AcquiADA -->
+    </classes>
+  </test> <!-- LocalTest(failed) -->
+</suite> <!-- Failed suite [Local] -->
