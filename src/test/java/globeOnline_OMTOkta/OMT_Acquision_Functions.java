@@ -8,11 +8,14 @@ import java.util.LinkedHashMap;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
 
+import com.pages.ada.ADADAF_Page;
 import com.pages.ada.BasePage;
 import com.pages.omt.ACQUI_omt_page;
 
-import globeOnline_ADA.ADAcommonmethods;
 import globeOnline_CommonMethods.DriverManager;
 import globeOnline_CommonMethods.util;
 import utility.Constant;
@@ -22,11 +25,10 @@ import utility.Generic;
 public class OMT_Acquision_Functions {
 	private util util = new util();
 	private BasePage BP = new BasePage();
-	private ADAcommonmethods common = new ADAcommonmethods();
 	private ACQUI_omt_page OMTAcqui = new ACQUI_omt_page();
 	private static LinkedHashMap<String, String> Map = new LinkedHashMap<>();
 
-
+private ADADAF_Page Form=new ADADAF_Page();
 	/*****
 	 * RONNIE SCRIPT STARTS HERE
 	 * 
@@ -1461,10 +1463,10 @@ public class OMT_Acquision_Functions {
 	}
 
 	public void UploadDocuments_POFC() throws InterruptedException, AWTException {
-		common.Upload_RequiredDocPOFC();
+		Upload_RequiredDocPOFC();
 
-		common.Upload_file2inordertracker();
-		common.submitbutton();
+		Upload_file2inordertracker();
+	submitbutton();
 
 		Thread.sleep(3000);
 
@@ -1476,29 +1478,29 @@ public class OMT_Acquision_Functions {
 			Thread.sleep(300000);
 
 		}
-		common.Upload_RequiredDocPOID();
+		Upload_RequiredDocPOID();
 
-		common.Upload_File1();
+		Upload_File1();
 
-		common.upload_file();
+		upload_file();
 
 		// Form.DropDownDisplay2();
-		common.Upload_RequiredDocPOFC();
+		Upload_RequiredDocPOFC();
 
-		common.Upload_file2inordertracker();
-		common.submitbutton();
+	Upload_file2inordertracker();
+		submitbutton();
 
 		Thread.sleep(3000);
 	}
 
 	public void UploadDocuments_POID() throws Exception {
-		common.Upload_RequiredDocPOID();
+		Upload_RequiredDocPOID();
 
-		common.Upload_File1();
+		Upload_File1();
 
-		common.upload_file();
+		upload_file();
 
-		common.submitbutton();
+	submitbutton();
 
 		Thread.sleep(3000);
 	}
@@ -2106,5 +2108,137 @@ public class OMT_Acquision_Functions {
 			JavascriptExecutor js6 = (JavascriptExecutor) DriverManager.getDriver();
 			js6.executeScript("arguments[0].click();", OMTAcqui.get_confirmcorrect());
 
+		}
+		
+		
+		public void Upload_RequiredDocPOID() throws InterruptedException
+		{
+			Form.isElementExist("Dropdown1", "Dropdown1", 10);
+
+			// String Poid=" Philippine Passport ";
+
+			//						    JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+			//				            js.executeScript("arguments[0].click();", Form.DropDownDisplay1());
+			Form.scroll_vertical(50);
+			String POID="PASSPORT ID";
+			Form.Select_dropdown(POID); 
+			System.out.println("Select ID type: "+POID);
+
+		}  
+		
+		public void Upload_File1() throws Exception
+		{
+
+			Thread.sleep(3000);
+	    	
+	    	//Form.Choosefile1Click().sendKeys(System.getProperty("user.dir")+"\\resources\\Documents\\POIDF.jpg");
+	    	try
+	    	{
+	    	  		WebElement addFile = DriverManager.getDriver().findElement(By.xpath("//input[@id='poidDocRef']"));
+	    			((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
+	    			addFile.sendKeys(System.getProperty("user.dir")+"\\resources\\Documents\\POIDF.jpg");
+	    	}
+	    	catch(Exception e)
+	    	{
+	    		System.out.println(e.getMessage());
+	    	}
+		}
+		public void upload_file() throws AWTException, InterruptedException
+		{
+
+			Thread.sleep(4000);
+	    	
+	    	//JavascriptExecutor js2 = (JavascriptExecutor) DriverManager.getDriver();
+	    	//Form.Choosefile2Click().sendKeys(System.getProperty("user.dir") +"\\resources\\Documents\\POIDBACK.jpg");
+	    		//Form.Choosefile2Click().sendKeys("D:\\lambda\\GlobeOnline_Lambda-master\\GlobeOnline_Lambda-master\\src\\test\\resources\\Documents\\POIDBACK.jpg");
+//	    	
+	    	try
+	    	{
+	    	  		WebElement addFile = DriverManager.getDriver().findElement(By.xpath("//input[@id='poidBackDocRef']"));
+	    			((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
+	    			addFile.sendKeys(System.getProperty("user.dir")+"\\resources\\Documents\\POIDBACK.jpg");
+	    	}
+	    	catch(Exception e)
+	    	{
+	    		System.out.println(e.getMessage());
+	    	}
+	    	}
+		//**************************************************************************
+		public void Upload_file2() throws AWTException, InterruptedException
+		{
+			Thread.sleep(3000);
+	    	//JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
+	       // js1.executeScript("arguments[0].click();", Form.Choosefile3Click());
+	    	//Form.Choosefile3Click().sendKeys(System.getProperty("user.dir") +"\\resources\\Documents\\POFCNEW.jpg");		    
+	    	//Form.Choosefile3Click().sendKeys("D:\\lambda\\GlobeOnline_Lambda-master\\GlobeOnline_Lambda-master\\src\\test\\resources\\Documents\\POFCNEW.jpg");
+	    	
+	    	try
+	    	{
+	    	  		WebElement addFile = DriverManager.getDriver().findElement(By.xpath("//input[@id='pofcDocRef']"));
+	    			((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
+	    			addFile.sendKeys(System.getProperty("user.dir")+"\\resources\\Documents\\POFCNEW.jpg");
+	    	}
+	    	catch(Exception e)
+	    	{
+	    		System.out.println(e.getMessage());
+	    	}
+	    	Thread.sleep(3000);
+	    	//Form.clickOnElement("checkbox", "label_accept_all_terms", "chboxterms");
+	    	JavascriptExecutor jsa = (JavascriptExecutor) DriverManager.getDriver();
+	        jsa.executeScript("arguments[0].click();", Form.get_label_accept_all_terms());
+			
+	    	
+			Form.clickOnElement("Agree", "btnagree", "btnagre");
+			//Form.clickOnElement("next", "btnNext", "btnnext");
+			
+			Thread.sleep(3000);
+			JavascriptExecutor js2 = (JavascriptExecutor) DriverManager.getDriver();
+	        js2.executeScript("arguments[0].click();", Form.get_next());
+			//Form.get_next().click(); 
+			
+	    
+		}
+		public void Upload_file2inordertracker() throws AWTException, InterruptedException
+		{
+			Thread.sleep(3000);
+	    	//JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
+	       // js1.executeScript("arguments[0].click();", Form.Choosefile3Click());
+	    	//Form.Choosefile3Click().sendKeys(System.getProperty("user.dir") +"\\resources\\Documents\\POFCNEW.jpg");		    
+	    	//Form.Choosefile3Click().sendKeys("D:\\lambda\\GlobeOnline_Lambda-master\\GlobeOnline_Lambda-master\\src\\test\\resources\\Documents\\POFCNEW.jpg");
+	    	
+	    	try
+	    	{
+	    	  		WebElement addFile = DriverManager.getDriver().findElement(By.xpath("//input[@id='pofcDocRef']"));
+	    			((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
+	    			addFile.sendKeys(System.getProperty("user.dir")+"\\resources\\Documents\\POFCNEW.jpg");
+	    	}
+	    	catch(Exception e)
+	    	{
+	    		System.out.println(e.getMessage());
+	    	}
+	    	
+	    	
+			
+	    
+		}
+
+		public void Upload_RequiredDocPOFC() throws InterruptedException
+		{
+			Form.isElementExist("Dropdown2", "Dropdown2", 10);
+
+			Form.scroll_vertical(130);
+			Thread.sleep(2000L);
+			String POFC = "BIR Form 1700";
+			Form.Select_dropdown2(POFC); 
+			System.out.println("Select ID type: "+POFC);
+
+		}
+		public void submitbutton() throws InterruptedException
+		{
+			Thread.sleep(3000);
+			JavascriptExecutor js2 = (JavascriptExecutor) DriverManager.getDriver();
+	        js2.executeScript("arguments[0].click();", Form.get_submitdocument());
+			
+			
 		}
 }
