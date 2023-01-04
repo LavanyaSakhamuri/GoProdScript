@@ -347,11 +347,12 @@ File file = new File(excelFilePath);
 
 	}
 	
-	public void writeToExcelExistingRowFromMap1(String strSheetname, LinkedHashMap<String, Integer> Map1) {
+	public void writeToExcelExistingRowFromMap1(String strSheetname, LinkedHashMap<String, Integer> Map1,
+			String ScenarioName, int ScenarioColumn) {
 		// TODO Auto-generated method stub
 		String columnName = "";
 		String textToInsertInCol = "";
-		Integer text ;
+		Integer text;
 		int colNo = 0;
 		boolean colFound = false;
 
@@ -368,8 +369,7 @@ File file = new File(excelFilePath);
 			// Row newRow = Worksheet.createRow(lastRow + 1);
 			int row = Worksheet.getLastRowNum();
 			// Row Row=Worksheet.
-			// int a= ReadFromExcelPosition(ScenarioName, strSheetname,
-			// iColumnNo);
+			int a = ReadFromExcelPosition(ScenarioName, strSheetname, ScenarioColumn);
 			// System.out.println(a);
 			for (String key : keys) {
 				textToInsertInCol = key;
@@ -386,7 +386,7 @@ File file = new File(excelFilePath);
 
 				if (colFound) {
 					// cell = Worksheet.getRow(lastRow + 1).getCell(colNo);
-					cell = Worksheet.getRow(row).getCell(colNo);
+					cell = Worksheet.getRow(a).getCell(colNo);
 
 					/// Cell cell = newRow.createCell(colNo);
 					// Cell cell = row.createCell(a);
@@ -403,9 +403,46 @@ File file = new File(excelFilePath);
 			e1.printStackTrace();
 		}
 	}
+	
+	public String ReadFromExcelORDERID(String strVariable, String strSheetname, int iColumnNo) throws Exception {
+		// System.out.println("In Read from Excel");
+		String strText = null;
+		String strData;
+		String Position;
+		// int i=0;
+		try {
+			FileInputStream ExcelFile = new FileInputStream(excelFilePath);
+			workbook = new XSSFWorkbook(ExcelFile);
+			Worksheet = workbook.getSheet(strSheetname);
+			int totalrows = Worksheet.getLastRowNum();
+			for (int i = 0; i < totalrows + 1; i++) {
+				strData = getcelldata(i, 1);
+				// System.out.println("StrData is "+strData);
+				// System.out.println("StrVar is "+strVariable);
+				if (strVariable.equals(strData.toString())) {
+					strText = getcelldata(i, iColumnNo);
+					// System.out.println("*************************** [ FINALLY
+					// EQUAL ]
+					// *************************** ");
+					break;
+				}
+			}
 
-	
-	
+		}
+
+		catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("Exception while reading from Excel : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return strText;
+
+	}
 	// ,String ScenarioName,int iColumnNo
 
 	public void writeToExcelExistingRowFromMap(String strSheetname, LinkedHashMap<String, String> Map,String ScenarioName,Integer ScenarioColumn)

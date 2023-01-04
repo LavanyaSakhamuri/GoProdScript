@@ -21,20 +21,21 @@ import io.appium.java_client.android.AndroidDriver;*/
 public class Constant {
 	
 	//*********omt parameters need to change before execution of each scenario**********//
-	
-		public static String ScenarioName = "MNPHAPPYPATH";
-		public static String OMT_FlowID = "MNPHAPPYPATH";
-		public static String FlowType = "MNP";
-		public static String AssignOrderTL = "OMT-GOTS-TL-MNP-NO";
-		public static String OMT_RegAddressType="House";
-		public static String OMT_DispoFirstTime="For Reservation";
-		public static String Email_GO = "Kummithi.vishnuvardhanreddy@globe.com.ph";
+	public static String ScenarioName = "OMT_Acqui_FTA_CompletedProd";
+	//public static String OMT_FlowID = "ReservationRenewal_PhysicalStock";
+	public static String FlowType = "FTA";
+	public static String AssignOrderTL = "FTA_Acqui_TL";
+	public static String OMT_RegAddressType="House";
+	public static String OMT_DispoFirstTime="Manual Case Creation";//after placing an order the status of order in omt dashboard
+	public static String Email_GO = "mamatha.a@globe.com.ph";
+	public static String OrderSubType="";
+
 		
 		//*********************************************************//
 		
 		// ***************OMT******************//
-		public static String RowValue = "8";
-		public static String RowValue_FlowDetails = "5";
+		public static String RowValue = "1";
+		public static String RowValue_FlowDetails = "1";
 
 		public static int Login_NetworkIDColm = 3;
 		public static int Login_PasswordColm = 4;
@@ -107,6 +108,10 @@ public class Constant {
 
 		public static String OngoingVerification = "ONGOING VERIFICATION";
 
+		public static String Renewal_Completed="Renewal Completed";
+		
+		public static String PreOrderWithStock="Pre-Order With Stock";
+		
 		public static String Approved = "Approved";
 
 		public static String RequestPayment = "Request Payment";
@@ -152,6 +157,8 @@ public class Constant {
 
 		public static String Completed = "Completed";
 
+		public static String ForActivation="For Activation";
+		
 		public static String ForCompliancePOFC = "For Compliance - POFC";
 		public static String ForCompliancePOID_POFC = "For Compliance - POID/POFC";
 		public static String ForCompliancePOID = "For Compliance - POID";
@@ -206,6 +213,9 @@ public class Constant {
 	public static HashMap<String, String> TestData1 = new HashMap<String, String>();
 	public static HashMap<String, HashMap<String, String>> Map = new HashMap<String, HashMap<String, String>>();
 	public static HashMap<String, HashMap<String, String>> Map2 = new HashMap<String, HashMap<String, String>>();
+
+	public static LinkedHashMap<String,String> LinkedMap = new LinkedHashMap<>();
+	
 	//public static final int defaultBrowserTimeOut = 15;
 	public static String Qrcodetext = null;
 	//public static String UserStoryName = null;

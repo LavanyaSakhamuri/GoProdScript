@@ -87,7 +87,7 @@ public class SetDriver {
         DriverManager.setWebDriver(driver);
 
 		DriverManager.getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		DriverManager.getDriver().manage().window().maximize();
+//		DriverManager.getDriver().manage().window().maximize();
 		DriverManager.getDriver().manage().deleteAllCookies();
 
     }

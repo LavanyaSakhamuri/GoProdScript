@@ -45,7 +45,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+//import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.io.FileHandler;
@@ -157,7 +157,7 @@ public class Control extends SetDriver {
 		if (browserName.equalsIgnoreCase("Firefox")) {
 			System.setProperty("webdriver.gecko.driver",
 					"D:\\Selenium\\Selenium Installation Material\\WebDriver\\geckodriver.exe");
-			Constant.driver = new FirefoxDriver();
+			//Constant.driver = new FirefoxDriver();
 		} else if (browserName.equalsIgnoreCase("Safari")) {
 			System.setProperty("webdriver.SafariDriver.driver", "C:\\WebDrivers\\SafariDriver.exe");
 			Constant.driver = new SafariDriver();
