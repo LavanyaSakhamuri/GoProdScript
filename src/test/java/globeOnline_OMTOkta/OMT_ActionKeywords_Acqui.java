@@ -31,9 +31,10 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 	private static LinkedHashMap<String, String> Map = new LinkedHashMap<>();
 
 	public static String Rowvalue = Constant.RowValue;
+	private static String Globeurl = "https://new.globe.com.ph/postpaid-plans";
 
-	private static String Globeurl = "https://onlinepreprod.globe.com.ph/track-order";
-	private static String OMTurl = "https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/";
+	private static String Globeurl1 = "https://new.globe.com.ph/postpaid-plans";
+	private static String OMTurl = "https://edo-data-engineering.globe.com.ph/omt/";
 
 	// public String ScenarioName= SC.getClass().getSimpleName();
 	// public String OrderReferenceId = "PRE-000005167"; // from excel
@@ -44,7 +45,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		String TestCaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);// ScenarioName
 
 		DriverManager.getDriver()
-				.get("https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/application-entry");
+				.get("https://edo-data-engineering.globe.com.ph/omt/application-entry");
 		// String SCname = util.ReadFromRowExcel(Constant.RowValue,
 		// "Sheet1", Constant.FlowIdColumnValue);// flowid
 		String User1 = util.ReadFromRowExcel(Constant.RowValue_FlowDetails, "FlowDetails", Constant.User1);
@@ -61,7 +62,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		Constant.dataMap.get().put("OMT_EstimatedDayOfDelivery", "NOT FOUND");
 		Constant.dataMap.get().put("OMT_OrderDetails", "NOT FOUND");
 
-		 Constant.dataMap.get().put("OMT_OrderState", "NOT FOUND");
+		// Constant.dataMap.get().put("OMT_OrderState", "0");
 		//Constant.dataMap.get().put("OMT_FlowID", "FTA_HappyPath_Completed");
 		Constant.dataMap.get().put("OMT_RecipientDetails", "NOT FOUND");
 		Constant.dataMap.get().put("OMT_PaymentDetails", "NOT FOUND");
@@ -79,7 +80,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 	}
 
-	public void VerifyOrder_OnGoingStatus(String RoleName) throws Exception {
+	public void VerifyOrder_OnGoingStatus(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -87,29 +88,29 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		String User3 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User3);
-		OMTOrderStatus_OngoingVerification(Constant.FlowType, User3, Constant.OngoingVerification);
+	//	String User3 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User3);
+		OMTOrderStatus_OngoingVerification(Constant.FlowType, UserAgent, Constant.OngoingVerification);
 
 	}
 	
-	public void VerifyOrder_PreorderWithStock(String RoleName) throws Exception {
+	public void VerifyOrder_PreorderWithStock(String UserAgent) throws Exception {
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-		String User6 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User6);
-		OMTorderStatus_PreorderWithStock(Constant.FlowType, User6, Constant.PreorderWithStock );
+	//	String User6 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User6);
+		OMTorderStatus_PreorderWithStock(Constant.FlowType, UserAgent, Constant.PreorderWithStock );
 	}
 	
-	public void VerifyOrder_PreorderWithoutStock(String RoleName) throws Exception {
+	public void VerifyOrder_PreorderWithoutStock(String UserAgent) throws Exception {
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-		String User6 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User6);
-		OMTorderStatus_PreorderWithStock(Constant.FlowType, User6, Constant.PreorderWithoutStock );
+	//	String User6 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User6);
+		OMTorderStatus_PreorderWithStock(Constant.FlowType, UserAgent, Constant.PreorderWithoutStock );
 	}
 	
 	
-	public void VerifyOrder_ForReDelivery1(String RoleName) throws Exception {
+	public void VerifyOrder_ForReDelivery1(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -118,11 +119,11 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 																												// id
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User21 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User21);
-		OMTOrderStatus_ReDelivery1(Constant.FlowType, User21, Constant.ForRedelivery1, CaseName);
+		//String User21 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User21);
+		OMTOrderStatus_ReDelivery1(Constant.FlowType, UserAgent, Constant.ForRedelivery1, CaseName);
 
 	}
-	public void VerifyOrder_ForCompliancePOFC(String RoleName) throws Exception {
+	public void VerifyOrder_ForCompliancePOFC(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -131,40 +132,40 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 																												// id
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User5 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User5);
-		OMTOrderStatus_ForCompliancePOFC(Constant.FlowType, User5, Constant.ForCompliancePOFC, CaseName);
-
-	}
-	
-	public void VerifyOrder_ForCompliancePOID(String RoleName) throws Exception {
-		// read from excel and make assign order as separate keyword
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-		String User7 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User7);
-		OMTOrderStatus_ForCompliancePOID(Constant.FlowType, User7, Constant.ForCompliancePOID, CaseName);
-
-	}
-
-	public void VerifyOrder_ForReDelivery2(String RoleName) throws Exception {
-		// read from excel and make assign order as separate keyword
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-		String User25 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User25);
-		OMTOrderStatus_ReDelivery2(Constant.FlowType, User25, Constant.ForRedelivery2, CaseName);
+	//	String User5 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User5);
+		OMTOrderStatus_ForCompliancePOFC(Constant.FlowType, UserAgent, Constant.ForCompliancePOFC, CaseName);
 
 	}
 	
-	public void VerifyOrder_ForCompliancePOID_POFC(String RoleName) throws Exception {
+	public void VerifyOrder_ForCompliancePOID(String UserAgent) throws Exception {
+		// read from excel and make assign order as separate keyword
+		// AssignOrderOMT(DS.sActionKeywordAgent);
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
+																												// id
+		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
+
+		//String User7 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User7);
+		OMTOrderStatus_ForCompliancePOID(Constant.FlowType, UserAgent, Constant.ForCompliancePOID, CaseName);
+
+	}
+
+	public void VerifyOrder_ForReDelivery2(String UserAgent) throws Exception {
+		// read from excel and make assign order as separate keyword
+		// AssignOrderOMT(DS.sActionKeywordAgent);
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
+																												// id
+		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
+
+		//String User25 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User25);
+		OMTOrderStatus_ReDelivery2(Constant.FlowType, UserAgent, Constant.ForRedelivery2, CaseName);
+
+	}
+	
+	public void VerifyOrder_ForCompliancePOID_POFC(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -174,13 +175,13 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User7 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User7);
-		OMTOrderStatus_ForCompliancePOID_POFC(Constant.FlowType, User7, Constant.ForCompliancePOID_POFC,
+	//	String User7 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User7);
+		OMTOrderStatus_ForCompliancePOID_POFC(Constant.FlowType, UserAgent, Constant.ForCompliancePOID_POFC,
 				CaseName);
 
 	}
 	
-	public void VerifyOrder_ForReDelivery3(String RoleName) throws Exception {
+	public void VerifyOrder_ForReDelivery3(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -189,26 +190,26 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 																												// id
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User29 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User29);
-		OMTOrderStatus_ReDelivery3(Constant.FlowType, User29, Constant.ForRedelivery3, CaseName);
+		//String User29 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User29);
+		OMTOrderStatus_ReDelivery3(Constant.FlowType, UserAgent, Constant.ForRedelivery3, CaseName);
 
 	}
 
 	
 
-	public void VerifyOrder_Approved(String RoleName) throws Exception {
+	public void VerifyOrder_Approved(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		String User5 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User5);
-		OMTOrderStatus_Approved(Constant.FlowType, User5, Constant.Approved);
+		//String User5 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User5);
+		OMTOrderStatus_Approved(Constant.FlowType, UserAgent, Constant.Approved);
 
 	}
 
-	public void VerifyOMTOrder_ReservedPhysicalStock(String RoleName) throws Exception {
+	public void VerifyOMTOrder_ReservedPhysicalStock(String UserAgent) throws Exception {
 		// System.out.println(DS.sActionKeywordAgent);
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -216,12 +217,12 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		String User10 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User10);
-		OMTOrderStatus_ReservedPhysicalStock(Constant.FlowType, User10, Constant.ReservedPhysicalStock);
+		//String User10 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User10);
+		OMTOrderStatus_ReservedPhysicalStock(Constant.FlowType, UserAgent, Constant.ReservedPhysicalStock);
 
 	}
 	
-	public void VerifyOMTOrder_ReservedVirtualStock(String RoleName) throws Exception {
+	public void VerifyOMTOrder_ReservedVirtualStock(String UserAgent) throws Exception {
 		// System.out.println(DS.sActionKeywordAgent);
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -229,94 +230,94 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		String User8 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User8);
-		OMTOrderStatus_ReservedVirtualStock(Constant.FlowType, User8, Constant.ReservedVirtuallStock);
+		//String User8 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User8);
+		OMTOrderStatus_ReservedVirtualStock(Constant.FlowType, UserAgent, Constant.ReservedVirtuallStock);
 
 	}
 
-	public void VerifyOMTOrder_RequestPayment(String RoleName) throws Exception {
+	public void VerifyOMTOrder_RequestPayment(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		String User11 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User11);
-		OMTOrderStatus_RequestPayment(Constant.FlowType, User11, Constant.RequestPayment);
+		//String User11 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User11);
+		OMTOrderStatus_RequestPayment(Constant.FlowType, UserAgent, Constant.RequestPayment);
 
 	}
 	
-	public void VerifyOMTOrder_AwaitingStock(String RoleName) throws Exception {
+	public void VerifyOMTOrder_AwaitingStock(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		String User7 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User7);
-		K.OMT_Role_Login(Constant.FlowType, User7);
+		//String User7 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User7);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
 		AF.OrderStatusVerifyInDashboard("Awaiting Stock");
 	}
 	
-	public void VerifyOMTOrder_AwaitingStockD07(String RoleName) throws Exception {
+	public void VerifyOMTOrder_AwaitingStockD07(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		String User9 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User9);
-		K.OMT_Role_Login(Constant.FlowType, User9);
+		//String User9 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User9);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
 		AF.OrderStatusVerifyInDashboard("Awaiting Stock D07");
 	}
 	
-	public void VerifyOMTOrder_AwaitingStockD14(String RoleName) throws Exception {
+	public void VerifyOMTOrder_AwaitingStockD14(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		String User11 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User11);
-		K.OMT_Role_Login(Constant.FlowType, User11);
+		//String User11 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User11);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
 		AF.OrderStatusVerifyInDashboard("Awaiting Stock D14");
 	}
 	
-	public void VerifyOMTOrder_AwaitingStockD21(String RoleName) throws Exception {
+	public void VerifyOMTOrder_AwaitingStockD21(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
 																										
-		String User13 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User13);
-		K.OMT_Role_Login(Constant.FlowType, User13);
+		//String User13 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User13);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
 		AF.OrderStatusVerifyInDashboard("Awaiting Stock D21");
 	}
 	
-	public void VerifyOMTOrder_Cancelled(String RoleName) throws Exception {
+	public void VerifyOMTOrder_Cancelled(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
 																										
-		String User14 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User14);
-		K.OMT_Role_Login(Constant.FlowType, User14);
+		//String User14 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User14);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
 		AF.OrderStatusVerifyInDashboard("Cancelled");
 	}
 	
-	public void VerifyOMTOrder_StatusCompleted(String RoleName) throws Exception {
+	public void VerifyOMTOrder_StatusCompleted(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
 																										
-		String User17 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User17);
-		K.OMT_Role_Login(Constant.FlowType, User17);
+		//String User17 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User17);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
 		AF.OrderStatusVerifyInDashboard("Completed");
 	}
 
 
-	public void VerifyOMTOrder_AwaitingPayment(String RoleName) throws Exception {
+	public void VerifyOMTOrder_AwaitingPayment(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
@@ -326,10 +327,10 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User13 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User13);
+		//String User13 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User13);
 		String PaymentMethod = util.ReadFromExcel(CaseName, "Sheet1", Constant.PaymentMenthod);
 		if (!(PaymentMethod.equalsIgnoreCase("COD"))) {
-			OMTStatus_AwaitingPayment(Constant.FlowType, User13, SCName, Constant.AwaitingPayment, CaseName);
+			OMTStatus_AwaitingPayment(Constant.FlowType, UserAgent, SCName, Constant.AwaitingPayment, CaseName);
 		} /*
 			 * else { OMTStatus_ForProcessing1(Constant.FlowType, User4,
 			 * SCName,PaymentMethod);
@@ -339,7 +340,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 	}
 
 
-	public void VerifyOMTOrder_ForProcessing(String RoleName) throws Exception {
+	public void VerifyOMTOrder_ForProcessing(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
@@ -347,10 +348,10 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User15 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User15);
+		//String User15 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User15);
 		String PaymentMethod = util.ReadFromExcel(CaseName, "Sheet1", Constant.PaymentMenthod);
 
-		OMTStatus_ForProcessing1(Constant.FlowType, User15, SCName, PaymentMethod, Constant.ForProcessing,CaseName);
+		OMTStatus_ForProcessing1(Constant.FlowType, UserAgent, SCName, PaymentMethod, Constant.ForProcessing,CaseName);
 		// Rid refreshes 15 min
 
 		/*
@@ -358,7 +359,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		 */
 
 	}
-	public void VerifyOMTOrder_ForProcessingRefresh(String RoleName) throws Exception {
+	public void VerifyOMTOrder_ForProcessingRefresh(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
@@ -366,16 +367,16 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User17 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User17);
+		//String User17 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User17);
 		String PaymentMethod = util.ReadFromExcel(CaseName, "Sheet1", Constant.PaymentMenthod);
 
-		OMTStatus_ForProcessing1(Constant.FlowType, User17, SCName, PaymentMethod, Constant.Processed,
+		OMTStatus_ForProcessing1(Constant.FlowType, UserAgent, SCName, PaymentMethod, Constant.Processed,
 				CaseName);
 
 	}
 
 
-	public void VerifyOMTOrder_Processed(String RoleName) throws Exception {
+	public void VerifyOMTOrder_Processed(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
@@ -383,12 +384,12 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User17 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User17);
-		OMTOrderStatus_Processed(Constant.FlowType, User17, SCName, Constant.Processed, CaseName);
+	//	String User17 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User17);
+		OMTOrderStatus_Processed(Constant.FlowType, UserAgent, SCName, Constant.Processed, CaseName);
 	}
 
 
-	public void VerifyOMTOrder_ForDelivery(String RoleName) throws Exception {
+	public void VerifyOMTOrder_ForDelivery(String UserAgent) throws Exception {
 
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -397,12 +398,11 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User19 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User19);
-
-		OMTOrderStatus_ForDelivery(Constant.FlowType, User19, SCName, Constant.ForDelivery, CaseName);
+		//String User19 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User19);
+		OMTOrderStatus_ForDelivery(Constant.FlowType, UserAgent, SCName, Constant.ForDelivery, CaseName);
 	}
 
-	public void VerifyOMTOrder_Delivered(String RoleName) throws Exception {
+	public void VerifyOMTOrder_Delivered(String UserAgent) throws Exception {
 
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -410,12 +410,12 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
 
-		String User21 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User21);
+		//String User21 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User21);
 
-		OMTOrderStatus_Delivered(Constant.FlowType, User21, SCName, Constant.Delivered, CaseName);
+		OMTOrderStatus_Delivered(Constant.FlowType, UserAgent, SCName, Constant.Delivered, CaseName);
 	}
 
-	public void VerifyOMTOrder_Activated(String RoleName) throws Exception {
+	public void VerifyOMTOrder_Activated(String UserAgent) throws Exception {
 
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -424,12 +424,12 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User23 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User23);
+		//String User23 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User23);
 
-		OMTOrderStatus_Activated(Constant.FlowType, User23, SCName, Constant.Activated, CaseName);
+		OMTOrderStatus_Activated(Constant.FlowType, UserAgent, SCName, Constant.Activated, CaseName);
 	}
 	
-	public void VerifyOMTOrder_Completed(String RoleName) throws Exception {
+	public void VerifyOMTOrder_Completed(String UserAgent) throws Exception {
 
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -438,9 +438,9 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User25 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User25);
+		//String User25 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User25);
 
-		OMTOrderStatus_Completed(Constant.FlowType, User25, SCName, Constant.Completed, CaseName);
+		OMTOrderStatus_Completed(Constant.FlowType, UserAgent, SCName, Constant.Completed, CaseName);
 	}
 
 
@@ -1520,7 +1520,10 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 	public void OrderTracker_GlobeOnline(String CaseName, String DispositionStatus) throws Exception {
 		// ORDER TRACKER NOT WRITTN //open link
-		DriverManager.getDriver().get(Globeurl);
+		System.out.println("hi");
+		System.out.println("hi");
+		//DriverManager.getDriver().get(Globeurl);
+		DriverManager.getDriver().get(Globeurl1);
 		Thread.sleep(1000); // Accpet
 		// cookies
 		AF.IacceptClick();
@@ -1706,7 +1709,6 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 
 		AF.OMTSearch_and_ValidateDashboard1();
-
 		System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
 		Constant.dataMap.set(Map);
 		Constant.dataMap.get().put("OMT_DispositionStatus", OMTAcqui.get_Dashboard_Dispo().getText());
@@ -1720,7 +1722,13 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		jsp.executeScript("arguments[0].click();", OMTAcqui.get_RemoveAssigneRdbtn());
 		JavascriptExecutor jsR = (JavascriptExecutor) DriverManager.getDriver();
 		jsR.executeScript("arguments[0].click();", OMTAcqui.get_RemoveButton());
-		if(!(OMTAcqui.get_CheckBoxOrder().isSelected()))
+		if(OMTAcqui.get_RemoveMessage().isDisplayed())
+		{
+			System.out.println("Removing an assignee to this application is not yet assigned to the admin");
+			JavascriptExecutor jsC = (JavascriptExecutor) DriverManager.getDriver();
+			jsC.executeScript("arguments[0].click();", OMTAcqui.get_OrderCheckBox());
+		}
+		 if((OMTAcqui.get_CheckNotHighlight().isSelected()))
 		{
 		// Click on Checkbox
 				JavascriptExecutor jsC = (JavascriptExecutor) DriverManager.getDriver();
@@ -1785,8 +1793,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		DriverManager.getDriver().manage().window().maximize();
 		// DriverManager.getDriver().manage().deleteAllCookies();
 
-		DriverManager.getDriver()
-				.get("https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/application-entry");
+		DriverManager.getDriver().get("https://edo-data-engineering.globe.com.ph/omt/");
 	}
 
 
