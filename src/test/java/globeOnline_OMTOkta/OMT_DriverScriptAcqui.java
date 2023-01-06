@@ -28,8 +28,8 @@ public class OMT_DriverScriptAcqui extends SetDriver {
 	public static int OrderStateValueReturn = 0;
 
 	public OMT_DriverScriptAcqui() {
+		
 		ActionKeywords = new OMT_ActionKeywords_Acqui();
-
 		method = ActionKeywords.getClass().getMethods();
 	}
 
@@ -60,9 +60,10 @@ public class OMT_DriverScriptAcqui extends SetDriver {
 						+ sActionKeywordAgent + "");
 
 				if (sActionKeyword.equalsIgnoreCase("Halt_Execution")) {
-
+					OrderStateValue = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.OrderState);
+					int OrderState = Integer.parseInt(OrderStateValue);
 					Constant.dataMap1.set(Map1);
-					Constant.dataMap1.get().put("OMT_OrderState", OrderStateNumber + 1);
+					Constant.dataMap1.get().put("OMT_OrderState", OrderState + 1);
 
 					util.writeToExcelExistingRowFromMap1("Sheet1", Constant.dataMap1.get(), Constant.ScenarioName, 1);
 
@@ -142,7 +143,7 @@ public class OMT_DriverScriptAcqui extends SetDriver {
 				util.writeToExcelExistingRowFromMap1("Sheet1", Constant.dataMap1.get(), Constant.ScenarioName, 1);
 
 				OrderStateValue = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.OrderState);
-
+System.out.println(OrderStateValue);
 				break;
 			}
 
