@@ -17,44 +17,49 @@ import globeOnline_CommonMethods.SetDriver;
 import globeOnline_CommonMethods.util;
 import utility.Constant;
 import utility.Control;
-import utility.Generic;
 
-public class OMT_ActionKeywords_Acqui extends SetDriver {
+public class OMT_ActionKeywords_Renewal extends SetDriver {
+
+	
+	
+	
 	public static util util = new util();
 	private static OMT_Login K = new OMT_Login();
 	private static OMT_ActionKeywords_Acqui SC = new OMT_ActionKeywords_Acqui();
-	public static OMT_DriverScriptAcqui DS = new OMT_DriverScriptAcqui();
+	public static OMT_DriverScript_Renewal DS = new OMT_DriverScript_Renewal();
 
-	private static OMT_Acquision_Functions AF = new OMT_Acquision_Functions();
+	private static OMT_Renewal_Functions RF = new OMT_Renewal_Functions();
 	private static ACQUI_omt_page OMTAcqui = new ACQUI_omt_page();
 	private static String Status = "failed";
 	private static LinkedHashMap<String, String> Map = new LinkedHashMap<>();
+	private static LinkedHashMap<String, Integer> Map1 = new LinkedHashMap<>();
 
 	public static String Rowvalue = Constant.RowValue;
-	private static String Globeurl = "https://new.globe.com.ph/postpaid-plans";
 
-	private static String Globeurl1 = "https://new.globe.com.ph/postpaid-plans";
-	private static String OMTurl = "https://edo-data-engineering.globe.com.ph/omt/";
+	private static String Globeurl = "https://onlinepreprod.globe.com.ph/track-order";
+	private static String OMTurl = "https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/";
 
 	// public String ScenarioName= SC.getClass().getSimpleName();
 	// public String OrderReferenceId = "PRE-000005167"; // from excel
+	/*private String ScenarioName = "OMT_Acqui_FTA1_4NEW"; // row number from
+	public static String RoleName = DS.AssignToAgent;*/
 
-	public void ValidateOMTOrderDetails(String RoleName) throws Exception {
+	public void ValidateOMTOrderDetails(String UserAgent) throws Exception {
 		// String SCname=util.ReadFromRowExcel(Constant.RowValue, "Sheet1",
 		// 29);
 		String TestCaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);// ScenarioName
 
 		DriverManager.getDriver()
-				.get("https://edo-data-engineering.globe.com.ph/omt/application-entry");
+				.get("https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/application-entry");
 		// String SCname = util.ReadFromRowExcel(Constant.RowValue,
 		// "Sheet1", Constant.FlowIdColumnValue);// flowid
-		//String User1 = util.ReadFromRowExcel(Constant.RowValue_FlowDetails, "FlowDetails", Constant.User1);
+	//	String User1 = util.ReadFromRowExcel(Constant.RowValue_FlowDetails, "FlowDetails_Renewal", Constant.User1);
 
-		K.OMT_Role_Login(Constant.FlowType, RoleName);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
 
-		// SC.getClass().getSimpleName()
+		// SC.getClass().getSimpleName()o
 		Constant.dataMap.set(Map);
-		//Constant.dataMap.get().put("TestClassName", ScenarioName);
+		//Constant.dataMap.get().put("TestClassName", Constant.ScenarioName);
 		Constant.dataMap.get().put("OMT_LAS", "NOT FOUND");
 		Constant.dataMap.get().put("OMT_DispositionStatus", "NOT FOUND");
 		Constant.dataMap.get().put("OMT_UpdateDate", "NOT FOUND");
@@ -62,8 +67,8 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		Constant.dataMap.get().put("OMT_EstimatedDayOfDelivery", "NOT FOUND");
 		Constant.dataMap.get().put("OMT_OrderDetails", "NOT FOUND");
 
-		// Constant.dataMap.get().put("OMT_OrderState", "0");
-		//Constant.dataMap.get().put("OMT_FlowID", "FTA_HappyPath_Completed");
+		//Constant.dataMap.get().put("OMT_OrderState", "NOT FOUND");
+		//Constant.dataMap.get().put("OMT_FlowID", Constant.OMT_FlowID);
 		Constant.dataMap.get().put("OMT_RecipientDetails", "NOT FOUND");
 		Constant.dataMap.get().put("OMT_PaymentDetails", "NOT FOUND");
 		Constant.dataMap.get().put("OMT_MobileNumber", "NOT FOUND");
@@ -79,7 +84,18 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		// DriverManager.getDriver().quit();
 
 	}
+	public void VerifyOMTOrder_PreOrderwithStock(String UserAgent) throws Exception
+	{
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
+																												// id
 
+		//String User4 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User4);
+		OMTOrderStatus_PreOrderwithStock(Constant.FlowType, UserAgent, Constant.PreOrderWithStock);
+
+	}
+	
 	public void VerifyOrder_OnGoingStatus(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 		// AssignOrderOMT(DS.sActionKeywordAgent);
@@ -88,29 +104,30 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-	//	String User3 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User3);
+		//String User3 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User3);
 		OMTOrderStatus_OngoingVerification(Constant.FlowType, UserAgent, Constant.OngoingVerification);
 
 	}
 	
-	public void VerifyOrder_PreorderWithStock(String UserAgent) throws Exception {
-		DriverManager.getDriver().quit();
+
+	
+	
+	public void VerifyOrder_ForOrderCreation(String UserAgent) throws Exception {
+		// read from excel and make assign order as separate keyword
+		// AssignOrderOMT(DS.sActionKeywordAgent);
+	DriverManager.getDriver().quit(); //sc1 no need
 		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-	//	String User6 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User6);
-		OMTorderStatus_PreorderWithStock(Constant.FlowType, UserAgent, Constant.PreorderWithStock );
+		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
+																												// id
+		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
+
+		//String User9 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User9);
+		OMTOrderStatus_ForOrderCreation(Constant.FlowType, UserAgent, Constant.ForOrderCreation,CaseName);
+
 	}
 	
-	public void VerifyOrder_PreorderWithoutStock(String UserAgent) throws Exception {
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-	//	String User6 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User6);
-		OMTorderStatus_PreorderWithStock(Constant.FlowType, UserAgent, Constant.PreorderWithoutStock );
-	}
 	
-	
-	public void VerifyOrder_ForReDelivery1(String UserAgent) throws Exception {
+	public void VerifyOrder_OrderCreated(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -119,82 +136,11 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 																												// id
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		//String User21 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User21);
-		OMTOrderStatus_ReDelivery1(Constant.FlowType, UserAgent, Constant.ForRedelivery1, CaseName);
-
-	}
-	public void VerifyOrder_ForCompliancePOFC(String UserAgent) throws Exception {
-		// read from excel and make assign order as separate keyword
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-	//	String User5 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User5);
-		OMTOrderStatus_ForCompliancePOFC(Constant.FlowType, UserAgent, Constant.ForCompliancePOFC, CaseName);
+		//String User11 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User11);
+		OMTOrderStatus_OrderCreated(Constant.FlowType, UserAgent, Constant.OrderCreated,CaseName);
 
 	}
 	
-	public void VerifyOrder_ForCompliancePOID(String UserAgent) throws Exception {
-		// read from excel and make assign order as separate keyword
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-		//String User7 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User7);
-		OMTOrderStatus_ForCompliancePOID(Constant.FlowType, UserAgent, Constant.ForCompliancePOID, CaseName);
-
-	}
-
-	public void VerifyOrder_ForReDelivery2(String UserAgent) throws Exception {
-		// read from excel and make assign order as separate keyword
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-		//String User25 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User25);
-		OMTOrderStatus_ReDelivery2(Constant.FlowType, UserAgent, Constant.ForRedelivery2, CaseName);
-
-	}
-	
-	public void VerifyOrder_ForCompliancePOID_POFC(String UserAgent) throws Exception {
-		// read from excel and make assign order as separate keyword
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-	//	String User7 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User7);
-		OMTOrderStatus_ForCompliancePOID_POFC(Constant.FlowType, UserAgent, Constant.ForCompliancePOID_POFC,
-				CaseName);
-
-	}
-	
-	public void VerifyOrder_ForReDelivery3(String UserAgent) throws Exception {
-		// read from excel and make assign order as separate keyword
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-		//String User29 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User29);
-		OMTOrderStatus_ReDelivery3(Constant.FlowType, UserAgent, Constant.ForRedelivery3, CaseName);
-
-	}
-
 	
 
 	public void VerifyOrder_Approved(String UserAgent) throws Exception {
@@ -204,8 +150,20 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		//String User5 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User5);
+	//	String User5 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User5);
 		OMTOrderStatus_Approved(Constant.FlowType, UserAgent, Constant.Approved);
+
+	}
+
+	public void VerifyOrder_Delivered(String UserAgent) throws Exception {
+		// AssignOrderOMT(DS.sActionKeywordAgent);
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
+																												// id
+
+		//String User18 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User18);
+		OMTOrderStatus_Delivered(Constant.FlowType, UserAgent, Constant.Delivered);
 
 	}
 
@@ -217,21 +175,8 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		//String User10 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User10);
+		//String User7 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User7);
 		OMTOrderStatus_ReservedPhysicalStock(Constant.FlowType, UserAgent, Constant.ReservedPhysicalStock);
-
-	}
-	
-	public void VerifyOMTOrder_ReservedVirtualStock(String UserAgent) throws Exception {
-		// System.out.println(DS.sActionKeywordAgent);
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-
-		//String User8 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User8);
-		OMTOrderStatus_ReservedVirtualStock(Constant.FlowType, UserAgent, Constant.ReservedVirtuallStock);
 
 	}
 
@@ -242,80 +187,10 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		//String User11 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User11);
+		//String User11 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User11);
 		OMTOrderStatus_RequestPayment(Constant.FlowType, UserAgent, Constant.RequestPayment);
 
 	}
-	
-	public void VerifyOMTOrder_AwaitingStock(String UserAgent) throws Exception {
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-
-		//String User7 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User7);
-		K.OMT_Role_Login(Constant.FlowType, UserAgent);
-		AF.OrderStatusVerifyInDashboard("Awaiting Stock");
-	}
-	
-	public void VerifyOMTOrder_AwaitingStockD07(String UserAgent) throws Exception {
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-
-		//String User9 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User9);
-		K.OMT_Role_Login(Constant.FlowType, UserAgent);
-		AF.OrderStatusVerifyInDashboard("Awaiting Stock D07");
-	}
-	
-	public void VerifyOMTOrder_AwaitingStockD14(String UserAgent) throws Exception {
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-
-		//String User11 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User11);
-		K.OMT_Role_Login(Constant.FlowType, UserAgent);
-		AF.OrderStatusVerifyInDashboard("Awaiting Stock D14");
-	}
-	
-	public void VerifyOMTOrder_AwaitingStockD21(String UserAgent) throws Exception {
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-																										
-		//String User13 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User13);
-		K.OMT_Role_Login(Constant.FlowType, UserAgent);
-		AF.OrderStatusVerifyInDashboard("Awaiting Stock D21");
-	}
-	
-	public void VerifyOMTOrder_Cancelled(String UserAgent) throws Exception {
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-																										
-		//String User14 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User14);
-		K.OMT_Role_Login(Constant.FlowType, UserAgent);
-		AF.OrderStatusVerifyInDashboard("Cancelled");
-	}
-	
-	public void VerifyOMTOrder_StatusCompleted(String UserAgent) throws Exception {
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-																										
-		//String User17 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User17);
-		K.OMT_Role_Login(Constant.FlowType, UserAgent);
-		AF.OrderStatusVerifyInDashboard("Completed");
-	}
-
 
 	public void VerifyOMTOrder_AwaitingPayment(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
@@ -327,7 +202,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		//String User13 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User13);
+	//	String User7 = util.ReadFromRowExcel(SCName, "FlowDetails_Renewal", Constant.User7);
 		String PaymentMethod = util.ReadFromExcel(CaseName, "Sheet1", Constant.PaymentMenthod);
 		if (!(PaymentMethod.equalsIgnoreCase("COD"))) {
 			OMTStatus_AwaitingPayment(Constant.FlowType, UserAgent, SCName, Constant.AwaitingPayment, CaseName);
@@ -339,7 +214,6 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 			 */
 	}
 
-
 	public void VerifyOMTOrder_ForProcessing(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -348,17 +222,17 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		//String User15 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User15);
+		//String User15 = util.ReadFromRowExcel(SCName, "FlowDetails_Renewal", Constant.User15);
 		String PaymentMethod = util.ReadFromExcel(CaseName, "Sheet1", Constant.PaymentMenthod);
 
 		OMTStatus_ForProcessing1(Constant.FlowType, UserAgent, SCName, PaymentMethod, Constant.ForProcessing,CaseName);
 		// Rid refreshes 15 min
 
-		/*
-		 * Thread.sleep(60000); VerifyOMTOrder_ForProcessingRefresh();
-		 */
+		/*Thread.sleep(60000);
+		VerifyOMTOrder_ForProcessingRefresh();*/
 
 	}
+
 	public void VerifyOMTOrder_ForProcessingRefresh(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -367,14 +241,12 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		//String User17 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User17);
+		//String User17 = util.ReadFromRowExcel(SCName, "FlowDetails_Renewal", Constant.User17);
 		String PaymentMethod = util.ReadFromExcel(CaseName, "Sheet1", Constant.PaymentMenthod);
 
-		OMTStatus_ForProcessing1(Constant.FlowType, UserAgent, SCName, PaymentMethod, Constant.Processed,
-				CaseName);
+		OMTStatus_ForProcessing1(Constant.FlowType, UserAgent, SCName, PaymentMethod, Constant.Processed,CaseName);
 
 	}
-
 
 	public void VerifyOMTOrder_Processed(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
@@ -384,50 +256,10 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-	//	String User17 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User17);
-		OMTOrderStatus_Processed(Constant.FlowType, UserAgent, SCName, Constant.Processed, CaseName);
+		//String User14 = util.ReadFromRowExcel(SCName, "FlowDetails_Renewal", Constant.User14);
+		OMTOrderStatus_Processed(Constant.FlowType, UserAgent, SCName, Constant.Processed,CaseName);
 	}
 
-
-	public void VerifyOMTOrder_ForDelivery(String UserAgent) throws Exception {
-
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-		//String User19 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User19);
-		OMTOrderStatus_ForDelivery(Constant.FlowType, UserAgent, SCName, Constant.ForDelivery, CaseName);
-	}
-
-	public void VerifyOMTOrder_Delivered(String UserAgent) throws Exception {
-
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-
-		//String User21 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User21);
-
-		OMTOrderStatus_Delivered(Constant.FlowType, UserAgent, SCName, Constant.Delivered, CaseName);
-	}
-
-	public void VerifyOMTOrder_Activated(String UserAgent) throws Exception {
-
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-		//String User23 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User23);
-
-		OMTOrderStatus_Activated(Constant.FlowType, UserAgent, SCName, Constant.Activated, CaseName);
-	}
 	
 	public void VerifyOMTOrder_Completed(String UserAgent) throws Exception {
 
@@ -438,11 +270,10 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		//String User25 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User25);
+		//String User18 = util.ReadFromRowExcel(SCName, "FlowDetails_Renewal", Constant.User18);
 
-		OMTOrderStatus_Completed(Constant.FlowType, UserAgent, SCName, Constant.Completed, CaseName);
+		OMTOrderStatus_Completed(Constant.FlowType, UserAgent, SCName, Constant.Renewal_Completed,CaseName);
 	}
-
 
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
 
@@ -453,7 +284,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 
-		AF.OMTSearch_and_ValidateDashboard1();
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		WebElement a = DriverManager.getDriver().findElement(OMTAcqui.DispositionStatus);
 		String status = a.getText();
@@ -465,8 +296,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		WebElement b = DriverManager.getDriver().findElement(OMTAcqui.TimeStamp);
 		String Timestamp = b.getText();
 		String Timestamp_OMT1 = Timestamp.replaceAll("-", "_");
-		String Timestamp_OMT2 = Timestamp_OMT1.replaceAll(" ", "_");
-		String Timestamp_OMT = Timestamp_OMT2.replaceAll(":", "_");
+		String Timestamp_OMT2 = Timestamp_OMT1.replaceAll(" ", "_");		String Timestamp_OMT = Timestamp_OMT2.replaceAll(":", "_");
 
 		Constant.dataMap.get().put("OMT_TimeStamp", Timestamp_OMT);
 		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
@@ -484,15 +314,14 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		String ORDERID = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.OrderRefID);
 
-		AF.Validate_ORDER(ORDERID, "", "FTA_ADA", "For Verification");
-//		AF.Validate_ORDER(ORDERID, "", Constant.FlowType, Constant.Validate_FirstOMTDispoStatus);
+		RF.Validate_ORDER(ORDERID, Constant.OrderSubType, Constant.FlowType, Constant.OMT_DispoFirstTime);
 
 		ArrayList CustDet_GO = util.readExcelData(Constant.CustomerDetails, ScName, "Sheet1");
-		String Customer_Details_OMT = AF.Validate_PRIMARYCUSTOMERDETAILS();
+		String Customer_Details_OMT = RF.Validate_PRIMARYCUSTOMERDETAILS();
 		String B = CustDet_GO.toString();
 		String C = B.replace("[", " ");
 		String D = C.replace("]", " ");
-		if (D.trim().equalsIgnoreCase(Customer_Details_OMT)) {
+		if (D.trim().contains(Customer_Details_OMT)) {
 			System.out.println("Globe Online  and OMT Customer Details of order placed are matched");
 		} else {
 			System.out.println("Globe Online and OMT Customer Details of order placed didnt matched");
@@ -506,26 +335,25 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		Constant.dataMap.get().put("OMT_RecipientDetails",
 				OMTAcqui.get_Primary_RecipientName().getAttribute("value"));
 
-		String AddressDetails = AF.Validate_RegisteredAddress(Constant.OMT_RegAddressType);
+		String AddressDetails = RF.Validate_RegisteredAddressRenewal(Constant.OMT_RegAddressType);
 		Constant.dataMap.get().put("OMT_AddressDetails", AddressDetails);
-		// //AF.Validate_ShippingAddress("Condo");
-		AF.Validate_AccountCheckResults();
-		AF.Validate_OrderDetails();
+		
+		RF.Validate_PrimaryAccountDetails();
+		RF.Validate_OrderDetails();
 		Constant.dataMap.get().put("OMT_OrderDetails", OMTAcqui.get_NewPlan().getAttribute("value"));
 
-		AF.Validate_DocumentSubmission();
-		AF.Validate_PostpaidCustomerDetails();
-		AF.Validate_PaymentDetails();
+		RF.Validate_DocumentSubmission();
+		RF.Validate_PaymentDetails();
 
 		Constant.dataMap.get().put("OMT_PaymentDetails", OMTAcqui.get_ReqPay_PaymentMethod().getAttribute("value"));
 
-		AF.Validate_FullfillmentDetails();
-		AF.Validate_activationdetails();
-		AF.Validate_planeprovisioningdetails();
-		AF.Validate_SEEDINGDETAILS();
-		AF.Validate_CALLOUTANDRECOVERY();
-		AF.Validate_REFUNDDETAILS();
-		AF.Validate_ORDERHISTORY();
+		RF.Validate_FullfillmentDetails();
+		//RF.Validate_activationdetails();
+		RF.Validate_planeprovisioningdetails();
+		RF.Validate_SEEDINGDETAILS();
+		RF.Validate_CALLOUTANDRECOVERY();
+		RF.Validate_REFUNDDETAILS();
+		RF.Validate_ORDERHISTORY();
 
 		/*
 		 * Constant.dataMap.get().put("OMT_UpdateDate",
@@ -541,11 +369,45 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
 		// Constant.dataMap.get().put("TimeStamp", util.getTimeStamp());
 		// Signout
-		AF.Signout();
+		RF.Signout();
 
 	}
+	
+	
+	public void OMTOrderStatus_PreOrderwithStock(String FlowType, String UserAgent, String Status) throws Exception {
 
+		
+		// Change the status to Ongoing verfication
 
+		K.OMT_Role_Login(FlowType, UserAgent);
+
+		Thread.sleep(3000);
+
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
+
+		RF.OMTSearch_and_ValidateDashboard1();
+
+		// Click on edit
+		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
+		jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
+
+		RF.UpdateOrderStatus(Status);
+
+		// RF.ongoingVerification("Ongoing Verification");
+		/*System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
+		Constant.dataMap.set(Map);
+		Constant.dataMap.get().put("OMT_DispositionStatus", "NotFound");
+		Constant.dataMap.get().put("OMT_DispositionStatus", OMTAcqui.get_Dashboard_Dispo().getText());
+		// util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),
+		// ScenarioName, 0);
+		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
+	*/
+		// Signout
+		RF.Signout();
+	}
+	
+	
 	public void OMTOrderStatus_OngoingVerification(String FlowType, String UserAgent, String Status) throws Exception {
 
 		/******************************************
@@ -560,15 +422,15 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 
-		AF.OMTSearch_and_ValidateDashboard1();
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		// Click on edit
 		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
 		jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
 
-		AF.UpdateOrderStatus(Status);
+		RF.UpdateOrderStatus(Status);
 
-		// AF.ongoingVerification("Ongoing Verification");
+		// RF.ongoingVerification("Ongoing Verification");
 		System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
 		Constant.dataMap.set(Map);
 		Constant.dataMap.get().put("OMT_DispositionStatus", "NotFound");
@@ -584,8 +446,8 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		/*
 		 * // Change the status to Approved
-		 * 
-		 * AF.Approved("Approved");
+		 * o
+		 * RF.Approved("Approved");
 		 * 
 		 * // WATING for 10 min to change the dispo stastus to for reservastion
 		 * Thread.sleep(600000); String ORDERID =
@@ -599,16 +461,17 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		 * OMTAcqui.get_Dashboard_Dispo().getText());
 		 */
 		// Signout
-		AF.Signout();
+		RF.Signout();
 	}
+
 	
-	public void OMTOrderStatus_ReDelivery1(String FlowType, String UserAgent, String Status, String CaseName)
-			throws Exception {
+	
+	public void OMTOrderStatus_ForOrderCreation(String FlowType, String UserAgent, String Status,String CaseName) throws Exception {
 
 		/******************************************
-		 * For ReDelivery
+		 For order creation
 		 ***********************************************/
-		// Change the status to Ongoing verfication
+		// Change the status to order creation 
 
 		K.OMT_Role_Login(FlowType, UserAgent);
 
@@ -617,84 +480,27 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 
-		AF.OMTSearch_and_ValidateDashboard1();
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		// Click on edit
 		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
 		jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
 
-		AF.UpdateOrderStatus(Status);
-
-		/*
-		 * // AF.ongoingVerification("Ongoing Verification");
-		 * System.out.println("Disposition Status: " +
-		 * OMTAcqui.get_Dashboard_Dispo().getText());
-		 * Constant.dataMap.set(Map);
-		 * Constant.dataMap.get().put("OMT_DispositionStatus", "NotFound");
-		 * Constant.dataMap.get().put("OMT_DispositionStatus",
-		 * OMTAcqui.get_Dashboard_Dispo().getText()); //
-		 * util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),
-		 * // ScenarioName, 0); util.writeToExcelExistingRowFromMap("Sheet1",
-		 * Constant.dataMap.get());
-		 */
+		RF.UpdateOrderStatus(Status);
 
 		// Signout
-		AF.Signout();
-		/*************************
-		 * //order tracker for Redelivry
-		 **************************************/
-		OrderTracker_GlobeOnline(CaseName, Status);
-	}
-
+		RF.Signout();
+		
 	
-	public void OMTorderStatus_PreorderWithStock(String FlowType, String UserAgent, String Status) throws Exception {
-		
-		K.OMT_Role_Login(FlowType, UserAgent);
-		Thread.sleep(5000);
-		
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
-		
-		AF.OMTSearch_and_ValidateDashboard1();
-    
-		if(OMTAcqui.get_Dashboard_Dispo().getText().equalsIgnoreCase("For Stock Checking")) {
-			JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
-			jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-		}
-		
-		AF.UpdateOrderStatus(Status);
-		AF.Signout();
 	}
 	
-  public void VerifyOrder_PreorderWithoutStock(String FlowType, String UserAgent, String Status) throws Exception {
-		
-		K.OMT_Role_Login(FlowType, UserAgent);
-		Thread.sleep(5000);
-		
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
-		
-		AF.OMTSearch_and_ValidateDashboard1();
-    
-		if(OMTAcqui.get_Dashboard_Dispo().getText().equalsIgnoreCase("For Stock Checking")) {
-			JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
-			jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-		}
-		
-		AF.UpdateOrderStatus(Status);
-		AF.Signout();
-	}
-
-
 	
-	
-  public void OMTOrderStatus_ReDelivery3(String FlowType, String UserAgent, String Status, String CaseName)
-			throws Exception {
+	public void OMTOrderStatus_OrderCreated(String FlowType, String UserAgent, String Status,String CaseName) throws Exception {
 
 		/******************************************
-		 * For ReDelivery
+		 For order created
 		 ***********************************************/
-		// Change the status to Ongoing verfication
+		// Change the status to Order created
 
 		K.OMT_Role_Login(FlowType, UserAgent);
 
@@ -703,69 +509,87 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 
-		AF.OMTSearch_and_ValidateDashboard1();
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		// Click on edit
 		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
 		jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
 
-		AF.UpdateOrderStatus(Status);
+		RF.UpdateOrderStatus(Status);
 
 		// Signout
-		AF.Signout();
+		RF.Signout();
+		
+		
+	}
+	public void VerifyOMTOrder_ForDelivery(String UserAgent) throws Exception {
 
-		/*************************
-		 * //order tracker for Redelivry
-		 **************************************/
-		OrderTracker_GlobeOnline(CaseName, Status);
+		// AssignOrderOMT(DS.sActionKeywordAgent);
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
+
+		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
+
+		//String User16 = util.ReadFromRowExcel(SCName, "FlowDetails_Renewal", Constant.User16);
+
+		OMTOrderStatus_ForDelivery(Constant.FlowType, UserAgent, SCName, Constant.ForDelivery, CaseName);
+	}
+
+	public void VerifyOrder_ForReDelivery1(String UserAgent) throws Exception {
+		// read from excel and make assign order as separate keyword
+		// AssignOrderOMT(DS.sActionKeywordAgent);
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
+																												// id
+		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
+
+	//	String User18 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User18);
+		OMTOrderStatus_ReDelivery1(Constant.FlowType, UserAgent, Constant.ForRedelivery1, CaseName);
+
+	}
+
+	public void VerifyOrder_ForReDelivery2(String UserAgent) throws Exception {
+		// read from excel and make assign order as separate keyword
+		// AssignOrderOMT(DS.sActionKeywordAgent);
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
+																												// id
+		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
+
+		//String User22 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User22);
+		OMTOrderStatus_ReDelivery2(Constant.FlowType, UserAgent, Constant.ForRedelivery2, CaseName);
+
+	}
+
+	public void VerifyOrder_ForReDelivery3(String UserAgent) throws Exception {
+		// read from excel and make assign order as separate keyword
+		// AssignOrderOMT(DS.sActionKeywordAgent);
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
+																												// id
+		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
+
+		//String User26 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User26);
+		OMTOrderStatus_ReDelivery3(Constant.FlowType, UserAgent, Constant.ForRedelivery3, CaseName);
+		Constant.dataMap.set(Map);
+		Constant.dataMap.get().put("OMT_DispositionStatus", "Cancelled");
 	}
 	
-	
-  public void OMTOrderStatus_ReDelivery2(String FlowType, String UserAgent, String Status, String CaseName)
-			throws Exception {
-
-		/******************************************
-		 * For ReDelivery
-		 ***********************************************/
-		// Change the status to Ongoing verfication
+	public void OMTOrderStatus_Delivered(String FlowType, String UserAgent, String Status) throws Exception {
 
 		K.OMT_Role_Login(FlowType, UserAgent);
-
-		Thread.sleep(3000);
-
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
-
-		AF.OMTSearch_and_ValidateDashboard1();
-
-		// Click on edit
-		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
-		jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-
-		AF.UpdateOrderStatus(Status);
-
-		// Signout
-		AF.Signout();
-
-		/*************************
-		 * //order tracker for Redelivry
-		 **************************************/
-		OrderTracker_GlobeOnline(CaseName, Status);
-	}
-	
-	
-	
-  public void OMTOrderStatus_Approved(String FlowType, String UserAgent, String Status) throws Exception {
-
-		K.OMT_Role_Login(FlowType, UserAgent);
-		// AF.OMTverifier("omt-cbs-verifier-acqui-no-tcoe", "admin");
+		// RF.OMTverifier("omt-cbs-verifier-acqui-no-tcoe", "admin");
 		Thread.sleep(3000);
 		// OMTAcqui.clickOnElement("Entities", "Entities", "Entities");
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 
-		// AF.OMTSearch_and_ValidateDashboardverifier(OrderReferenceId);
-		AF.OMTSearch_and_ValidateDashboard1();
+		// RF.OMTSearch_and_ValidateDashboardverifier(OrderReferenceId);
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		// Click on edit
 		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
@@ -773,12 +597,43 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		// Change the status to Approved
 
-		AF.UpdateOrderStatus(Status);
+		RF.UpdateOrderStatus(Status);
 		/*System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
 		Constant.dataMap.set(Map);
 		Constant.dataMap.get().put("OMT_DispositionStatus", OMTAcqui.get_Dashboard_Dispo().getText());
 
-		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);*/
+		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
+*/
+		 // Signout
+		RF.Signout();
+	}
+
+	
+	
+	public void OMTOrderStatus_Approved(String FlowType, String UserAgent, String Status) throws Exception {
+
+		K.OMT_Role_Login(FlowType, UserAgent);
+		// RF.OMTverifier("omt-cbs-verifier-acqui-no-tcoe", "admin");
+		Thread.sleep(3000);
+		// OMTAcqui.clickOnElement("Entities", "Entities", "Entities");
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
+
+		// RF.OMTSearch_and_ValidateDashboardverifier(OrderReferenceId);
+		RF.OMTSearch_and_ValidateDashboard1();
+
+		// Click on edit
+		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
+		jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
+
+		// Change the status to Approved
+
+		RF.UpdateOrderStatus(Status);
+		System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
+		Constant.dataMap.set(Map);
+		Constant.dataMap.get().put("OMT_DispositionStatus", OMTAcqui.get_Dashboard_Dispo().getText());
+
+		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
 
 		/*
 		 * // WATING for 10 min to change the dispo stastus to for reservastion
@@ -797,11 +652,11 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		 * Constant.dataMap.get());
 		 * 
 		 */ // Signout
-		AF.Signout();
+		RF.Signout();
 	}
 
 	// UpdateOrder_ReservedPhysStock
-  public void OMTOrderStatus_ReservedPhysicalStock(String FlowType, String UserAgent, String Status)
+	public void OMTOrderStatus_ReservedPhysicalStock(String FlowType, String UserAgent, String Status)
 			throws Exception {
 		K.OMT_Role_Login(FlowType, UserAgent);
 
@@ -810,8 +665,8 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 
-		// AF.OMTverifier("omt-cbs-encoder-acqui-no-tcoe", "admin");
-		AF.OMTSearch_and_ValidateDashboard1();
+		// RF.OMTverifier("omt-cbs-encoder-acqui-no-tcoe", "admin");
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		// Click on edit
 		JavascriptExecutor js90 = (JavascriptExecutor) DriverManager.getDriver();
@@ -820,8 +675,8 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		/***************************************
 		 * reserve physical stock
 		 ****************************************************************/
-		AF.UpdateOrderStatus(Status);
-		// AF.ReservedPhysicalStock(Status);
+		RF.UpdateOrderStatus(Status);
+		// RF.ReservedPhysicalStock(Status);
 
 		/*
 		 * Thread.sleep(500000);
@@ -843,15 +698,22 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		 */
 
 		// Signout
-		AF.Signout();
+		RF.Signout();
 	}
-  
-  public void Halt_Execution(String RoleName) throws Exception {
+	
+	public void Halt_Execution(String RoleName) throws Exception {
+		
+System.out.println("The execution needs to stop in order to wait for the disposition status to change");		
+DriverManager.getDriver().quit();
+
+	}
+
+	public void Halt_Execution1(String RoleName) throws Exception {
 		String orderState = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.OrderState);
+		//DriverManager.getDriver().quit();
 		if (orderState.trim().equals("7")) {
 			Thread.sleep(600000);
-			AssignOrderOMT(RoleName);
-			//K.OMT_Role_Login(Constant.FlowType, RoleName);
+			K.OMT_Role_Login(Constant.FlowType, RoleName);
 			Thread.sleep(3000);
 			SearchForDispoStatus();
 		}
@@ -859,8 +721,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		else if (orderState.trim().equals("5")) {
 			// wait for 10 min for Manual Case creation
 			Thread.sleep(300000);
-			//K.OMT_Role_Login(Constant.FlowType, RoleName);
-			AssignOrderOMT(RoleName);
+			K.OMT_Role_Login(Constant.FlowType, RoleName);
 			Thread.sleep(3000);
 			SearchForDispoStatus();
 		}
@@ -869,41 +730,38 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		else if (orderState.trim().equals("6")) {
 			// RID Refreshes wait for 10 min
 			Thread.sleep(600000);
-			//K.OMT_Role_Login(Constant.FlowType, RoleName);
-			AssignOrderOMT(RoleName);
+			K.OMT_Role_Login(Constant.FlowType, RoleName);
 			Thread.sleep(3000);
 			SearchForDispoStatus();
 		}
-		// for processing
+		//for processing
 		else if (orderState.trim().equals("1")) {
-			// RID Refreshes wait for 15 min changes to for reservation in TL
-			// and again assign to encoder
+			// RID Refreshes wait for 15 min changes to for reservation in TL and again assign to encoder
 			Thread.sleep(900000);
 			AssignOrderOMT(RoleName);
 			//K.OMT_Role_Login(Constant.FlowType, RoleName);
 			Thread.sleep(3000);
-			SearchForDispoStatus();
-		} else if (orderState.trim().equals("17")) {
+//			SearchForDispoStatus();
+		} 
+		else if (orderState.trim().equals("17")) {
 			// changes to FOR DISPATCH wait for some time
 			Thread.sleep(20000);
-			AssignOrderOMT(RoleName);
-			//K.OMT_Role_Login(Constant.FlowType, RoleName);
+			K.OMT_Role_Login(Constant.FlowType, RoleName);
 			Thread.sleep(3000);
 			SearchForDispoStatus();
 		} else {
 			// for processing1
 			// RID Refreshes wait for 15 min changes to For Reservation again
 			Thread.sleep(900000);
-			AssignOrderOMT(RoleName);
-			//K.OMT_Role_Login(Constant.FlowType, RoleName);
+			K.OMT_Role_Login(Constant.FlowType, RoleName);
 			Thread.sleep(3000);
 			SearchForDispoStatus();
 
 		}
 
 	}
-  
-  public void OMTOrderStatus_RequestPayment(String FlowType, String UserAgent, String Status) throws Exception {
+
+	public void OMTOrderStatus_RequestPayment(String FlowType, String UserAgent, String Status) throws Exception {
 		K.OMT_Role_Login(FlowType, UserAgent);
 
 		Thread.sleep(3000);
@@ -911,16 +769,16 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 
-		// AF.OMTverifier("omt-cbs-encoder-acqui-no-tcoe", "admin");
-		AF.OMTSearch_and_ValidateDashboard1();
+		// RF.OMTverifier("omt-cbs-encoder-acqui-no-tcoe", "admin");
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		// Click on edit
 		JavascriptExecutor jsr = (JavascriptExecutor) DriverManager.getDriver();
 		jsr.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
 
 		// change disposition status to Requestpaymento
-		AF.UpdateOrderStatus(Status);
-		// AF.Requestpayment("Request Payment");
+		RF.UpdateOrderStatus(Status);
+		// RF.Requestpayment("Request Payment");
 
 		/*
 		 * System.out.println("Disposition Status: " +
@@ -932,9 +790,10 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		Thread.sleep(1000);
 
 		// Signoutoa
-		AF.Signout();
+		RF.Signout();
 	}
-  public void OMTStatus_AwaitingPayment(String FlowType, String UserAgent, String SCName, String Status,
+
+	public void OMTStatus_AwaitingPayment(String FlowType, String UserAgent, String SCName, String Status,
 			String CaseName) throws Exception {
 
 		K.OMT_Role_Login(FlowType, UserAgent);
@@ -945,8 +804,8 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 		Thread.sleep(4000);
 
-		// AF.OMTverifier("omt-cbs-encoder-acqui-no-tcoe", "admin");
-		AF.OMTSearch_and_ValidateDashboard1();
+		// RF.OMTverifier("omt-cbs-encoder-acqui-no-tcoe", "admin");
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		/********************************************************************************************/
 
@@ -960,19 +819,19 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		// in awaiting payemnt make Payemnt reference as "Paid" for happy
 		// path
-		// AF.Awaitingpayment(Status,PayementReference,StatusPayment);
-		AF.UpdateOrderStatus(Status);
+		// RF.Awaitingpayment(Status,PayementReference,StatusPayment);
+		RF.UpdateOrderStatus(Status);
 		System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
 		Constant.dataMap.set(Map);
 		Constant.dataMap.get().put("OMT_DispositionStatus", OMTAcqui.get_Dashboard_Dispo().getText());
 
 		OrderTracker_GlobeOnline(CaseName, Status);
 
-		AF.Signout();
+		RF.Signout();
 
 	}
-  
-  public void OMTStatus_ForProcessing(String FlowType, String UserAgent, String SCName, String PaymentMethod)
+
+	public void OMTStatus_ForProcessing(String FlowType, String UserAgent, String SCName, String PaymentMethod)
 			throws Exception {
 
 		K.OMT_Role_Login(FlowType, UserAgent);
@@ -982,13 +841,13 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 
-		AF.OMTSearch_and_ValidateDashboard1();
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		// Click on edit
 		JavascriptExecutor jsr = (JavascriptExecutor) DriverManager.getDriver();
 		jsr.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
 
-		AF.forproccessing("For Processing");
+		RF.forproccessing("For Processing");
 		/*
 		 * // RID Refreshes wait for 15 min Thread.sleep(900000);
 		 * System.out.println("Disposition Status: " +
@@ -996,42 +855,25 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		 * Constant.dataMap.get().put("OMT_DispositionStatus",
 		 * OMTAcqui.get_Dashboard_Dispo().getText());
 		 */
-		AF.Signout();
+		RF.Signout();
 
 	}
-
 	
-	public void OMTOrderStatus_ReservedVirtualStock(String FlowType, String UserAgent, String Status) throws Exception {
-		K.OMT_Role_Login(FlowType, UserAgent);
+	public void VerifyOMTOrder_Delivered(String UserAgent) throws Exception {
 
-		Thread.sleep(3000);
-		// OMTAcqui.clickOnElement("Entities", "Entities", "Entities");
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
+		// AssignOrderOMT(DS.sActionKeywordAgent);
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
+		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
 
-		// AF.OMTverifier("omt-cbs-encoder-acqui-no-tcoe", "admin");
-		AF.OMTSearch_and_ValidateDashboard1();
+		//String User21 = util.ReadFromRowExcel(SCName, "FlowDetails", Constant.User21);
 
-		// Click on edit
-		JavascriptExecutor js90 = (JavascriptExecutor) DriverManager.getDriver();
-		js90.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-
-		/***************************************
-		 * reserve physical stock
-		 ****************************************************************/
-		AF.UpdateOrderStatus(Status);
-
-		// Signout
-		AF.Signout();
+		OMTOrderStatus_Delivered(Constant.FlowType, UserAgent, SCName, Constant.Delivered, CaseName);
 	}
-
-	
-	
-
-	
 	
 	public void OMTStatus_ForProcessing1(String FlowType, String UserAgent, String SCName, String PaymentMethod,
-			String Status, String CaseName) throws Exception {
+			String Status,String CaseName) throws Exception {
 
 		K.OMT_Role_Login(FlowType, UserAgent);
 
@@ -1040,15 +882,25 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 
-		AF.OMTSearch_and_ValidateDashboard1();
+		RF.OMTSearch_and_ValidateDashboard1();
+		// download las
+				JavascriptExecutor jsL = (JavascriptExecutor) DriverManager.getDriver();
+				jsL.executeScript("arguments[0].click();", OMTAcqui.get_LAS());
 
+				if (OMTAcqui.get_LAS().isDisplayed()) {
+					Constant.dataMap.set(Map);
+					Constant.dataMap.get().put("OMT_LAS", "Downloaded");
+
+					util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
+
+				}
 		// Click on edit
 		JavascriptExecutor jsr = (JavascriptExecutor) DriverManager.getDriver();
 		jsr.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-		AF.UpdateOrderStatus(Status);
-		// AF.forproccessing("For Processing");
+		RF.UpdateOrderStatus(Status);
+		// RF.forproccessing("For Processing");
 		// RID Refreshes wait for 15 min changes to For Reservation again
-		// Halt_Execution(RoleName);
+		//Halt_Execution(RoleName);
 		/*
 		 * Thread.sleep(900000); System.out.println("Disposition Status: " +
 		 * OMTAcqui.get_Dashboard_Dispo().getText());
@@ -1056,93 +908,13 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		 * OMTAcqui.get_Dashboard_Dispo().getText());
 		 */
 
-		AF.Signout();
+		RF.Signout();
 
 	}
 
-	public void AssignOrder_MonitoringAgent(String FlowType, String UserAgent, String SCName) throws Exception {
-
-		K.OMT_Role_Login(FlowType, UserAgent);
-
-		Thread.sleep(6000);
-		// OMTAcqui.clickOnElement("Entities", "Entities", "Entities");
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
-		Thread.sleep(4000);
-
-		// AF.OMTverifier("omt-cbs-encoder-acqui-no-tcoe", "admin");
-		AF.OMTSearch_and_ValidateDashboard1();
-
-		/********************************************************************************************/
-
-		/******************************
-		 * IF it is EXCEPT COD we can follow these script
-		 **********************************/
-
-		// OMT_Acqui_FTA1_4NEW
-		String a = util.ReadFromExcel(SCName, "Sheet1", Constant.PaymentMenthod);
-
-		if (!(a.contains("COD"))) {
-
-			// Click on edit
-			JavascriptExecutor jsa = (JavascriptExecutor) DriverManager.getDriver();
-			jsa.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-
-			// in awaiting payemnt make Payemnt reference as "Paid" for happy
-			// path
-			// AF.Awaitingpayment("Awaiting Payment");
-			AF.UpdateOrderStatus(Status);
-			System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
-			Constant.dataMap.set(Map);
-			Constant.dataMap.get().put("OMT_OrderState", OMTAcqui.get_Dashboard_Dispo().getText());
-
-			OrderTracker_GlobeOnline(SCName, "Awaiting Payment");
-		}
-
-		else if ((a.contains("COD")))
-
-		{
-
-			/*****************************************
-			 * if COD we can use here
-			 ************************************************************/
-
-			// Click on edit
-			JavascriptExecutor jsr = (JavascriptExecutor) DriverManager.getDriver();
-			jsr.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-
-			// ************************* use the for payment method no need cod
-			// *******************
-			AF.forproccessing("For Processing");
-
-			System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
-			Constant.dataMap.set(Map);
-			Constant.dataMap.get().put("OMT_OrderState", OMTAcqui.get_Dashboard_Dispo().getText());
-		}
-
-		Thread.sleep(3000);
-		// OMTAcqui.clickOnElement("Entities", "Entities", "Entities");
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
-
-		AF.OMTSearch_and_ValidateDashboard1();
-
-		// Click on edit
-		JavascriptExecutor jsr = (JavascriptExecutor) DriverManager.getDriver();
-		jsr.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-
-		AF.forproccessing("For Processing");
-		// RID Refreshes wait for 15 min
-		Thread.sleep(900000);
-		// System.out.println("Disposition Status: " +
-		// OMTAcqui.get_Dashboard_Dispo().getText());
-		// Constant.dataMap.get().put("OMT_OrderState",
-		// OMTAcqui.get_Dashboard_Dispo().getText());
-	}
-
-
-	public void OMTOrderStatus_Processed(String FlowType, String UserAgent, String SCName, String Status,
-			String CaseName) throws Exception {
+	
+	public void OMTOrderStatus_Processed(String FlowType, String UserAgent, String SCName, String Status,String CaseName)
+			throws Exception {
 
 		K.OMT_Role_Login(FlowType, UserAgent);
 		Thread.sleep(6000);
@@ -1150,12 +922,12 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 		Thread.sleep(4000);
-		AF.OMTSearch_and_ValidateDashboard1();
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		/*// Click on edit
 		JavascriptExecutor jsr = (JavascriptExecutor) DriverManager.getDriver();
 		jsr.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());*/
-		// AF.forproccessing("For Processing");
+		// RF.forproccessing("For Processing");
 
 		// *************************************************************************************//*
 
@@ -1163,18 +935,18 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		JavascriptExecutor jsL = (JavascriptExecutor) DriverManager.getDriver();
 		jsL.executeScript("arguments[0].click();", OMTAcqui.get_LAS());
 
-		if (OMTAcqui.get_LAS().isDisplayed()) {
+		/*if (OMTAcqui.get_LAS().isDisplayed()) {
 			Constant.dataMap.set(Map);
 			Constant.dataMap.get().put("OMT_LAS", "Downloaded");
 
 			util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
 
-		}
+		}*/
 
 		JavascriptExecutor jsPP = (JavascriptExecutor) DriverManager.getDriver();
 		jsPP.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-		// AF.processed("Processed");
-		AF.UpdateOrderStatus(Status);
+		// RF.processed("Processed");
+		RF.UpdateOrderStatus(Status);
 		// changes to FOR DISPATCH wait for some time
 		/*
 		 * Thread.sleep(20000); System.out.println("Disposition Status: " +
@@ -1188,85 +960,10 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OrderTracker_GlobeOnline(CaseName, "For Dispatch");
 
 		// Signout
-		AF.Signout();
+		RF.Signout();
 
 	}
 
-
-	public void OMTOrderStatus_ForDelivery(String FlowType, String UserType, String SCName, String Status,
-			String CaseName) throws Exception {
-
-		K.OMT_Role_Login(FlowType, UserType);
-		Thread.sleep(6000);
-		// OMTAcqui.clickOnElement("Entities", "Entities", "Entities");
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
-		Thread.sleep(4000);
-		AF.OMTSearch_and_ValidateDashboard1();
-
-		// Click on edit
-		JavascriptExecutor jsDE = (JavascriptExecutor) DriverManager.getDriver();
-		jsDE.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-
-		// For Delivery
-		// AF.Fordelivery("For Delivery");
-		AF.UpdateOrderStatus(Status);
-		Thread.sleep(10000);
-		/*
-		 * System.out.println("Disposition Status: " +
-		 * OMTAcqui.get_Dashboard_Dispo().getText());
-		 * Constant.dataMap.set(Map);
-		 * Constant.dataMap.get().put("OMT_DispositionStatus",
-		 * OMTAcqui.get_Dashboard_Dispo().getText());
-		 */
-
-		/*************************
-		 * //order tracker for delivry
-		 **************************************/
-
-		// open link
-		OrderTracker_GlobeOnline(CaseName, Status);
-		// Signout
-		AF.Signout();
-
-	}
-	
-	public void OMTOrderStatus_Delivered(String FlowType, String UserType, String SCName, String Status,
-			String CaseName) throws Exception {
-
-		K.OMT_Role_Login(FlowType, UserType);
-		Thread.sleep(6000);
-		// OMTAcqui.clickOnElement("Entities", "Entities", "Entities");
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
-		Thread.sleep(4000);
-		AF.OMTSearch_and_ValidateDashboard1();
-
-		// Click on edit
-		JavascriptExecutor jsDE = (JavascriptExecutor) DriverManager.getDriver();
-		jsDE.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-		AF.UpdateOrderStatus(Status);
-		// AF.Delivered("Delivered"); // some times auto change the status
-		Thread.sleep(10000);
-
-		/*
-		 * System.out.println("Disposition Status: " +
-		 * OMTAcqui.get_Dashboard_Dispo().getText());// reservation
-		 * Constant.dataMap.set(Map);
-		 * Constant.dataMap.get().put("OMT_DispositionStatus",
-		 * OMTAcqui.get_Dashboard_Dispo().getText());
-		 */
-
-		// email,order tracker
-		/**********************
-		 * order tracking for activation
-		 ***************************/
-
-		OrderTracker_GlobeOnline(CaseName, "For Activation");
-
-		// Signout
-		AF.Signout();
-	}
 	
 	public void OMTValidate_PALAgent(String FlowType, String UserType, String SCName) throws Exception {
 
@@ -1276,14 +973,14 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 		Thread.sleep(4000);
-		AF.OMTSearch_and_ValidateDashboard1();
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		// Click on edit
 		JavascriptExecutor jsDE = (JavascriptExecutor) DriverManager.getDriver();
 		jsDE.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
 
 		// For Delivery
-		AF.Fordelivery("For Delivery");
+		RF.Fordelivery("For Delivery");
 		Thread.sleep(10000);
 		System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
 		Constant.dataMap.set(Map);
@@ -1296,7 +993,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		// open link
 		OrderTracker_GlobeOnline(SCName, "For Delivery");
 		// Signout
-		AF.Signout();
+		RF.Signout();
 		////////////////////////////////////////////////////////////////////////////////////////////////////////
 		JavascriptExecutor js4 = (JavascriptExecutor) DriverManager.getDriver();
 		js4.executeScript("arguments[0].click();", OMTAcqui.get_Account());
@@ -1312,14 +1009,14 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 		Thread.sleep(4000);
-		// AF.OMTverifier("omt-pal-agent-acqui-tcoe", "admin");
-		AF.OMTSearch_and_ValidateDashboard1();
+		// RF.OMTverifier("omt-pal-agent-acqui-tcoe", "admin");
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		// Click on edit
 		JavascriptExecutor js5 = (JavascriptExecutor) DriverManager.getDriver();
 		js5.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
 
-		AF.Delivered("Delivered"); // some times auto change the status
+		RF.Delivered("Delivered"); // some times auto change the status
 		Thread.sleep(10000);
 
 		// System.out.println("Disposition Status: " +
@@ -1335,63 +1032,40 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OrderTracker_GlobeOnline(SCName, "For Activation");
 
 		// Signout
-		AF.Signout();
+		RF.Signout();
 	}
-	
-	public void OMTOrderStatus_Activated(String Flowtype, String UserAgent, String SCName, String Status,
-			String CaseName) throws Exception {
 
-		// AF.OMTverifier("omt-activation-agent-acqui-no-tcoe", "admin");
+
+
+	public void OMTOrderStatus_Completed(String Flowtype, String UserAgent, String SCName, String Status,String CaseName)
+			throws Exception {
+
+		// RF.OMTverifier("omt-activation-agent-acqui-no-tcoe", "admin");
 		K.OMT_Role_Login(Flowtype, UserAgent);
 		Thread.sleep(4000);
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 		Thread.sleep(4000);
 
-		AF.OMTSearch_and_ValidateDashboard1();
-
-		JavascriptExecutor jstt = (JavascriptExecutor) DriverManager.getDriver();
-		jstt.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-		AF.UpdateOrderStatus(Status);
-		// AF.Activated("Activated");
-		Thread.sleep(6000);
-
-		System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());// reservation
-		Constant.dataMap.set(Map);
-		Constant.dataMap.get().put("OMT_DispositionStatus", OMTAcqui.get_Dashboard_Dispo().getText());
-
-	}
-
-	public void OMTOrderStatus_Completed(String Flowtype, String UserAgent, String SCName, String Status,
-			String CaseName) throws Exception {
-
-		// AF.OMTverifier("omt-activation-agent-acqui-no-tcoe", "admin");
-		K.OMT_Role_Login(Flowtype, UserAgent);
-		Thread.sleep(4000);
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
-		Thread.sleep(4000);
-
-		AF.OMTSearch_and_ValidateDashboard1();
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		String a = util.ReadFromExcel(CaseName, "Sheet1", Constant.PaymentMenthod);
 		// String a = util.ReadFromExcel(SC.getClass().getSimpleName(),
 		// "Sheet1", Constant.PaymentMenthod);
 
-		if (a.contains("CC") || a.contains("Straight Payement") || a.contains("CC(Straight payemnet)")) {
+		if (a.contains("CC") || a.contains("Straight Payement")|| a.contains("CC(Straight payemnet)")) {
 			DriverManager.getDriver().quit();
 			String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																													// id
-
-			//String User25 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User25);
+			//String User18 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User18);
 			Encoder_PlanCheck(Constant.FlowType, UserAgent, Status);
 		}
 
 		else {
 			JavascriptExecutor jstl = (JavascriptExecutor) DriverManager.getDriver();
 			jstl.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-			AF.UpdateOrderStatus(Status);
-			// AF.completed("Completed");
+			RF.UpdateOrderStatus(Status);
+			// RF.completed("Completed");
 			Thread.sleep(10000);
 			System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());// reservation
 			Constant.dataMap.set(Map);
@@ -1406,66 +1080,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		System.out.println("!!! Execution Completed for " + SCName + " !!!");
 
 	}
-	
-	public void OMTOrder_Acqui_Activation(String Flowtype, String UserAgent, String SCName, String Status)
-			throws Exception {
 
-		// AF.OMTverifier("omt-activation-agent-acqui-no-tcoe", "admin");
-		K.OMT_Role_Login(Flowtype, UserAgent);
-		Thread.sleep(4000);
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
-		Thread.sleep(4000);
-
-		AF.OMTSearch_and_ValidateDashboard1();
-
-		/*
-		 * JavascriptExecutor jstt = (JavascriptExecutor)
-		 * DriverManager.getDriver();
-		 * jstt.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-		 * 
-		 * AF.Activated("Activated"); Thread.sleep(6000);
-		 */
-		// Thread.sleep(600000);
-		// if payment is Straight debit or credit then status autom changes to
-		// manual posting
-		// login as encoder
-
-		String a = util.ReadFromExcel(SC.getClass().getSimpleName(), "Sheet1", Constant.PaymentMenthod);
-		if (a.contains("CC") || a.contains("Straight Payement")) {
-			DriverManager.getDriver().quit();
-			String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																													// id
-
-			//String User3 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User3);
-			Encoder_PlanCheck(Constant.FlowType, UserAgent, Status);
-		}
-
-		/////////////////////
-		// System.out.println("Disposition Status: " +
-		///////////////////// OMTAcqui.get_Dashboard_Dispo().getText());//
-		///////////////////// reservation
-		// Constant.dataMap.get().put("OMT_DispositionStatus",
-		// OMTAcqui.get_Dashboard_Dispo().getText());
-		else {
-			JavascriptExecutor jstl = (JavascriptExecutor) DriverManager.getDriver();
-			jstl.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-
-			AF.completed("Completed");
-			Thread.sleep(10000);
-			System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());// reservation
-			Constant.dataMap.set(Map);
-			Constant.dataMap.get().put("OMT_DispositionStatus", OMTAcqui.get_Dashboard_Dispo().getText());
-		}
-		// track order and sms
-		// open link
-		OrderTracker_GlobeOnline(SCName, "Completed");
-
-		Status = "passed";
-		// DriverManager.getDriver().quit();
-		System.out.println("!!! Execution Completed for " + SCName + " !!!");
-
-	}
 
 
 	public void TrackOrder_GlobeOnline(String SCName) throws Exception {
@@ -1473,24 +1088,24 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		DriverManager.getDriver().get(Globeurl);
 		Thread.sleep(1000); // Accpet
 		// cookies
-		AF.IacceptClick();
+		RF.IacceptClick();
 		Thread.sleep(5000);
 		// Login Trackmyorder
 		// ORDERID
 		String ORDERID = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.OrderRefID);
-		AF.OMT_Trackmyorderlogin(ORDERID, Constant.Email_GO);
-		AF.ordertracker_Awaitingpayment(SCName);
+		RF.OMT_Trackmyorderlogin(ORDERID, Constant.Email_GO);
+		RF.ordertracker_Awaitingpayment(SCName);
 
 		// open link
 		DriverManager.getDriver().get(OMTurl);
 		Thread.sleep(1000);
 
 		/*
-		 * //Signout AF.Signout();
+		 * //Signout RF.Signout();
 		 * 
-		 * AF.OMTLoginmonitor("omt-monitoring-agent-acqui-no-tcoe","admin");
+		 * RF.OMTLoginmonitor("omt-monitoring-agent-acqui-no-tcoe","admin");
 		 * Thread.sleep(1000);
-		 * AF.OMTSearch_and_ValidateDashboard("PRE-000005116");
+		 * RF.OMTSearch_and_ValidateDashboard("PRE-000005116");
 		 */
 	}
 
@@ -1505,85 +1120,56 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 		Thread.sleep(4000);
 
-		AF.OMTSearch_and_ValidateDashboard1();
+		RF.OMTSearch_and_ValidateDashboard1();
 
 		JavascriptExecutor jstt = (JavascriptExecutor) DriverManager.getDriver();
 		jstt.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-		// AF.completed("Completed");
-		AF.UpdateOrderStatus(Status);
+		// RF.completed("Completed");
+		RF.UpdateOrderStatus(Status);
 		Thread.sleep(10000);
+		OMTAcqui.clickOnElement("Search button", "SearchBtn", "SearchBtn");
+
 		System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
 		Constant.dataMap.set(Map);
 		Constant.dataMap.get().put("OMT_DispositionStatus", OMTAcqui.get_Dashboard_Dispo().getText());
 	}
 
-
 	public void OrderTracker_GlobeOnline(String CaseName, String DispositionStatus) throws Exception {
 		// ORDER TRACKER NOT WRITTN //open link
-		System.out.println("hi");
-		System.out.println("hi");
-		//DriverManager.getDriver().get(Globeurl);
-		DriverManager.getDriver().get(Globeurl1);
+		DriverManager.getDriver().get(Globeurl);
 		Thread.sleep(1000); // Accpet
 		// cookies
-		AF.IacceptClick();
+		RF.IacceptClick();
 		Thread.sleep(5000);
 		// Login Trackmyorder
 		String ORDERID = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.OrderRefID);
 
-		AF.OMT_Trackmyorderlogin(ORDERID, Constant.Email_GO);
+		RF.OMT_Trackmyorderlogin(ORDERID, Constant.Email_GO);
 
 		switch (DispositionStatus) {
 
 		case "Awaiting Payment":
 
-			AF.ordertracker_Awaitingpayment(CaseName);
+			RF.ordertracker_Awaitingpayment(CaseName);
 			break;
 		case "For Dispatch":
 
-			AF.ordertracker_ForDispatch();
+			RF.ordertracker_ForDispatch();
 			break;
-
-		case "For Compliance - POFC":
-
-			AF.UploadDocuments_POFC();
-			break;
-
-		case "For Compliance - POID/POFC":
-
-			AF.UploadDocuments_POID_POFC();
-			break;
-
-		case "For Compliance - POID":
-
-			AF.UploadDocuments_POID();
-			break;
+		
 
 		case "For Delivery":
 
-			AF.ordertracker_ForDelivery();
+			RF.ordertracker_ForDelivery();
 			break;
-		case "For Redelivery1":
-
-			AF.ordertracker_ForReDelivery();
-			break;
-		case "For Redelivery2":
-
-			AF.ordertracker_ForReDelivery();
-			break;
-		case "For Redelivery3":
-
-			AF.ordertracker_Cancelled("Cancelled");
-			break;
-			
 
 		case "For Activation":
 
-			AF.ordertracker_ForaActivation();
+			RF.ordertracker_ForaActivation();
 			break;
-		case "Completed":
+		case "Renewal Completed":
 
-			String b = AF.ordertracker_Completed();
+			 RF.ordertracker_Completed();
 			break;
 
 		}
@@ -1594,112 +1180,10 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 	}
 
-	public void OMTOrderStatus_ForCompliancePOFC(String FlowType, String UserAgent, String Status, String CaseName)
-			throws Exception {
-
-		/******************************************
-		 * For Compliance POFC
-		 ***********************************************/
-		// Change the status to Ongoing verfication
-
-		K.OMT_Role_Login(FlowType, UserAgent);
-
-		Thread.sleep(3000);
-
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
-
-		AF.OMTSearch_and_ValidateDashboard1();
-
-		// Click on edit
-		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
-		jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-
-		AF.UpdateOrderStatus(Status);
-
-		// Signout
-		AF.Signout();
-
-		/*************************
-		 * //order tracker for Compliance POID_POFC
-		 **************************************/
-		OrderTracker_GlobeOnline(CaseName, Status);
-
-	}
-	
-	public void OMTOrderStatus_ForCompliancePOID(String FlowType, String UserAgent, String Status, String CaseName)
-			throws Exception {
-
-		/******************************************
-		 * For Compliance
-		 ***********************************************/
-		// Change the status to Ongoing verfication
-
-		K.OMT_Role_Login(FlowType, UserAgent);
-
-		Thread.sleep(3000);
-
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
-
-		AF.OMTSearch_and_ValidateDashboard1();
-
-		// Click on edit
-		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
-		jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-
-		AF.UpdateOrderStatus(Status);
-
-		// Signout
-		AF.Signout();
-
-		/*************************
-		 * //order tracker for Compliance
-		 **************************************/
-		OrderTracker_GlobeOnline(CaseName, Status);
-
-	}
-	public void OMTOrderStatus_ForCompliancePOID_POFC(String FlowType, String UserAgent, String Status, String CaseName)
-			throws Exception {
-
-		/******************************************
-		 * For Compliance POID POFC
-		 ***********************************************/
-		// Change the status to Ongoing verfication
-
-		K.OMT_Role_Login(FlowType, UserAgent);
-
-		Thread.sleep(3000);
-
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
-		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
-
-		AF.OMTSearch_and_ValidateDashboard1();
-
-		// Click on edit
-		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
-		jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
-
-		AF.UpdateOrderStatus(Status);
-
-		// Signout
-		AF.Signout();
-
-		/*************************
-		 * //order tracker for Compliance
-		 **************************************/
-		OrderTracker_GlobeOnline(CaseName, Status);
-
-	}
-
 	public void AssignOrderOMT(String RoleName) throws Exception {
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
 		Thread.sleep(2000);
-		// String User1 = util.ReadFromRowExcel(SCname,
-		// "FlowDetails",Constant.User1);
-		// String RoleName = util.ReadFromRowExcel(SCname,
-		// "FlowDetails",Constant.User1);
 		K.OMT_Role_Login(Constant.FlowType, Constant.AssignOrderTL);
 
 		Thread.sleep(3000);
@@ -1708,7 +1192,8 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 
-		AF.OMTSearch_and_ValidateDashboard1();
+		RF.OMTSearch_and_ValidateDashboard1();
+
 		System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
 		Constant.dataMap.set(Map);
 		Constant.dataMap.get().put("OMT_DispositionStatus", OMTAcqui.get_Dashboard_Dispo().getText());
@@ -1722,13 +1207,15 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		jsp.executeScript("arguments[0].click();", OMTAcqui.get_RemoveAssigneRdbtn());
 		JavascriptExecutor jsR = (JavascriptExecutor) DriverManager.getDriver();
 		jsR.executeScript("arguments[0].click();", OMTAcqui.get_RemoveButton());
+		Thread.sleep(2000);
+
 		if(OMTAcqui.get_RemoveMessage().isDisplayed())
 		{
 			System.out.println("Removing an assignee to this application is not yet assigned to the admin");
 			JavascriptExecutor jsC = (JavascriptExecutor) DriverManager.getDriver();
 			jsC.executeScript("arguments[0].click();", OMTAcqui.get_OrderCheckBox());
 		}
-		 if((OMTAcqui.get_CheckNotHighlight().isSelected()))
+		 if(!(OMTAcqui.get_CheckBoxOrder().isSelected()))
 		{
 		// Click on Checkbox
 				JavascriptExecutor jsC = (JavascriptExecutor) DriverManager.getDriver();
@@ -1772,10 +1259,48 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 			js2.executeScript("arguments[0].click();", OMTAcqui.get_Assign_btn());
 		}
 
-		AF.Signout();
+		RF.Signout();
 		DriverManager.getDriver().quit();
 
 	}
+	public void OMTOrderStatus_ForDelivery(String FlowType, String UserType, String SCName, String Status,
+			String CaseName) throws Exception {
+
+		K.OMT_Role_Login(FlowType, UserType);
+		Thread.sleep(6000);
+		// OMTAcqui.clickOnElement("Entities", "Entities", "Entities");
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
+		Thread.sleep(4000);
+		RF.OMTSearch_and_ValidateDashboard1();
+
+		// Click on edit
+		JavascriptExecutor jsDE = (JavascriptExecutor) DriverManager.getDriver();
+		jsDE.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
+
+		// For Delivery
+		// RF.Fordelivery("For Delivery");
+		RF.UpdateOrderStatus(Status);
+		Thread.sleep(10000);
+		/*
+		 * System.out.println("Disposition Status: " +
+		 * OMTAcqui.get_Dashboard_Dispo().getText());
+		 * Constant.dataMap.set(Map);
+		 * Constant.dataMap.get().put("OMT_DispositionStatus",
+		 * OMTAcqui.get_Dashboard_Dispo().getText());
+		 */
+
+		/*************************
+		 * //order tracker for delivry
+		 **************************************/
+
+		// open link
+		OrderTracker_GlobeOnline(CaseName, Status);
+		// Signout
+		RF.Signout();
+
+	}
+
 
 	public void LaunchBrowser_OMT() {
 
@@ -1793,28 +1318,174 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 		DriverManager.getDriver().manage().window().maximize();
 		// DriverManager.getDriver().manage().deleteAllCookies();
 
-		DriverManager.getDriver().get("https://edo-data-engineering.globe.com.ph/omt/");
+		DriverManager.getDriver()
+				.get("https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/application-entry");
 	}
+	
+	public void OMTOrderStatus_ReDelivery1(String FlowType, String UserAgent, String Status, String CaseName)
+			throws Exception {
 
+		/******************************************
+		 * For ReDelivery
+		 ***********************************************/
+		// Change the status to Ongoing verfication
 
-	public void SearchForDispoStatus() throws Exception {
-		//Thread.sleep(1000);
-		LaunchBrowser_OMT();
-		Thread.sleep(2000);
-		K.OMT_Role_Login(Constant.FlowType, Constant.AssignOrderTL);
+		K.OMT_Role_Login(FlowType, UserAgent);
 
 		Thread.sleep(3000);
+
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
 		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
 
-		AF.OMTSearch_and_ValidateDashboard1();
-		if (OMTAcqui.isElementExist("Disposition status", "Dashboard_Dispo", 20)) {
-			System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
-			Constant.dataMap.set(Map);
-			Constant.dataMap.get().put("OMT_DispositionStatus", OMTAcqui.get_Dashboard_Dispo().getText());
+		RF.OMTSearch_and_ValidateDashboard1();
 
-			util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
-		}
-		AF.Signout();
+		// Click on edit
+		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
+		jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
+
+		RF.UpdateOrderStatus(Status);
+
+		/*
+		 * // RF.ongoingVerification("Ongoing Verification");
+		 * System.out.println("Disposition Status: " +
+		 * OMTAcqui.get_Dashboard_Dispo().getText());
+		 * Constant.dataMap.set(Map);
+		 * Constant.dataMap.get().put("OMT_DispositionStatus", "NotFound");
+		 * Constant.dataMap.get().put("OMT_DispositionStatus",
+		 * OMTAcqui.get_Dashboard_Dispo().getText()); //
+		 * util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),
+		 * // ScenarioName, 0); util.writeToExcelExistingRowFromMap("Sheet1",
+		 * Constant.dataMap.get());
+		 */
+
+		// Signout
+		RF.Signout();
+		/*************************
+		 * //order tracker for Redelivry
+		 **************************************/
+		OrderTracker_GlobeOnline(CaseName, Status);
 	}
+
+	public void OMTOrderStatus_ReDelivery3(String FlowType, String UserAgent, String Status, String CaseName)
+			throws Exception {
+
+		/******************************************
+		 * For ReDelivery
+		 ***********************************************/
+		// Change the status to Ongoing verfication
+
+		K.OMT_Role_Login(FlowType, UserAgent);
+
+		Thread.sleep(3000);
+
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
+
+		RF.OMTSearch_and_ValidateDashboard1();
+
+		// Click on edit
+		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
+		jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
+
+		RF.UpdateOrderStatus(Status);
+
+		// Signout
+		RF.Signout();
+
+		/*************************
+		 * //order tracker for Redelivry
+		 **************************************/
+		OrderTracker_GlobeOnline(CaseName, Status);
+	}
+
+	public void OMTOrderStatus_ReDelivery2(String FlowType, String UserAgent, String Status, String CaseName)
+			throws Exception {
+
+		/******************************************
+		 * For ReDelivery
+		 ***********************************************/
+		// Change the status to Ongoing verfication
+
+		K.OMT_Role_Login(FlowType, UserAgent);
+
+		Thread.sleep(3000);
+
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
+
+		RF.OMTSearch_and_ValidateDashboard1();
+
+		// Click on edit
+		JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
+		jsO.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
+
+		RF.UpdateOrderStatus(Status);
+
+		// Signout
+		RF.Signout();
+
+		/*************************
+		 * //order tracker for Redelivry
+		 **************************************/
+		OrderTracker_GlobeOnline(CaseName, Status);
+	}
+
+	public void SearchForDispoStatus() throws Exception {
+		Thread.sleep(1000);
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
+
+		RF.OMTSearch_and_ValidateDashboard1();
+if(OMTAcqui.isElementExist("Disposition status", "Dashboard_Dispo", 20))
+{
+		System.out.println("Disposition Status: " + OMTAcqui.get_Dashboard_Dispo().getText());
+		Constant.dataMap.set(Map);
+		Constant.dataMap.get().put("OMT_DispositionStatus", OMTAcqui.get_Dashboard_Dispo().getText());
+
+		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
+}
+		RF.Signout();
+	}
+	
+
+	
+	
+	
+	public void OMTOrderStatus_Delivered(String FlowType, String UserType, String SCName, String Status,
+			String CaseName) throws Exception {
+
+		K.OMT_Role_Login(FlowType, UserType);
+		Thread.sleep(6000);
+		// OMTAcqui.clickOnElement("Entities", "Entities", "Entities");
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
+		Thread.sleep(4000);
+		RF.OMTSearch_and_ValidateDashboard1();
+
+		// Click on edit
+		JavascriptExecutor jsDE = (JavascriptExecutor) DriverManager.getDriver();
+		jsDE.executeScript("arguments[0].click();", OMTAcqui.get_EditBtn());
+		RF.UpdateOrderStatus(Status);
+		// AF.Delivered("Delivered"); // some times auto change the status
+		Thread.sleep(10000);
+
+		/*
+		 * System.out.println("Disposition Status: " +
+		 * OMTAcqui.get_Dashboard_Dispo().getText());// reservation
+		 * Constant.dataMap.set(Map);
+		 * Constant.dataMap.get().put("OMT_DispositionStatus",
+		 * OMTAcqui.get_Dashboard_Dispo().getText());
+		 */
+
+		// email,order tracker
+		/**********************
+		 * order tracking for Renewal Completed
+		 ***************************/
+
+		OrderTracker_GlobeOnline(CaseName, "Renewal Completed");
+
+		// Signout
+		RF.Signout();
+	}
+	
 }
