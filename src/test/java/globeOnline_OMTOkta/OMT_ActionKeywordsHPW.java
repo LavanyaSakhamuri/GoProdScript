@@ -48,7 +48,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 	private String ScenarioName = "HPW_HappyPath_Dispatch_Activated"; // row number from
 	//public static String RoleName = DS.AssignToAgent;
 
-	public void ValidateOMTOrderDetails(String RoleName) throws Exception {
+	public void ValidateOMTOrderDetails(String UserAgent) throws Exception {
 		// String SCname=util.ReadFromRowExcel(Constant.RowValue, "Sheet1",
 		// 29);
 		String TestCaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);// ScenarioName
@@ -57,9 +57,9 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 				.get("https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/application-entry");
 		// String SCname = util.ReadFromRowExcel(Constant.RowValue,
 		// "Sheet1", Constant.FlowIdColumnValue);// flowid
-		String User1 = util.ReadFromRowExcel(Constant.RowValue_FlowDetails, "FlowDetailsHPW", Constant.User1);
+	//	String User1 = util.ReadFromRowExcel(Constant.RowValue_FlowDetails, "FlowDetailsHPW", Constant.User1);
 
-		K.OMT_Role_Login(Constant.FlowType, User1);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
 
 		// SC.getClass().getSimpleName()
 		Constant.dataMap.set(Map);
@@ -91,7 +91,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 	
 	
-	public void VerifyOrder_ForReDelivery1(String RoleName) throws Exception {
+	public void VerifyOrder_ForReDelivery1(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -99,12 +99,12 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow id
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 																									
-		String User11 = util.ReadFromRowExcel(SCname, "FlowDetailsHPW", Constant.User11);
-		OMTOrderStatus_ReDelivery1(Constant.FlowType, User11, Constant.ForRedelivery1,CaseName);
+		//String User11 = util.ReadFromRowExcel(SCname, "FlowDetailsHPW", Constant.User11);
+		OMTOrderStatus_ReDelivery1(Constant.FlowType, UserAgent, Constant.ForRedelivery1,CaseName);
 
 	}
 	
-	public void VerifyOrder_ForReDelivery2(String RoleName) throws Exception {
+	public void VerifyOrder_ForReDelivery2(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -113,12 +113,12 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 																												// id
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User15 = util.ReadFromRowExcel(SCname, "FlowDetailsHPW", Constant.User15);
-		OMTOrderStatus_ReDelivery2(Constant.FlowType, User15, Constant.ForRedelivery2,CaseName);
+		//String User15 = util.ReadFromRowExcel(SCname, "FlowDetailsHPW", Constant.User15);
+		OMTOrderStatus_ReDelivery2(Constant.FlowType, UserAgent, Constant.ForRedelivery2,CaseName);
 
 	}
 	
-	public void VerifyOrder_ForReDelivery3(String RoleName) throws Exception {
+	public void VerifyOrder_ForReDelivery3(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -127,12 +127,12 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 																												// id
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User19 = util.ReadFromRowExcel(SCname, "FlowDetailsHPW", Constant.User19);
-		OMTOrderStatus_ReDelivery3(Constant.FlowType, User19, Constant.ForRedelivery3,CaseName);
+	//	String User19 = util.ReadFromRowExcel(SCname, "FlowDetailsHPW", Constant.User19);
+		OMTOrderStatus_ReDelivery3(Constant.FlowType, UserAgent, Constant.ForRedelivery3,CaseName);
 
 	}
 	
-	public void VerifyOMTOrder_ForProcessing(String RoleName) throws Exception {
+	public void VerifyOMTOrder_ForProcessing(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
@@ -140,17 +140,17 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User3 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User3);
+		//String User3 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User3);
 		String PaymentMethod = util.ReadFromExcel(CaseName, "Sheet1", Constant.PaymentMenthod);
 
-		OMTStatus_ForProcessing1(Constant.FlowType, User3, SCName, PaymentMethod, Constant.ForProcessing,CaseName);
+		OMTStatus_ForProcessing1(Constant.FlowType, UserAgent, SCName, PaymentMethod, Constant.ForProcessing,CaseName);
 		// Rid refreshes 15 min
 
 		/*Thread.sleep(60000);
 		VerifyOMTOrder_ForProcessingRefresh();*/
 
 	}
-	public void VerifyOMTOrder_ForDispatch(String RoleName) throws Exception {
+	public void VerifyOMTOrder_ForDispatch(String UserAgent) throws Exception {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
@@ -158,17 +158,17 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User5 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User5);
+		//String User5 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User5);
 		String PaymentMethod = util.ReadFromExcel(CaseName, "Sheet1", Constant.PaymentMenthod);
 
-		OMTOrderStatus_ForDispach(Constant.FlowType, User5, SCName,Constant.ForDispatch,CaseName);
+		OMTOrderStatus_ForDispach(Constant.FlowType, UserAgent, SCName,Constant.ForDispatch,CaseName);
 		// Rid refreshes 15 min
 
 		/*Thread.sleep(60000);
 		VerifyOMTOrder_ForProcessingRefresh();*/
 
 	}
-	public void Validateorderstatus(String RoleName) throws Exception {
+	public void Validateorderstatus(String UserAgent) throws Exception {
 
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -177,11 +177,11 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User7 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User7);
+		//String User7 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User7);
 
-		ValidateOrderStatustl(Constant.FlowType, User7, SCName,Constant.ForDispatch,CaseName);
+		ValidateOrderStatustl(Constant.FlowType, UserAgent, SCName,Constant.ForDispatch,CaseName);
 	}
-	public void VerifyOMTOrder_Forpickup(String RoleName) throws Exception {
+	public void VerifyOMTOrder_Forpickup(String UserAgent) throws Exception {
 
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -190,67 +190,26 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User9 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User9);
+	//	String User9 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User9);
 
-		OMTOrder_Acqui_ForPickup(Constant.FlowType, User9, SCName, Constant.ForPickup,CaseName);
-	}
-
-
-	public void VerifyOMTOrder_ForDelivery(String RoleName) throws Exception {
-
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-		String User9 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User9);
-
-		OMTOrderStatus_ForDelivery(Constant.FlowType, User9, SCName, Constant.ForDelivery,CaseName);
-	}
-	public void VerifyOMTOrder_ForDelivery2(String RoleName) throws Exception {
-
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-		String User13 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User13);
-
-		OMTOrderStatus_ForDelivery(Constant.FlowType, User13, SCName, Constant.ForDelivery,CaseName);
-	}
-
-	public void VerifyOMTOrder_ForDelivery3(String RoleName) throws Exception {
-
-		// AssignOrderOMT(DS.sActionKeywordAgent);
-		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
-
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-		String User17 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User17);
-
-		OMTOrderStatus_ForDelivery(Constant.FlowType, User17, SCName, Constant.ForDelivery,CaseName);
+		OMTOrder_Acqui_ForPickup(Constant.FlowType, UserAgent, SCName, Constant.ForPickup,CaseName);
 	}
 
 
-	public void VerifyOMTOrder_Delivered(String RoleName) throws Exception {
+	public void VerifyOMTOrder_ForDelivery(String UserAgent) throws Exception {
 
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
-		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
 
-		String User13 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User13);
+		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		OMTOrderStatus_Delivered(Constant.FlowType, User13, SCName, Constant.Delivered,CaseName);
+	//	String User9 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User9);
+
+		OMTOrderStatus_ForDelivery(Constant.FlowType, UserAgent, SCName, Constant.ForDelivery,CaseName);
 	}
-	public void VerifyOMTOrder_ForActivated(String RoleName) throws Exception {
+	public void VerifyOMTOrder_ForDelivery2(String UserAgent) throws Exception {
 
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -259,12 +218,12 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User14= util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User14);
+		//String User13 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User13);
 
-		OMTOrder_Acqui_ForActivated(Constant.FlowType, User14, SCName, Constant.ForActivation,CaseName);
+		OMTOrderStatus_ForDelivery(Constant.FlowType, UserAgent, SCName, Constant.ForDelivery,CaseName);
 	}
 
-	public void VerifyOMTOrder_Activated(String RoleName) throws Exception {
+	public void VerifyOMTOrder_ForDelivery3(String UserAgent) throws Exception {
 
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -273,9 +232,50 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		String User23 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User23);
+		//String User17 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User17);
 
-		OMTOrderStatus_Activated(Constant.FlowType, User23, SCName, Constant.Activated,CaseName);
+		OMTOrderStatus_ForDelivery(Constant.FlowType, UserAgent, SCName, Constant.ForDelivery,CaseName);
+	}
+
+
+	public void VerifyOMTOrder_Delivered(String UserAgent) throws Exception {
+
+		// AssignOrderOMT(DS.sActionKeywordAgent);
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
+		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
+
+		//String User13 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User13);
+
+		OMTOrderStatus_Delivered(Constant.FlowType, UserAgent, SCName, Constant.Delivered,CaseName);
+	}
+	public void VerifyOMTOrder_ForActivated(String UserAgent) throws Exception {
+
+		// AssignOrderOMT(DS.sActionKeywordAgent);
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
+
+		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
+
+		//String User14= util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User14);
+
+		OMTOrder_Acqui_ForActivated(Constant.FlowType, UserAgent, SCName, Constant.ForActivation,CaseName);
+	}
+
+	public void VerifyOMTOrder_Activated(String UserAgent) throws Exception {
+
+		// AssignOrderOMT(DS.sActionKeywordAgent);
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
+
+		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
+
+		//String User23 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User23);
+
+		OMTOrderStatus_Activated(Constant.FlowType, UserAgent, SCName, Constant.Activated,CaseName);
 	}
 	
 		
