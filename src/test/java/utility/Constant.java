@@ -53,44 +53,6 @@ public class Constant {
 		
 		public static int AgentName = 5;
 
-		public static int User1 = 3;
-		public static int User2 = 5;
-		public static int User3 = 7;
-		public static int User4 = 9;
-		public static int User5 = 11;
-		public static int User6 = 13;
-		public static int User7 = 15;
-		public static int User8 = 17;
-		public static int User9 = 19;
-		public static int User10 = 21;
-		public static int User11 = 23;
-		public static int User12 = 25;
-		public static int User13 = 27;
-		public static int User14 = 29;
-		public static int User15 = 31;
-		public static int User16 = 33;
-		public static int User17 = 35;
-		public static int User18 = 37;
-		public static int User19 = 39;
-		public static int User20 = 41;
-		public static int User21 = 43;
-		public static int User22 = 45;
-		public static int User23 = 47;
-		public static int User24 = 49;
-		public static int User25 = 51;
-		public static int User26 = 53;
-		public static int User27 = 55;
-		public static int User28 = 57;
-		public static int User29 = 59;
-		public static int User30 = 61;
-		public static int User31 = 63;
-		public static int User32 = 65;
-		public static int User33 = 67;
-		public static int User34 = 69;
-		public static int User35 = 71;
-		public static int User36 = 73;
-		public static int User37 = 75;
-		public static int User38 = 77;
 
 		public static String BSSorderID = "764532";
 		public static String BSSorderCaseID = "43725";
@@ -411,4 +373,3 @@ public class Constant {
 	
 	
 }
-//
