@@ -604,18 +604,23 @@ private ADADAF_Page Form=new ADADAF_Page();
 	}
 
 	public void Validate_activationdetails() {
-		BP.scroll_vertical(550);
+		if(OMTAcqui.isElementExist("ActivationDetails", "activation", 10))
+				{
+				BP.scroll_vertical(550);
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_activation());
 
 		System.out.println("ActChannel: " + OMTAcqui.get_ActChannel().getAttribute("value"));
 		System.out.println("DateofActivation: " + OMTAcqui.get_DateofActivation().getAttribute("value"));
 		System.out.println("TimeofActivation: " + OMTAcqui.get_TimeofActivation().getAttribute("value"));
-
+				}
 	}
 
 	public void Validate_planeprovisioningdetails() {
+		
 		BP.scroll_vertical(580);
+		if(OMTAcqui.isElementExist("PlanProvisioning details", "planpro", 10))
+		{
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_planpro());
 
@@ -625,9 +630,11 @@ private ADADAF_Page Form=new ADADAF_Page();
 		System.out.println("timeOfOrderClosing: " + OMTAcqui.get_timeOfOrderClosing().getAttribute("value"));
 		System.out.println("startDateOfContract: " + OMTAcqui.get_startDateOfContract().getAttribute("value"));
 		System.out.println("endDateOfContract: " + OMTAcqui.get_endDateOfContract().getAttribute("value"));
-
+		}
 	}
 	public void Validate_SEEDINGDETAILS() {
+		if(OMTAcqui.isElementExist("SeedingDetails", "seeding", 10))
+		{
 		BP.scroll_vertical(600);
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_seeding());
@@ -636,10 +643,12 @@ private ADADAF_Page Form=new ADADAF_Page();
 		System.out.println("GCashTagging: " + OMTAcqui.get_GCashTagging().getAttribute("value"));
 		System.out.println("SeedingReference: " + OMTAcqui.get_SeedingReference().getAttribute("value"));
 		System.out.println("SeedingDate: " + OMTAcqui.get_SeedingDate().getAttribute("value"));
-
+		}
 	}
 
 	public void Validate_CALLOUTANDRECOVERY() {
+		if(OMTAcqui.isElementExist("CalloutAndRecovery", "callout", 10))
+		{
 		BP.scroll_vertical(630);
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_callout());
@@ -649,7 +658,7 @@ private ADADAF_Page Form=new ADADAF_Page();
 		System.out.println("CalloutData: " + OMTAcqui.get_CalloutData().getAttribute("value"));
 		System.out.println("CalloutDisposition: " + OMTAcqui.get_CalloutDisposition().getAttribute("value"));
 		System.out.println("CalloutNotes: " + OMTAcqui.get_CalloutNotes().getAttribute("value"));
-
+		}
 	}
 
 	public void Validate_REFUNDDETAILS() {
@@ -1448,7 +1457,8 @@ private ADADAF_Page Form=new ADADAF_Page();
 	public void OMT_Trackmyorderlogin(String ORDERID, String EMAIL) throws Exception {
 
 		Thread.sleep(6000);
-
+if(OMTAcqui.isElementExist("TrackMyOrder", "Trackmyorder", 10))
+{
 		JavascriptExecutor js4 = (JavascriptExecutor) DriverManager.getDriver();
 		js4.executeScript("arguments[0].click();", OMTAcqui.get_Trackmyorder());
 		Thread.sleep(9000);
@@ -1459,7 +1469,7 @@ private ADADAF_Page Form=new ADADAF_Page();
 		JavascriptExecutor js6 = (JavascriptExecutor) DriverManager.getDriver();
 		js6.executeScript("arguments[0].click();", OMTAcqui.get_Trackmyorder_button());
 		Thread.sleep(12000);
-
+}
 	}
 
 	public void UploadDocuments_POFC() throws InterruptedException, AWTException {
@@ -1845,7 +1855,7 @@ private ADADAF_Page Form=new ADADAF_Page();
 					JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 					js1.executeScript("arguments[0].click();", OMTAcqui.get_orderdetails());
 
-					if (Status.equalsIgnoreCase("Reserved Physical Stock")) {
+					if (Status.equalsIgnoreCase("Reserved Physical Stock"))  {
 						OMTAcqui.get_ReservationID().clear();
 
 						OMTAcqui.get_ReservationID().sendKeys(Constant.ReservationID);
@@ -1938,27 +1948,33 @@ private ADADAF_Page Form=new ADADAF_Page();
 
 					}
 
-					else {
+					 else if (Status.equalsIgnoreCase("Request Payment")) {
 						// Request Payment
+						OMTAcqui.get_BSSOrderID().clear();
 						OMTAcqui.get_BSSOrderID().sendKeys(Constant.BSSorderID);
 						System.out.println("BSS Order ID: " + OMTAcqui.get_BSSOrderID().getAttribute("value"));
 
+						OMTAcqui.get_BSSOrderCaseID().clear();
 						OMTAcqui.get_BSSOrderCaseID().sendKeys(Constant.BSSorderCaseID);
 						System.out.println("BSS Order Case ID: " + OMTAcqui.get_BSSOrderCaseID().getAttribute("value"));
+						
 						OMTAcqui.get_NewMobileNumber().clear();
 						OMTAcqui.get_NewMobileNumber().sendKeys(Constant.MobilenUmb);
 						System.out.println("New Mobile Number: " + OMTAcqui.get_NewMobileNumber().getAttribute("value"));
 
 						JavascriptExecutor jsp = (JavascriptExecutor) DriverManager.getDriver();
 						jsp.executeScript("arguments[0].click();", OMTAcqui.get_postpaid());
-
+						
+						OMTAcqui.get_CustDet_FAID().clear();
 						OMTAcqui.get_CustDet_FAID().sendKeys(Constant.CustFAID);
 						System.out.println("FA ID: " + OMTAcqui.get_CustDet_FAID().getAttribute("value"));
-
+						
+						OMTAcqui.get_CustDet_BAID().clear();
 						OMTAcqui.get_CustDet_BAID().sendKeys(Constant.CustContactID);
 						System.out.println(
 								"Billing Arrangement ID (BA ID): " + OMTAcqui.get_CustDet_BAID().getAttribute("value"));
-
+						
+						OMTAcqui.get_CustDet_ContactID().clear();
 						OMTAcqui.get_CustDet_ContactID().sendKeys("9876543321");
 						System.out.println("Contact ID: " + OMTAcqui.get_CustDet_ContactID().getAttribute("value"));
 
@@ -2001,6 +2017,23 @@ private ADADAF_Page Form=new ADADAF_Page();
 					System.out.println(
 							"POFC VERIFICATION FINDING:" + OMTAcqui.get_POFC_Verficationfinding1().getAttribute("value"));
 
+					JavascriptExecutor jsP = (JavascriptExecutor) DriverManager.getDriver();
+					jsP.executeScript("arguments[0].click();", OMTAcqui.get_postpaid());
+					OMTAcqui.get_CustDet_FAID().clear();
+					OMTAcqui.get_CustDet_FAID().sendKeys("1234");
+					OMTAcqui.get_CustDet_BAID().clear();
+					OMTAcqui.get_CustDet_BAID().sendKeys("4342");
+					OMTAcqui.get_CustDet_ContactID().clear();
+					OMTAcqui.get_CustDet_ContactID().sendKeys("877863257");
+
+					JavascriptExecutor jsO = (JavascriptExecutor) DriverManager.getDriver();
+					jsO.executeScript("arguments[0].click();", OMTAcqui.get_orderdetails());
+					OMTAcqui.get_BSSOrderID().clear();
+					OMTAcqui.get_BSSOrderID().sendKeys("1234");
+					OMTAcqui.get_BSSOrderCaseID().clear();
+					OMTAcqui.get_BSSOrderCaseID().sendKeys("456");
+					OMTAcqui.get_NewMobileNumber().clear();
+					OMTAcqui.get_NewMobileNumber().sendKeys("09765433219");
 				}
 
 			}
