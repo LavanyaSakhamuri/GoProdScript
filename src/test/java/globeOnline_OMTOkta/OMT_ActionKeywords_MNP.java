@@ -47,7 +47,7 @@ public class OMT_ActionKeywords_MNP extends SetDriver {
 //	private String ScenarioName = "MNPHAPPYPATH"; // row number from
 	// public static String RoleName = DS.AssignToAgent;
 
-	public void ValidateOMTOrderDetails(String RoleName) throws Exception {
+	public void ValidateOMTOrderDetails(String UserAgent) throws Exception {
 		// String SCname=util.ReadFromRowExcel(Constant.RowValue, "Sheet1",
 		// 29);
 //		JavascriptExecutor jse = (JavascriptExecutor)DriverManager.getDriver();
@@ -58,9 +58,9 @@ public class OMT_ActionKeywords_MNP extends SetDriver {
 				.get("https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/application-entry");
 		// String SCname = util.ReadFromRowExcel(Constant.RowValue,
 		// "Sheet1", Constant.FlowIdColumnValue);// flowid
-		String User1 = util.ReadFromRowExcel(Constant.RowValue_FlowDetails, "FlowDetails", Constant.User1);
+	//	String User1 = util.ReadFromRowExcel(Constant.RowValue_FlowDetails, "FlowDetails", Constant.User1);
 
-		K.OMT_Role_Login(Constant.FlowType, User1);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
 
 		// SC.getClass().getSimpleName()
 		Constant.dataMap.set(Map);
@@ -226,7 +226,7 @@ public class OMT_ActionKeywords_MNP extends SetDriver {
 		Thread.sleep(30000);
 	}
 	/***********************************************************************************/
-	public void VerifyOrder_CheckMNPStatusFailed(String RoleName) throws Exception {
+	public void VerifyOrder_CheckMNPStatusFailed(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 //		 AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -236,14 +236,14 @@ public class OMT_ActionKeywords_MNP extends SetDriver {
 		
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 		Control.takeScreenshot();																								// i
-		String User2 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User2);
-		OMTOrderStatus_CheckMNPStatusFailed(Constant.FlowType, User2, Constant.PortingReqStatusSuccess);
+		//String User2 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User2);
+		OMTOrderStatus_CheckMNPStatusFailed(Constant.FlowType, UserAgent, Constant.PortingReqStatusSuccess);
 	}
 	
 //	Porting Under View Request Status Change
 	
 	/******************************************Porting Under Review ***********************************************/	
-	public void VerifyOrder_PortingReqStatusPending(String RoleName) throws Exception {
+	public void VerifyOrder_PortingReqStatusPending(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 //		 AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
@@ -251,12 +251,12 @@ public class OMT_ActionKeywords_MNP extends SetDriver {
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		String User3 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User3);
-		OMTOrderStatus_PortingUnderView(Constant.FlowType, User3, Constant.PortingReqStatusPeding);
+	//	String User3 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User3);
+		OMTOrderStatus_PortingUnderView(Constant.FlowType, UserAgent, Constant.PortingReqStatusPeding);
 	}
 	
 	/******************************************Porting Under Review ***********************************************/
-	public void VerifyOrder_PortingReqStatusFailed(String RoleName) throws Exception {
+	public void VerifyOrder_PortingReqStatusFailed(String UserAgent) throws Exception {
 		// read from excel and make assign order as separate keyword
 //		 AssignOrderOMT(DS.sActionKeywordAgent);
 //		DriverManager.getDriver().quit();
@@ -264,8 +264,8 @@ public class OMT_ActionKeywords_MNP extends SetDriver {
 		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																												// id
 
-		String User3 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User3);
-		OMTOrderStatus_PortingReqStatusFailed(Constant.FlowType, User3, Constant.PortingReqStatusFailed);
+	//	String User3 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User3);
+		OMTOrderStatus_PortingReqStatusFailed(Constant.FlowType, UserAgent, Constant.PortingReqStatusFailed);
 	}
 	/******************************************Assign Order to OMT-GotS-TL***********************************************/
 	
