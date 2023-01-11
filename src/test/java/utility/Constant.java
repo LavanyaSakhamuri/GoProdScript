@@ -27,15 +27,25 @@ public class Constant {
 	public static String AssignOrderTL = "FTA_Acqui_TL";
 	public static String OMT_RegAddressType="House";
 	public static String OMT_DispoFirstTime="Manual Case Creation";//after placing an order the status of order in omt dashboard
-	public static String Email_GO = "mamatha.a@globe.com.ph";
+	public static String Email_GO = "shaik.asma@globe.com.ph";
 	public static String OrderSubType="";
 
 		
+	public static String ScenarioNameHPW = "OMT_HPW_CompletedProd";
+	//public static String OMT_FlowID = "ReservationRenewal_PhysicalStock";
+	//public static String OMT_FlowID = "HPW_THREE_DELIVERY";
+	public static String FlowTypeHPW = "HPW";
+	public static String AssignOrderTLHPW = "HPW_TL_PROD";
+	public static String OMT_RegAddressTypeHPW="House";
+	public static String OMT_DispoFirstTimeHPW="For Processing";
+	//public static String Email_GOHPW = "mamatha.a@globe.com.ph";
+	//public static String OrderSubTypeHPW="PreOrder";
+
 		//*********************************************************//
 		
 		// ***************OMT******************//
-		public static String RowValue = "1";
-		public static String RowValue_FlowDetails = "1";
+		public static String RowValue = "2";
+		public static String RowValue_FlowDetails = "2";
 
 		public static int Login_NetworkIDColm = 3;
 		public static int Login_PasswordColm = 4;
