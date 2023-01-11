@@ -429,7 +429,11 @@ public By OMT_MobileNumb=By.xpath("//input[@id='mobileNumber']");
 			//for activation 
 				
 				By Activation=By.xpath("//div[@class='go_order-card-header']//div");
-				
+				By OKTA_AccSignIn = By.xpath("//span[text()='Sign in']");
+			
+				public WebElement get_OKTA_AccSignIn() {
+					return DriverManager.getDriver().findElement(OKTA_AccSignIn);
+				}
 		/********************************************************************************************************************************/
 		public WebElement get_privacyAccept() {
 			return DriverManager.getDriver().findElement(privacyAccept);
@@ -1828,6 +1832,9 @@ public By OMT_MobileNumb=By.xpath("//input[@id='mobileNumber']");
 		case "Primarydetails":
 			flag = waitForElementClickable(Primarydetails, waitTime);
 			break;
+		case "AccountBtn":
+			flag = waitForElementClickable(AccountBtn, waitTime);
+			break;
 		
 		
 
@@ -1874,6 +1881,9 @@ public By OMT_MobileNumb=By.xpath("//input[@id='mobileNumber']");
 				break;
 			case "OKTA_Notif":
 				get_OKTA_Notif().click();
+				break;
+			case "OKTA_AccSignIn":
+				get_OKTA_AccSignIn().click();
 				break;
 				
 			case "SearchBtn":

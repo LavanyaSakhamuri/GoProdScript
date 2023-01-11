@@ -5,23 +5,13 @@ import java.util.ArrayList;
 
 import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.math3.dfp.DfpField;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import utility.Constant;
-import utility.Control;
-
-
+import utility.*;
 import com.pages.omt.HPW_omt_page;
-
-//import globeOnline_OMTOkta.Constant;
 import globeOnline_CommonMethods.DriverManager;
 import globeOnline_CommonMethods.SetDriver;
 import globeOnline_CommonMethods.util;
@@ -29,39 +19,23 @@ import globeOnline_CommonMethods.util;
 public class OMT_ActionKeywordsHPW extends SetDriver {
 	public static util util = new util();
 	private static OMT_Login K = new OMT_Login();
-	private static OMT_ActionKeywordsHPW SC = new OMT_ActionKeywordsHPW();
 	public static OMT_DriverScriptHPW DS = new OMT_DriverScriptHPW();
-
 	private static OMT_HPW_Functions AF = new OMT_HPW_Functions();
-	private static HPW_omt_page OMTHPW = new HPW_omt_page();
-	private static String Status = "failed";
+	private static HPW_omt_page OMTHPW = new HPW_omt_page();	
 	private static LinkedHashMap<String, String> Map = new LinkedHashMap<>();
-	private static LinkedHashMap<String, Integer> Map1 = new LinkedHashMap<>();
-
 	public static String Rowvalue = Constant.RowValue;
+	private static String Globeurl = "https://online.globe.com.ph/";
+	private static String OMTurl = "https://edo-data-engineering.globe.com.ph/omt/";
 
-	private static String Globeurl = "https://onlinepreprod.globe.com.ph/track-order";
-	private static String OMTurl = "https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/";
-
-	// public String ScenarioName= SC.getClass().getSimpleName();
-	// public String OrderReferenceId = "PRE-000005167"; // from excel
-	private String ScenarioName = "HPW_HappyPath_Dispatch_Activated"; // row number from
-	//public static String RoleName = DS.AssignToAgent;
 
 	public void ValidateOMTOrderDetails(String UserAgent) throws Exception {
-		// String SCname=util.ReadFromRowExcel(Constant.RowValue, "Sheet1",
-		// 29);
+		
 		String TestCaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);// ScenarioName
 
 		DriverManager.getDriver()
-				.get("https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/application-entry");
-		// String SCname = util.ReadFromRowExcel(Constant.RowValue,
-		// "Sheet1", Constant.FlowIdColumnValue);// flowid
-	//	String User1 = util.ReadFromRowExcel(Constant.RowValue_FlowDetails, "FlowDetailsHPW", Constant.User1);
-
-		K.OMT_Role_Login(Constant.FlowType, UserAgent);
-
-		// SC.getClass().getSimpleName()
+				.get("https://edo-data-engineering.globe.com.ph/omt/");
+				
+		K.OMT_Role_Login(Constant.FlowTypeHPW, UserAgent);
 		Constant.dataMap.set(Map);
 		//Constant.dataMap.get().put("TestClassName", ScenarioName);
 		Constant.dataMap.get().put("OMT_LAS", "NOT FOUND");
@@ -83,7 +57,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		Constant.dataMap.get().put("OMT_AddressDetails", "NOT FOUND");
 
 		OMT_ValidateOrderDetails(TestCaseName);
-		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
+		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioNameHPW,1);
 
 		// DriverManager.getDriver().quit();
 
@@ -100,7 +74,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 																									
 		//String User11 = util.ReadFromRowExcel(SCname, "FlowDetailsHPW", Constant.User11);
-		OMTOrderStatus_ReDelivery1(Constant.FlowType, UserAgent, Constant.ForRedelivery1,CaseName);
+		OMTOrderStatus_ReDelivery1(Constant.FlowTypeHPW, UserAgent, Constant.ForRedelivery1,CaseName);
 
 	}
 	
@@ -114,7 +88,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
 		//String User15 = util.ReadFromRowExcel(SCname, "FlowDetailsHPW", Constant.User15);
-		OMTOrderStatus_ReDelivery2(Constant.FlowType, UserAgent, Constant.ForRedelivery2,CaseName);
+		OMTOrderStatus_ReDelivery2(Constant.FlowTypeHPW, UserAgent, Constant.ForRedelivery2,CaseName);
 
 	}
 	
@@ -127,8 +101,8 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 																												// id
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-	//	String User19 = util.ReadFromRowExcel(SCname, "FlowDetailsHPW", Constant.User19);
-		OMTOrderStatus_ReDelivery3(Constant.FlowType, UserAgent, Constant.ForRedelivery3,CaseName);
+		//String User19 = util.ReadFromRowExcel(SCname, "FlowDetailsHPW", Constant.User19);
+		OMTOrderStatus_ReDelivery3(Constant.FlowTypeHPW, UserAgent, Constant.ForRedelivery3,CaseName);
 
 	}
 	
@@ -143,7 +117,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		//String User3 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User3);
 		String PaymentMethod = util.ReadFromExcel(CaseName, "Sheet1", Constant.PaymentMenthod);
 
-		OMTStatus_ForProcessing1(Constant.FlowType, UserAgent, SCName, PaymentMethod, Constant.ForProcessing,CaseName);
+		OMTStatus_ForProcessing1(Constant.FlowTypeHPW, UserAgent, SCName, PaymentMethod, Constant.ForProcessing,CaseName);
 		// Rid refreshes 15 min
 
 		/*Thread.sleep(60000);
@@ -161,7 +135,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		//String User5 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User5);
 		String PaymentMethod = util.ReadFromExcel(CaseName, "Sheet1", Constant.PaymentMenthod);
 
-		OMTOrderStatus_ForDispach(Constant.FlowType, UserAgent, SCName,Constant.ForDispatch,CaseName);
+		OMTOrderStatus_ForDispach(Constant.FlowTypeHPW, UserAgent, SCName,Constant.ForDispatch,CaseName);
 		// Rid refreshes 15 min
 
 		/*Thread.sleep(60000);
@@ -179,7 +153,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		//String User7 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User7);
 
-		ValidateOrderStatustl(Constant.FlowType, UserAgent, SCName,Constant.ForDispatch,CaseName);
+		ValidateOrderStatustl(Constant.FlowTypeHPW, UserAgent, SCName,Constant.ForDispatch,CaseName);
 	}
 	public void VerifyOMTOrder_Forpickup(String UserAgent) throws Exception {
 
@@ -190,9 +164,9 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-	//	String User9 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User9);
+		//String User9 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User9);
 
-		OMTOrder_Acqui_ForPickup(Constant.FlowType, UserAgent, SCName, Constant.ForPickup,CaseName);
+		OMTOrder_Acqui_ForPickup(Constant.FlowTypeHPW, UserAgent, SCName, Constant.ForPickup,CaseName);
 	}
 
 
@@ -205,9 +179,9 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-	//	String User9 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User9);
+		//String User9 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User9);
 
-		OMTOrderStatus_ForDelivery(Constant.FlowType, UserAgent, SCName, Constant.ForDelivery,CaseName);
+		OMTOrderStatus_ForDelivery(Constant.FlowTypeHPW, UserAgent, SCName, Constant.ForDelivery,CaseName);
 	}
 	public void VerifyOMTOrder_ForDelivery2(String UserAgent) throws Exception {
 
@@ -220,7 +194,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		//String User13 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User13);
 
-		OMTOrderStatus_ForDelivery(Constant.FlowType, UserAgent, SCName, Constant.ForDelivery,CaseName);
+		OMTOrderStatus_ForDelivery(Constant.FlowTypeHPW, UserAgent, SCName, Constant.ForDelivery,CaseName);
 	}
 
 	public void VerifyOMTOrder_ForDelivery3(String UserAgent) throws Exception {
@@ -234,7 +208,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		//String User17 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User17);
 
-		OMTOrderStatus_ForDelivery(Constant.FlowType, UserAgent, SCName, Constant.ForDelivery,CaseName);
+		OMTOrderStatus_ForDelivery(Constant.FlowTypeHPW, UserAgent, SCName, Constant.ForDelivery,CaseName);
 	}
 
 
@@ -248,7 +222,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		//String User13 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User13);
 
-		OMTOrderStatus_Delivered(Constant.FlowType, UserAgent, SCName, Constant.Delivered,CaseName);
+		OMTOrderStatus_Delivered(Constant.FlowTypeHPW, UserAgent, SCName, Constant.Delivered,CaseName);
 	}
 	public void VerifyOMTOrder_ForActivated(String UserAgent) throws Exception {
 
@@ -261,7 +235,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		//String User14= util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User14);
 
-		OMTOrder_Acqui_ForActivated(Constant.FlowType, UserAgent, SCName, Constant.ForActivation,CaseName);
+		OMTOrder_Acqui_ForActivated(Constant.FlowTypeHPW, UserAgent, SCName, Constant.ForActivation,CaseName);
 	}
 
 	public void VerifyOMTOrder_Activated(String UserAgent) throws Exception {
@@ -275,7 +249,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		//String User23 = util.ReadFromRowExcel(SCName, "FlowDetailsHPW", Constant.User23);
 
-		OMTOrderStatus_Activated(Constant.FlowType, UserAgent, SCName, Constant.Activated,CaseName);
+		OMTOrderStatus_Activated(Constant.FlowTypeHPW, UserAgent, SCName, Constant.Activated,CaseName);
 	}
 	
 		
@@ -289,6 +263,8 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		// OMTHPW.clickOnElement("Entities", "Entities", "Entities");
 		OMTHPW.javascript_clickOnElement(OMTHPW.get_Entities());
 		OMTHPW.javascript_clickOnElement(OMTHPW.get_ApplicationEntry());
+		Generic.WriteTestData("User should be able to Validate omt dash board", "", "", "User should be able to Validate omt dash board","User is  able to Validate omt dash board", "Passed");
+		Thread.sleep(4000);	    
 		Control.takeScreenshot();
 
 		AF.OMTSearch_and_ValidateDashboard1();
@@ -307,7 +283,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		String Timestamp_OMT = Timestamp_OMT2.replaceAll(":", "_");
 
 		Constant.dataMap.get().put("OMT_TimeStamp", Timestamp_OMT);
-		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
+		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioNameHPW,1);
 
 		ArrayList Time_Go = util.readExcelData(Constant.TimeStamp, ScName, "Sheet1");
 		if (Time_Go.contains(Timestamp_OMT)) {    
@@ -322,10 +298,11 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		Control.takeScreenshot();
 		String ORDERID = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.OrderRefID);
 
-		AF.Validate_ORDER(ORDERID, "For encoding");// NEED TO change in every flow
+		AF.Validate_ORDER(ORDERID, "For Processing");// NEED TO change in every flow
 
 		ArrayList CustDet_GO = util.readExcelData(Constant.CustomerDetails, ScName, "Sheet1");
 		String Customer_Details_OMT = AF.orderview_CustomerDetails();
+		
 		String B = CustDet_GO.toString();
 		String C = B.replace("[", " ");
 		String D = C.replace("]", " ");
@@ -346,7 +323,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 				OMTHPW.get_Primary_RecipientName().getText());
 		}
 
-		String AddressDetails = AF.Validate_RegisteredAddress("Condo");   // i need to change also address po
+		String AddressDetails = AF.Validate_RegisteredAddress("House");   // i need to change also address po
 		Constant.dataMap.get().put("OMT_AddressDetails", AddressDetails);
 		// //AF.Validate_ShippingAddress("Condo");
 		
@@ -354,7 +331,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		AF.orderview_CustomerDetails();
 		AF.orderview_RecipentDetails();
 		AF.orderview_AddressDetails();
-		AF.Validate_RegisteredAddress("Condo");
+		AF.Validate_RegisteredAddress("House");
 		
 		//common.orderview_PaymentDetails();
 				
@@ -379,14 +356,6 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		
 		
 				
-
-		/*
-		 * Constant.dataMap.get().put("OMT_UpdateDate",
-		 * OMTHPW.get_AutomaticUpdateDate().getText());
-		 * util.writeToExcelExistingRowFromMap("Sheet1",
-		 * Constant.dataMap.get());
-		 */
-		// Click on Back
 		JavascriptExecutor js2 = (JavascriptExecutor) DriverManager.getDriver();
 		js2.executeScript("arguments[0].click();", OMTHPW.get_Backbutton());
 		Thread.sleep(3000);
@@ -398,15 +367,14 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 //		jsO.executeScript("arguments[0].click();", OMTHPW.get_EditBtn());
 //
 //		
-//		AF.UPDATEmobilenumberforpaymentSCenario();
+//	AF.UPDATEmobilenumberforpaymentSCenario();
 		
 		
 		System.out.println("Disposition Status: " + OMTHPW.get_Dashboard_Dispo().getText());
-		// Constant.dataMap.get().put("TimeStamp", util.getTimeStamp());
-		// Signout
+		
 		AF.Signout();
 		//driver.quit();  for sc6 only 
-		Control.takeScreenshot();
+		
 	}
 
 	public void OMTOrderStatus_ReDelivery1(String FlowType, String UserAgent, String Status,String CaseName) throws Exception {
@@ -422,6 +390,10 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		OMTHPW.javascript_clickOnElement(OMTHPW.get_Entities());
 		OMTHPW.javascript_clickOnElement(OMTHPW.get_ApplicationEntry());
+		
+		Generic.WriteTestData("User should be able to Validate omt dash board", "", "", "User should be able to Validate omt dash board","User is able to Validate omt dash board", "Passed");
+		Thread.sleep(4000);	    
+		Control.takeScreenshot();
 
 		AF.OMTSearch_and_ValidateDashboard1();
 
@@ -431,14 +403,6 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		AF.UpdateOrderStatus(Status);//need to check these one 
 
-		/*// AF.ongoingVerification("Ongoing Verification");
-		System.out.println("Disposition Status: " + OMTHPW.get_Dashboard_Dispo().getText());
-		Constant.dataMap.set(Map);
-		Constant.dataMap.get().put("OMT_DispositionStatus", "NotFound");
-		Constant.dataMap.get().put("OMT_DispositionStatus", OMTHPW.get_Dashboard_Dispo().getText());
-		// util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),
-		// ScenarioName, 0);
-		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get());*/
 		
 		// Signout
 		AF.Signout();
@@ -509,7 +473,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		String orderState = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.OrderState);
 		if (orderState.trim().equals("7")) {
 			Thread.sleep(600000);
-			K.OMT_Role_Login(Constant.FlowType, RoleName);
+			K.OMT_Role_Login(Constant.FlowTypeHPW, RoleName);
 			Thread.sleep(3000);
 			SearchForDispoStatus();
 		}
@@ -517,7 +481,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		else if (orderState.trim().equals("5")) {
 			// wait for 10 min for Manual Case creation
 			Thread.sleep(300000);
-			K.OMT_Role_Login(Constant.FlowType, RoleName);
+			K.OMT_Role_Login(Constant.FlowTypeHPW, RoleName);
 			Thread.sleep(3000);
 			SearchForDispoStatus();
 		}
@@ -526,7 +490,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		else if (orderState.trim().equals("6")) {
 			// RID Refreshes wait for 10 min
 			Thread.sleep(600000);
-			K.OMT_Role_Login(Constant.FlowType, RoleName);
+			K.OMT_Role_Login(Constant.FlowTypeHPW, RoleName);
 			Thread.sleep(3000);
 			SearchForDispoStatus();
 		}
@@ -535,21 +499,21 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 			// RID Refreshes wait for 15 min changes to for reservation in TL and again assign to encoder
 			//Thread.sleep(900000);
 			AssignOrderOMT(RoleName);
-			//K.OMT_Role_Login(Constant.FlowType, RoleName);
+			//K.OMT_Role_Login(Constant.FlowTypeHPW, RoleName);
 			Thread.sleep(3000);
 			//SearchForDispoStatus();
 		} 
 		else if (orderState.trim().equals("17")) {
 			// changes to FOR DISPATCH wait for some time
 			Thread.sleep(20000);
-			K.OMT_Role_Login(Constant.FlowType, RoleName);
+			K.OMT_Role_Login(Constant.FlowTypeHPW, RoleName);
 			Thread.sleep(3000);
 			SearchForDispoStatus();
 		} else {
 			// for processing1
 			// RID Refreshes wait for 15 min changes to For Reservation again
 			Thread.sleep(900000);
-			K.OMT_Role_Login(Constant.FlowType, RoleName);
+			K.OMT_Role_Login(Constant.FlowTypeHPW, RoleName);
 			Thread.sleep(3000);
 			SearchForDispoStatus();
 
@@ -584,7 +548,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 			Constant.dataMap.set(Map);
 			Constant.dataMap.get().put("OMT_LAS", "Downloaded");
 
-			util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
+			util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioNameHPW,1);
 
 		}
 
@@ -629,7 +593,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 			Constant.dataMap.set(Map);
 			Constant.dataMap.get().put("OMT_LAS", "Downloaded");
 
-			util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
+			util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioNameHPW,1);
 
 		}
 
@@ -664,10 +628,17 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		OMTHPW.javascript_clickOnElement(OMTHPW.get_ApplicationEntry());
 		Thread.sleep(4000);
 		AF.OMTSearch_and_ValidateDashboard1();
+		Generic.WriteTestData("User should be able to access OMT application", "", "", "User should be able to access OMT application","User is able to access OMT application", "Passed");
+		Thread.sleep(4000);
+	    Control.takeScreenshot();
 
 		// Click on edit
 		JavascriptExecutor jsDE = (JavascriptExecutor) DriverManager.getDriver();
 		jsDE.executeScript("arguments[0].click();", OMTHPW.get_EditBtn());
+		
+		Generic.WriteTestData("User should be able to access OMT application", "", "", "User should be able to access OMT application","User is able to access OMT application", "Passed");
+		Thread.sleep(4000);
+	    Control.takeScreenshot();
 
 		// For Delivery
 		// AF.Fordelivery("For Delivery");
@@ -682,7 +653,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		 **************************************/
 		AF.Signout();
 		// open link
-		OrderTracker_GlobeOnline(CaseName, Status);
+		//OrderTracker_GlobeOnline(CaseName, Status);
 		// Signout
 		
 
@@ -707,7 +678,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 			Constant.dataMap.set(Map);
 			Constant.dataMap.get().put("OMT_LAS", "Downloaded");
 
-			util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
+			util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioNameHPW,1);
 
 		}
 		JavascriptExecutor jsDE = (JavascriptExecutor) DriverManager.getDriver();
@@ -726,7 +697,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		 **************************************/
 		AF.Signout();
 		// open link
-		OrderTracker_GlobeOnline(CaseName, Status);
+		//OrderTracker_GlobeOnline(CaseName, Status);
 		// Signout
 		
 
@@ -801,10 +772,12 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		// AF.Activated("Activated");
 		Thread.sleep(6000);
 //
-//		System.out.println("Disposition Status: " + OMTHPW.get_Dashboard_Dispo().getText());// reservation
-//		Constant.dataMap.set(Map);
-//		Constant.dataMap.get().put("OMT_DispositionStatus", OMTHPW.get_Dashboard_Dispo().getText());
-		OrderTracker_GlobeOnline(CaseName, "For Activation");
+		System.out.println("Disposition Status: " + OMTHPW.get_Dashboard_Dispo().getText());// reservation
+		Constant.dataMap.set(Map);
+		Constant.dataMap.get().put("OMT_DispositionStatus", OMTHPW.get_Dashboard_Dispo().getText());
+		
+		
+		//OrderTracker_GlobeOnline(CaseName, "For Activation");
 
 		// Signout
 		AF.Signout();
@@ -914,6 +887,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		// AF.Activated("Activated");
 		Thread.sleep(6000);
 
+		
 		System.out.println("Disposition Status: " + OMTHPW.get_Dashboard_Dispo().getText());// reservation
 		Constant.dataMap.set(Map);
 		Constant.dataMap.get().put("OMT_DispositionStatus", OMTHPW.get_Dashboard_Dispo().getText());
@@ -994,12 +968,8 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 		switch (DispositionStatus) {
 
-		case "Awaiting Payment":
-
-			//AF.ordertracker_Awaitingpayment(CaseName);
-			break;
+		
 		case "For Dispatch":
-
 			AF.ordertracker_ForDispatch();
 			break;
 		case "Delivered":
@@ -1009,14 +979,27 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 
 			AF.ordertracker_ForDelivery();
 			break;
+		case "For Redelivery1":
+
+			AF.ordertracker_ForReDelivery();
+			break;
+		case "For Redelivery2":
+
+			AF.ordertracker_ForReDelivery();
+			break;
+		case "For Redelivery3":
+
+			AF.ordertracker_Cancelled("cancelled");
+			break;
+
 
 		case "For Activation":
 
-			AF.ordertracker_Foractivated();
+			AF.ordertracker_ForaActivation();
 			break;
 		case "Cancelled":
 
-			AF.ordertracker_cancelled();
+			AF.ordertracker_Cancelled("cancelled");
 			
 			break;
 
@@ -1036,20 +1019,23 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		// "FlowDetailsHPW",Constant.User1);
 		// String RoleName = util.ReadFromRowExcel(SCname,
 		// "FlowDetailsHPW",Constant.User1);
-		K.OMT_Role_Login(Constant.FlowType, Constant.AssignOrderTL);
+		K.OMT_Role_Login(Constant.FlowType, Constant.AssignOrderTLHPW);
 
 		Thread.sleep(3000);
 
 		// OMTHPW.clickOnElement("Entities", "Entities", "Entities");
 		OMTHPW.javascript_clickOnElement(OMTHPW.get_Entities());
 		OMTHPW.javascript_clickOnElement(OMTHPW.get_ApplicationEntry());
+		Generic.WriteTestData("User should be able to access OMT application", "", "", "User should be able to access OMT application","User is able to access OMT application", "Passed");
+		Thread.sleep(4000);
+		Control.takeScreenshot();
 
 		AF.OMTSearch_and_ValidateDashboard1();
 
 		System.out.println("Disposition Status: " + OMTHPW.get_Dashboard_Dispo().getText());
 		Constant.dataMap.set(Map);
 		Constant.dataMap.get().put("OMT_DispositionStatus", OMTHPW.get_Dashboard_Dispo().getText());
-		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
+		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioNameHPW,1);
 		Thread.sleep(4000);
 		// Assign order to respective Agent
 		// Click on Checkbox
@@ -1119,7 +1105,7 @@ public class OMT_ActionKeywordsHPW extends SetDriver {
 		// DriverManager.getDriver().manage().deleteAllCookies();
 
 		DriverManager.getDriver()
-				.get("https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/application-entry");
+				.get("https://edo-data-engineering.globe.com.ph/omt/");
 	}
 
 	public void SearchForDispoStatus() throws Exception {
@@ -1134,7 +1120,7 @@ if(OMTHPW.isElementExist("Disposition status", "Dashboard_Dispo", 20))
 		Constant.dataMap.set(Map);
 		Constant.dataMap.get().put("OMT_DispositionStatus", OMTHPW.get_Dashboard_Dispo().getText());
 
-		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
+		util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioNameHPW,1);
 }
 		AF.Signout();
 	}

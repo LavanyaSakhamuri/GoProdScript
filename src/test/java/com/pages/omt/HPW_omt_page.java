@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.Set;
@@ -55,18 +56,20 @@ public class HPW_omt_page extends BasePage {
 	By Account_Signin = By.xpath("//span[contains(text(),'Sign in')]");
 	
 	//Dashboard	
-	By Dashboard_DateSubmitted = By.xpath("//td//ngb-highlight[contains(text(), '2022')]");
-	By Dashboard_RefNum = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[2]");
-	By Dashboard_LName = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[3]");
-	By Dashboard_FName = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[4]");
-	By Dashboard_PRODUCTAvailed = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[5]");
-	public By Dashboard_Dispo = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[6]");
-	By Dashboard_Reason = By.xpath("(//td//ngb-highlight[text()=");
-	By Dashboard_Assignee = By.xpath("(//td//ngb-highlight[text()=");
+	By Dashboard_DateSubmitted = By.xpath("//td//ngb-highlight[contains(text(), '2023')]");
+	By Dashboard_RefNum = By.xpath("(//td//ngb-highlight)[2]");
+	By Dashboard_LName = By.xpath("(//td//ngb-highlight)[3]");
+	By Dashboard_FName = By.xpath("(//td//ngb-highlight)[4]");
+	By Dashboard_PRODUCTAvailed = By.xpath("(//td//ngb-highlight)[5]");
+	public By Dashboard_Dispo = By.xpath("(//td//ngb-highlight)[6]");
+	By Dashboard_Reason = By.xpath("(//td//ngb-highlight)[7]");
+	By Dashboard_Assignee = By.xpath("(//td//ngb-highlight)[8]");
 	By Forpayment = By.xpath("//ngb-highlight[contains(text(),'For Payment')]");//NEED TO CHECK
 	
+	
+	
 	//clicking on view
-	By Orderid = By.xpath("//h2[contains(text(),'PRE-000')]");
+	By Orderid = By.xpath("//h2[contains(text(),'GLE-000')]");
 	By Ordertype = By.xpath("//label[contains(text(),'Order Type')]");
 	By Ordermethod = By.xpath("//input[@id='orderType']");
 	By Customertyoe = By.xpath("//input[@id='customerType']");
@@ -75,7 +78,7 @@ public class HPW_omt_page extends BasePage {
 	By giveasgiftvalue=By.xpath("//input[@id='giveAsGift']");
 	By OMT_Disposition = By.xpath("//select[@id='dispositionStatus']");
 	//select[@id='dispositionStatus']
-	By OMT_DispoReason = By.xpath("//select[@id='dispositionReason']");
+	By OMT_DispoReason = By.xpath("//select[@id='reason']");
 	
 	
    //customer details
@@ -220,8 +223,9 @@ public class HPW_omt_page extends BasePage {
 	By Schedule_input=By.xpath("//input[@id='deliveryDate']");
 	
 	By Status = By.xpath("(//div[contains(text(),'Status')])[1]");
-	By Status_input=By.xpath("");
+	By Status_input=By.xpath("(//select[@id='status'])");
 	By Remarks = By.xpath("(//div[contains(text(),'Remarks')])[1]");
+	By Remarks_input=  By.xpath("(//select[@id='remarks'])");
 	By Addnewrowbutton = By.xpath("(//button[contains(text(),' Add New Row ')])[1]");
 	
 	//Activationdetails
@@ -248,7 +252,7 @@ public class HPW_omt_page extends BasePage {
 	By Authorization = By.xpath("(//label[contains(text(),'Authorization / Approval Code')])[1]");
 	By Authorization_input = By.xpath("//input[@id='approvalCode']");
 	By Remarks_Refund = By.xpath("(//label[contains(text(),'Remarks')])[1]");
-	By Remarks_input = By.xpath("(//select[@id='remarks'])[2]");
+	By Remarks_inputrefund = By.xpath("//label[text()='Remarks']//following-sibling::select");
 	By RefundReference = By.xpath("(//label[contains(text(),'Refund Reference')])[1]");
 	By RefundReference_input = By.xpath("(//input[@id='refundReference'])");			
 	
@@ -294,7 +298,7 @@ public class HPW_omt_page extends BasePage {
 	By FulfillDet_Schedule = By.xpath("//input[@id='deliveryDate']");
 	By FulfillDet_Status = By.xpath("//select[@id='status']");
 	By FulfillDet_Remarks = By.xpath("//select[@id='remarks']");
-	By addnewrow=By.xpath("//button[text()=' Add New Row ']");
+	//By addnewrow=By.xpath("//button[text()=' Add New Row ']");
 	
 	//ReviewSubmittedform
 	By ReviewSubmittedform = By.xpath("(//h4[contains(text(),'Review Submitted Form')])");
@@ -325,7 +329,8 @@ public class HPW_omt_page extends BasePage {
 	By Confirm_Subtitle = By.xpath("//div[contains(text(),' Completed: ')]");
 	
 	//***************************Delivery*********************************
-	By Deliver = By.xpath("(//div[@class=\\\"d-flex flex-row order-status-title show-active-title\\\"])[2]");
+	By Deliver = By.xpath("(//div[@class='d-flex flex-row order-status-title show-active-title'])[2]");
+	By reDeliver=By.xpath("(//div[@class='d-flex flex-row order-status-title show-error-title show-active-title'])");
 	By Deliver_Subtitle = By.xpath("//div[contains(text(),' Your order is on the way ')]");
 	By Deliver_Heading = By.xpath("//div[@class='col-sm-7 col-7 order-deliver-heading']");
 	By Deliver_Date = By.xpath("//div[@class='col-sm-5 col-5 order-deliver-data']");
@@ -342,7 +347,7 @@ public class HPW_omt_page extends BasePage {
 	
 	
 	//***************************DISAPTCH*********************************
-		By DISAPTCH = By.xpath("(//div[@class=\\\"d-flex flex-row order-status-title show-active-title\\\"])[2]");
+		By DISAPTCH = By.xpath("(//div[@class='d-flex flex-row order-status-title show-active-title'])[2]");
 		By DISAPTCH_Subtitle = By.xpath("//div[contains(text(),' Your order is on the way ')]");
 		By DISAPTCH_Heading = By.xpath("//span[contains(text(),'For Dispatch')]");
 		By DISAPTCH_Date = By.xpath("//div[@class='col-sm-5 col-5 order-recieved-data']");
@@ -357,8 +362,8 @@ public class HPW_omt_page extends BasePage {
 		By DISAPTCH_EstimatedDelivery = By.xpath("(//div[@class='ship-text'])[2]");
 		By DISAPTCH_Estimated_deliverydate = By.xpath("//div[contains(text(),'business days')]");
 		//********Recieve********
-	By recieve = By.xpath("(//div[@class=\\\"d-flex flex-row order-status-title show-active-title\\\"])[3]");
-	By Recieve_Subtitle = By.xpath("//div[contains(text(),' Sit Tight for updates ')]");
+	By recieve = By.xpath("(//div[@class='d-flex flex-row order-status-title show-active-title'])[3]");
+	By Recieve_Subtitle = By.xpath("//div[contains(text(),' Your Package has arrived ')]");
 	By Recieve_Img = By.xpath("//img[@class='globeImage1-1']");
 	By Recieve_For_Activation = By.xpath("//span[contains(text(),'For Activation')]");
 	By recieve_Date = By.xpath("//div[@class='col-sm-5 col-5 order-recieved-data']");
@@ -381,7 +386,49 @@ public class HPW_omt_page extends BasePage {
 
 	 public By Select_Admin=By.xpath("//input[@id='typeahead-basic']");
 	 public By Assign_Result=By.xpath("//button[@class='dropdown-item active']");
+	 
+	 
+	 By houseaddress=By.xpath("//label[text()=' House ']//preceding-sibling::input");
+	 By condoaddress=By.xpath("//label[text()=' Condominium ']//preceding-sibling::input");
+	 By addnewrow=By.xpath("//button[text()=' Add New Row ']");
+	 
+	 
+	 
+	 //dynamic
+	 By UPDATED=By.xpath("//span[contains(text(),'Updated')]");
+	 By product=By.xpath("//div[@class='content-1']//div[2]");
+	 By unit=By.xpath("//span[contains(text(),'unit')]");
+	 
+	 By OrderCancelled=By.xpath("//span[contains(text(),' Your order has been cancelled ')]");
+	 By UpdatedDate=By.xpath("//div[contains(text(),'Updated')]");
+	 By OrderCancelledContext=By.xpath("//div[@class='go_text-small-regular-content-big']");
+	 By cancelimage=By.xpath("//img[@class='go_order-details-image-file']");
+	 By prodname=By.xpath("//div[@class='go_order-details-device']//span[2]");
+	 
+	 
+	 
+	 public WebElement get_houseaddress() {
+			return DriverManager.getDriver().findElement(houseaddress);
+		}
+	 
+	 public WebElement get_condoaddress() {
+			return DriverManager.getDriver().findElement(condoaddress);
+		}
+	
 	//FULFILLMENT DETAILS
+	 public List  <WebElement> get_Schedule_input()
+	 {
+		 return DriverManager.getDriver().findElements(Schedule_input);
+	 }
+	 public List  <WebElement> get_Status_input()
+	 {
+		 return DriverManager.getDriver().findElements(Status_input);
+	 }
+	 public List  <WebElement> get_Remarks_input()
+	 {
+		 return DriverManager.getDriver().findElements(Status_input);
+	 }
+	 
 	public WebElement get_OMT_Disposition() {
 		return DriverManager.getDriver().findElement(OMT_Disposition);
 	}
@@ -463,17 +510,19 @@ public class HPW_omt_page extends BasePage {
 			return DriverManager.getDriver().findElement(FulfillDet_AssignedAgent);
 		}
 		/********************************************************************************************************************************/
-		public WebElement get_FulfillDet_Schedule() {
-			return DriverManager.getDriver().findElement(FulfillDet_Schedule);
+		public List<WebElement> get_FulfillDet_Schedule() {
+			return DriverManager.getDriver().findElements(FulfillDet_Schedule);
 		}
 		/********************************************************************************************************************************/
-		public WebElement get_FulfillDet_Status() {
-			return DriverManager.getDriver().findElement(FulfillDet_Status);
+		public List<WebElement> get_FulfillDet_Status() {
+			return DriverManager.getDriver().findElements(FulfillDet_Status);
 		}
 		/********************************************************************************************************************************/
-		public WebElement get_FulfillDet_Remarks() {
-			return DriverManager.getDriver().findElement(FulfillDet_Remarks);
+		public List<WebElement> get_FulfillDet_Remarks() {
+			return DriverManager.getDriver().findElements(FulfillDet_Remarks);
 		}
+		
+		
 		public void select_get_FulfillDet_Status(String option) {
 			Select s = new Select(DriverManager.getDriver().findElement(FulfillDet_Status));
 			s.selectByVisibleText(option);
@@ -1010,8 +1059,8 @@ public class HPW_omt_page extends BasePage {
 	public WebElement get_IssuingBank_input() {
 		return DriverManager.getDriver().findElement(IssuingBank_input);
 	}
-	public WebElement get_Remarks_input() {
-		return DriverManager.getDriver().findElement(Remarks_input);
+	public WebElement get_Remarks_inputrefund() {
+		return DriverManager.getDriver().findElement(Remarks_inputrefund);
 	}
 	
 	public WebElement get_Remarks_Refund() {
@@ -1166,6 +1215,34 @@ public class HPW_omt_page extends BasePage {
 		case "cookiesNotification":
 			flag = waitForElementVisibility(cookiesNotification, waitTime);
 			break;
+		case "OrderCancelled":
+			flag = waitForElementVisibility(OrderCancelled, waitTime);
+			break;
+		case "UpdatedDate":
+			flag = waitForElementVisibility(UpdatedDate, waitTime);
+			break;
+		case "OrderCancelledContext":
+			flag = waitForElementVisibility(OrderCancelledContext, waitTime);
+			break;
+		case "cancelimage":
+			flag = waitForElementVisibility(cancelimage, waitTime);
+			break;
+		case "prodname":
+			flag = waitForElementVisibility(prodname, waitTime);
+			break;
+		case "UPDATED":
+			flag = waitForElementVisibility(UPDATED, waitTime);
+			break;
+		case "unit":
+			flag = waitForElementVisibility(unit, waitTime);
+			break;
+		case "reDeliver":
+			flag = waitForElementVisibility(reDeliver, waitTime);
+			break;
+		case "product":
+			flag = waitForElementVisibility(product, waitTime);
+			break;
+			
 		case "Accountbutton":
 			flag = waitForElementVisibility(Accountbutton, waitTime);
 			break;

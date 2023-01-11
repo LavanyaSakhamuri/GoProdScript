@@ -39,7 +39,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 	// public String ScenarioName= SC.getClass().getSimpleName();
 	// public String OrderReferenceId = "PRE-000005167"; // from excel
 
-	public void ValidateOMTOrderDetails(String RoleName) throws Exception {
+	public void ValidateOMTOrderDetails(String UserAgent) throws Exception {
 		// String SCname=util.ReadFromRowExcel(Constant.RowValue, "Sheet1",
 		// 29);
 		String TestCaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);// ScenarioName
@@ -48,9 +48,9 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 				.get("https://edo-data-engineering.globe.com.ph/omt/application-entry");
 		// String SCname = util.ReadFromRowExcel(Constant.RowValue,
 		// "Sheet1", Constant.FlowIdColumnValue);// flowid
-		String User1 = util.ReadFromRowExcel(Constant.RowValue_FlowDetails, "FlowDetails", Constant.User1);
+	//	String User1 = util.ReadFromRowExcel(Constant.RowValue_FlowDetails, "FlowDetails", Constant.User1);
 
-		K.OMT_Role_Login(Constant.FlowType, User1);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
 
 		// SC.getClass().getSimpleName()
 		Constant.dataMap.set(Map);
@@ -1383,8 +1383,8 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 			String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																													// id
 
-			String User25 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User25);
-			Encoder_PlanCheck(Constant.FlowType, User25, Status);
+			//String User25 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User25);
+			Encoder_PlanCheck(Constant.FlowType, UserAgent, Status);
 		}
 
 		else {
@@ -1437,8 +1437,8 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 			String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
 																													// id
 
-			String User3 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User3);
-			Encoder_PlanCheck(Constant.FlowType, User3, Status);
+			//String User3 = util.ReadFromRowExcel(SCname, "FlowDetails", Constant.User3);
+			Encoder_PlanCheck(Constant.FlowType, UserAgent, Status);
 		}
 
 		/////////////////////
@@ -1728,7 +1728,7 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 			JavascriptExecutor jsC = (JavascriptExecutor) DriverManager.getDriver();
 			jsC.executeScript("arguments[0].click();", OMTAcqui.get_OrderCheckBox());
 		}
-		 if((OMTAcqui.get_CheckNotHighlight().isSelected()))
+		 if((OMTAcqui.get_OrderCheckBox().isSelected()))
 		{
 		// Click on Checkbox
 				JavascriptExecutor jsC = (JavascriptExecutor) DriverManager.getDriver();

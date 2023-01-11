@@ -1,48 +1,34 @@
 package globeOnline_OMTOkta;
 
 import static org.junit.Assert.assertTrue;
-
-import java.util.LinkedHashMap;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
 import com.pages.omt.ACQUI_omt_page;
-
 //import globeOnline_FTA.Constant;
-import globeOnline_CommonMethods.DriverManager;
-import globeOnline_CommonMethods.SetDriver;
-import globeOnline_CommonMethods.util;
+import globeOnline_CommonMethods.*;
+
 import utility.*;
 
 public class OMT_Login extends SetDriver {
 	private util util = new util();
-	private OMT_Acquision_Functions AF = new OMT_Acquision_Functions();
+	
 	private ACQUI_omt_page OMTAcqui = new ACQUI_omt_page();
-	// private OMT_Acqui_ADA2__4_FTA2Completed ADA2omtScenario = new
-	// OMT_Acqui_ADA2__4_FTA2Completed();
-	// private OMT_Acqui_FTA1_4NEW Scenario1 = new OMT_Acqui_FTA1_4NEW();
-	private String Status = "failed";
-	private static LinkedHashMap<String, String> Map = new LinkedHashMap<>();
-	private String Globeurl = "https://onlinepreprod.globe.com.ph/";
-	private String OMTurl = "https://edo-data-engineering.globe.com.ph/omt/";
+	
+	
+	
 	private By UserName = By.xpath("//input[@name='username' or @id='okta-signin-username']");
 	private By Password = By.xpath("//input[@name='password']");
 	private By UserName1 = By.xpath("//input[@name='identifier']");
 	private By Password1 = By.xpath("//input[@name='credentials.passcode']");
-	private By RememberMe = By.xpath("//input[@name='rememberMe']");
+	
 
 	public void OMT_Role_Login(String FlowType, String role) throws Exception {
 
-		Thread.sleep(10000);
-
+		Thread.sleep(1000);
 		if (OMTAcqui.isElementExist("OKTA Account", "AccountBtn", 20)) {
-			OMTAcqui.clickOnElement("OKTA Account", "AccountBtn", "AccountBtn");
-
-			OMTAcqui.clickOnElement("OKTA SignIn", "OKTA_AccSignIn", "OKTA_AccSignIn");
+			 if (OMTAcqui.isClickable("AccountBtn", 5)) {
+				 OMTAcqui.clickOnElement("OKTA Account", "AccountBtn", "AccountBtn");	
+				 OMTAcqui.clickOnElement("OKTA SignIn", "OKTA_AccSignIn", "OKTA_AccSignIn");
+			 }		
 		}
 
 		if (OMTAcqui.isElementExist("OKTA SSO button", "OKTA_SSO_Btn", 20)) {
@@ -53,7 +39,6 @@ public class OMT_Login extends SetDriver {
 			Control.takeScreenshot();
 			OMTAcqui.clickOnElement("OKTA_SSO", "OKTA_SSO_Btn", "OKTA_SSO_Btn");
 		}
-		Thread.sleep(3000);
 		// Login as Team Lead
 		String username = util.ReadFromExcel(role, "LoginDetails", Constant.Login_NetworkIDColm);
 		String password = util.ReadFromExcel(role, "LoginDetails", Constant.Login_PasswordColm);
