@@ -21,12 +21,22 @@ import io.appium.java_client.android.AndroidDriver;*/
 public class Constant {
 	
 	//*********omt parameters need to change before execution of each scenario**********//
-	public static String ScenarioName = "OMT_Acqui_FTA_CompletedProd";
+	/*
+	 * public static String ScenarioName = "OMT_Acqui_FTA_CompletedProd"; //public
+	 * static String OMT_FlowID = "ReservationRenewal_PhysicalStock"; public static
+	 * String FlowType = "FTA"; public static String AssignOrderTL = "FTA_Acqui_TL";
+	 * public static String OMT_RegAddressType="House"; public static String
+	 * OMT_DispoFirstTime="Manual Case Creation";//after placing an order the status
+	 * of order in omt dashboard public static String Email_GO =
+	 * "mamatha.a@globe.com.ph"; public static String OrderSubType="";
+	 */
+	
+	public static String ScenarioName = "OMT_Renewal_CompletedProd";
 	//public static String OMT_FlowID = "ReservationRenewal_PhysicalStock";
-	public static String FlowType = "FTA";
-	public static String AssignOrderTL = "FTA_Acqui_TL";
+	public static String FlowType = "Renewal";
+	public static String AssignOrderTL = "Renewal_TL";
 	public static String OMT_RegAddressType="House";
-	public static String OMT_DispoFirstTime="Manual Case Creation";//after placing an order the status of order in omt dashboard
+	public static String OMT_DispoFirstTime="For Resevation";//after placing an order the status of order in omt dashboard
 	public static String Email_GO = "mamatha.a@globe.com.ph";
 	public static String OrderSubType="";
 
@@ -34,8 +44,8 @@ public class Constant {
 		//*********************************************************//
 		
 		// ***************OMT******************//
-		public static String RowValue = "1";
-		public static String RowValue_FlowDetails = "1";
+		public static String RowValue = "2";
+		public static String RowValue_FlowDetails = "2";
 
 		public static int Login_NetworkIDColm = 3;
 		public static int Login_PasswordColm = 4;
@@ -193,7 +203,7 @@ public class Constant {
 	public static boolean DefaultoptionalFlag = true;
 	public static boolean NF_AddOperationFlag = true;
 
-	public static final String path_to_python_scripts = "D:\\pythonpdfmadhu\\Python27_Excel_PDF\\Python27_Excel_PDF\\Python27_Excel_PDF\\";
+	public static final String path_to_python_scripts = "D:\\PDF_SolutionComp\\PDF_SolutionComp\\";
 	public static final String Device_Type = "PC";
 
 	//public static URL url = null;

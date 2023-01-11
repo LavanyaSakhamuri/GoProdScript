@@ -51,16 +51,16 @@ By RemoveMsg=By.xpath("//Pre[contains(text(),'Successfully') or contains(text(),
 public By ReferenceNumb=By.xpath("(//th[text()='Reference Number']//following::td//following::ngb-highlight)[2]");
 public By OMT_MobileNumb=By.xpath("//input[@id='mobileNumber']");
 	
-	By Dashboard_DateSubmitted = By.xpath("//td//ngb-highlight[contains(text(), '2022')]");
-	By Dashboard_RefNum = By.xpath("//span[contains(text(), 'PRE')]");
-	By Dashboard_LName = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[3]");
-	By Dashboard_FName = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[4]");
+	By Dashboard_DateSubmitted = By.xpath("//td//ngb-highlight[contains(text(), '2023')]");
+	By Dashboard_RefNum = By.xpath("//span[contains(text(), 'GLE')]");
+	By Dashboard_LName = By.xpath("(//td//ngb-highlight)[3]");
+	By Dashboard_FName = By.xpath("(//td//ngb-highlight)[4]");
 	By Dashboard_PlanAvailed = By.xpath("//td//ngb-highlight[contains(text(), 'GPlan')]");
-	By Dashboard_Dispo = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[6]");
-	By Dashboard_Reason = By.xpath("(//td//ngb-highlight[@ng-reflect-term])[7]");
-	By Dashboard_Assignee = By.xpath("(//td//ngb-highlight[@ng-reflect-term])[8]");
+	By Dashboard_Dispo = By.xpath("(//td//ngb-highlight)[6]");
+	By Dashboard_Reason = By.xpath("(//td//ngb-highlight)[7]");
+	By Dashboard_Assignee = By.xpath("(//td//ngb-highlight)[8]");
 	
-	By OMT_OrderID = By.xpath("//h2[contains(text(), 'PRE-')]");
+	By OMT_OrderID = By.xpath("//h2[contains(text(), 'GLE-')]");
 	By OMT_OrderType = By.xpath("//input[@id='orderType']");
 	By OMT_orderSubType = By.xpath("//input[@id='orderSubType']");
 	By OMT_acquiType = By.xpath("//input[@id='acquiType']");
@@ -87,7 +87,11 @@ public By OMT_MobileNumb=By.xpath("//input[@id='mobileNumber']");
 	By PrimaryRegAdd_CondoRbtn = By.xpath("//input[@name='houseOrCondo' and @value='Condominium']");
 	By PrimaryRegAdd_houseNo = By.xpath("//input[@name='houseNo']");
 	By PrimaryRegAdd_Street = By.xpath("//input[@name='street']");
+	By seeMoreBtn1 = By.xpath("(//div[text()=' See More '])[1]");
+	By seeMoreBtn2 = By.xpath("(//div[text()=' See More '])[2]");
+	By seeMoreBtn3 = By.xpath("(//div[text()=' See More '])[1]");
 	By PrimaryRegAdd_VillageSubdi = By.xpath("//input[@name='subdivision']");
+
 	
 	//condo
 	By PrimaryRegAdd_FlrNo = By.xpath("//input[@name='unitNo']");
@@ -425,6 +429,7 @@ public By OMT_MobileNumb=By.xpath("//input[@id='mobileNumber']");
 				By Deliver_Shiptothisaddress = By.xpath("(//div[@class='ship-text1'])[1]");
 				By Deliver_EstimatedDelivery = By.xpath("Ship to this address");
 				By Deliver_Estimated_deliverydate = By.xpath("//div[contains(text(),'business days')]");
+				By OKTA_AccSignIn = By.xpath("//span[text()='Sign in']");
 				
 			//for activation 
 				
@@ -1487,6 +1492,18 @@ public By OMT_MobileNumb=By.xpath("//input[@id='mobileNumber']");
 	{
 		return DriverManager.getDriver().findElement(CalloutNotes);
 	}
+	public WebElement get_seeMoreBtn1()
+	{
+		return DriverManager.getDriver().findElement(seeMoreBtn1);
+	}
+	public WebElement get_seeMoreBtn2()
+	{
+		return DriverManager.getDriver().findElement(seeMoreBtn2);
+	}
+	public WebElement get_seeMoreBtn3()
+	{
+		return DriverManager.getDriver().findElement(seeMoreBtn3);
+	}
 	
 	/********************************************************************************************************/
 	//REFUND DETAILS
@@ -1553,6 +1570,11 @@ public By OMT_MobileNumb=By.xpath("//input[@id='mobileNumber']");
 	{
 		return DriverManager.getDriver().findElement(Completed);
 	}
+	public WebElement get_OKTA_AccSignIn()
+	{
+		return DriverManager.getDriver().findElement(OKTA_AccSignIn);
+	}
+	
 	
 	/********************************************************************************************************************************/
 
@@ -1600,6 +1622,15 @@ public By OMT_MobileNumb=By.xpath("//input[@id='mobileNumber']");
 			
 		case "OrderCancelled":
 			flag = waitForElementVisibility(OrderCancelled, waitTime);
+			break;
+		case "seeMoreBtn1":
+			flag = waitForElementVisibility(seeMoreBtn1, waitTime);
+			break;
+		case "seeMoreBtn2":
+			flag = waitForElementVisibility(seeMoreBtn1, waitTime);
+			break;
+		case "seeMoreBtn3":
+			flag = waitForElementVisibility(seeMoreBtn3, waitTime);
 			break;
 		case "OrderCancelledContext":
 			flag = waitForElementVisibility(OrderCancelledContext, waitTime);
@@ -1891,6 +1922,9 @@ public By OMT_MobileNumb=By.xpath("//input[@id='mobileNumber']");
 				break;
 			case "AppEntry":
 				get_AppEntry().click();
+				break;
+			case "OKTA_AccSignIn":
+				get_OKTA_AccSignIn().click();
 				break;
 			case "Entities":
 				get_Entities().click();

@@ -62,18 +62,23 @@ public class OMT_DriverScript_Renewal extends SetDriver {
 						+ sActionKeywordAgent + "");
 
 				if (sActionKeyword.equalsIgnoreCase("Halt_Execution")) {
-
+					OrderStateValue = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.OrderState);
+					int OrderState = Integer.parseInt(OrderStateValue);
 					Constant.dataMap1.set(Map1);
-					Constant.dataMap1.get().put("OMT_OrderState", OrderStateNumber + 1);
+					Constant.dataMap1.get().put("OMT_OrderState", OrderState + 1);
 
 					util.writeToExcelExistingRowFromMap1("Sheet1", Constant.dataMap1.get(), Constant.ScenarioName, 1);
 
 					break;
 				}
+				if(sActionKeyword.isEmpty()) {
+					break;
+				}else {
 
-				int OrderStateNumberReturn = execute_Actions1(sActionKeywordAgent);
-				OS = OrderStateNumberReturn;
-				System.out.println(OrderStateNumberReturn);
+					int OrderStateNumberReturn = execute_Actions1(sActionKeywordAgent);
+					OS = OrderStateNumberReturn;
+					System.out.println(OrderStateNumberReturn);
+				}
 
 			}
 		}
@@ -95,7 +100,11 @@ public class OMT_DriverScript_Renewal extends SetDriver {
 					util.writeToExcelExistingRowFromMap1("Sheet1", Constant.dataMap1.get(), Constant.ScenarioName, 1);
 					break;
 				}
-				execute_Actions(sActionKeywordAgent);
+				if(sActionKeyword.isEmpty()) {
+					break;
+				}else {
+				  execute_Actions(sActionKeywordAgent);
+				}
 
 			}
 		}
@@ -149,10 +158,13 @@ public class OMT_DriverScript_Renewal extends SetDriver {
 			}
 
 		}
+		Generic.TestScriptEnds();
+		Control.GeneratePDFReport();
 		int OrderStateNumberReturn = Integer.parseInt(OrderStateValue);
 
 		return OrderStateNumberReturn;
 
 	}
+	
 
 }

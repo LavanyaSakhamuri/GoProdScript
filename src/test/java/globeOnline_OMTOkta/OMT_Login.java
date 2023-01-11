@@ -52,11 +52,9 @@ public class OMT_Login extends SetDriver {
 			if (OMTAcqui.isElementExist("OMT_Keep me signed in", "KeepMeSignedIn", 10)) {
 				DriverManager.getDriver().findElement(OMTAcqui.KeepMeSignedIn).click();
 			}
-			Generic.WriteTestData("User should be able Click the submit Button", "", "",
-					"User should be able to access OMT application", "User is able to access OMT application",
-					"Passed");
+			Generic.WriteTestData("User should be able to enter username & password", "", "", "User should be able to enter username & password","User is able to enter username & password", "Passed");
 			Thread.sleep(4000);
-			Control.takeScreenshot();
+		    Control.takeScreenshot();
 			OMTAcqui.clickOnElement("Signin Button", "SignIn_Btn", "SignIn_Btn");
 			Thread.sleep(2000);
 
