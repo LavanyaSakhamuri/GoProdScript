@@ -41,15 +41,24 @@ public class Renewal_OMT_page extends BasePage {
 	By Account_Signin = By.xpath("//span[contains(text(),'Sign in')]");
 
 	//Dashboard	
-	By Dashboard_DateSubmitted = By.xpath("//td//ngb-highlight[contains(text(), '2022')]");
-	By Dashboard_RefNum = By.xpath("//span[contains(text(), 'UAT')]");
-	By Dashboard_LName = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[3]");
-	By Dashboard_FName = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[4]");
+	By Dashboard_DateSubmitted = By.xpath("//td//ngb-highlight[contains(text(), '2023')]");
+	By Dashboard_RefNum = By.xpath("//span[contains(text(), 'GLE')]");
+	By Dashboard_LName = By.xpath("(//td//ngb-highlight)[3]");
+	By Dashboard_FName = By.xpath("(//td//ngb-highlight)[4]");
 	By Dashboard_PlanAvailed = By.xpath("//td//ngb-highlight[contains(text(), 'GPlan')]");
-	By Dashboard_Dispo = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[6]");
-	By Dashboard_Reason = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[7]");
-	By Dashboard_Assignee = By.xpath("(//td//ngb-highlight[@ng-reflect-result])[8]");
+	By Dashboard_Dispo = By.xpath("(//td//ngb-highlight)[6]");
+	By Dashboard_Reason = By.xpath("(//td//ngb-highlight)[7]");
+	By Dashboard_Assignee = By.xpath("(//td//ngb-highlight)[8]");
 	By ForVerification = By.xpath("//ngb-highlight[contains(text(),'For Payment')]");
+	
+	By POFC_Img = By.xpath("(//img[@class='img-fluid'])");
+	By POFC_Type = By.xpath("//select[@name='pofcType']");
+	By POFC_Verification = By.xpath("//select[@name='pofcVerification']");
+	By POFC_Reason = By.xpath("(//input[@id='reason'])");
+	By POFC_DateReviewed = By.xpath("(//input[@id='dateReviewed'])");
+	By POFC_Verficationfinding1=By.xpath("(//textarea[@id='verificationFindings'])");
+	
+	
 
 
 	//-----DASHBOARD-----
@@ -155,6 +164,26 @@ public class Renewal_OMT_page extends BasePage {
 
 
 	/********************************************************************************************************************************/
+	public WebElement get_POFC_Type() {
+		return DriverManager.getDriver().findElement(POFC_Type);
+	}
+	/********************************************************************************************************************************/
+	public WebElement get_POFC_Verification() {
+		return DriverManager.getDriver().findElement(POFC_Verification);
+	}
+	/********************************************************************************************************************************/
+	public WebElement get_POFC_Reason() {
+		return DriverManager.getDriver().findElement(POFC_Reason);
+	}
+	/********************************************************************************************************************************/
+	public WebElement get_POFC_DateReviewed() {
+		return DriverManager.getDriver().findElement(POFC_DateReviewed);
+	}
+	
+	public WebElement get_POFC_Verficationfinding1()
+	{
+		return DriverManager.getDriver().findElement(POFC_Verficationfinding1);
+	}
 
 
 	public boolean isElementExist(String message, String element, int waitTime) {
@@ -197,6 +226,9 @@ public class Renewal_OMT_page extends BasePage {
 			break;
 		case "EditBtn":
 			flag = waitForElementVisibility(EditBtn, waitTime);
+			break;
+		case "POFC_Img":
+			flag = waitForElementVisibility(POFC_Img, waitTime);
 			break;
 		}
 		if (flag) {

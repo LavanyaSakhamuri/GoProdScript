@@ -46,9 +46,6 @@ public class OMT_ActionKeywords_Acqui extends SetDriver {
 
 		DriverManager.getDriver()
 				.get("https://edo-data-engineering.globe.com.ph/omt/application-entry");
-		// String SCname = util.ReadFromRowExcel(Constant.RowValue,
-		// "Sheet1", Constant.FlowIdColumnValue);// flowid
-	//	String User1 = util.ReadFromRowExcel(Constant.RowValue_FlowDetails, "FlowDetails", Constant.User1);
 
 		K.OMT_Role_Login(Constant.FlowType, UserAgent);
 

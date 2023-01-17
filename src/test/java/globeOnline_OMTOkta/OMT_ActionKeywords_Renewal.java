@@ -36,7 +36,7 @@ public class OMT_ActionKeywords_Renewal extends SetDriver {
 
 	public static String Rowvalue = Constant.RowValue;
 
-	private static String Globeurl = "https://onlinepreprod.globe.com.ph/track-order";
+	private static String Globeurl = "https://new.globe.com.ph/";
 	private static String OMTurl = "https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/";
 
 	// public String ScenarioName= SC.getClass().getSimpleName();
@@ -50,7 +50,7 @@ public class OMT_ActionKeywords_Renewal extends SetDriver {
 		String TestCaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);// ScenarioName
 
 		DriverManager.getDriver()
-				.get("https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/application-entry");
+				.get("https://edo-data-engineering.globe.com.ph/omt/");
 		// String SCname = util.ReadFromRowExcel(Constant.RowValue,
 		// "Sheet1", Constant.FlowIdColumnValue);// flowid
 	//	String User1 = util.ReadFromRowExcel(Constant.RowValue_FlowDetails, "FlowDetails_Renewal", Constant.User1);
@@ -131,12 +131,8 @@ public class OMT_ActionKeywords_Renewal extends SetDriver {
 		// read from excel and make assign order as separate keyword
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
-		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
+		LaunchBrowser_OMT();																												// id
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
-
-		//String User11 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User11);
 		OMTOrderStatus_OrderCreated(Constant.FlowType, UserAgent, Constant.OrderCreated,CaseName);
 
 	}
@@ -159,10 +155,6 @@ public class OMT_ActionKeywords_Renewal extends SetDriver {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-
-		//String User18 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User18);
 		OMTOrderStatus_Delivered(Constant.FlowType, UserAgent, Constant.Delivered);
 
 	}
@@ -172,10 +164,6 @@ public class OMT_ActionKeywords_Renewal extends SetDriver {
 		// AssignOrderOMT(DS.sActionKeywordAgent);
 		DriverManager.getDriver().quit();
 		LaunchBrowser_OMT();
-		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);// flow
-																												// id
-
-		//String User7 = util.ReadFromRowExcel(SCname, "FlowDetails_Renewal", Constant.User7);
 		OMTOrderStatus_ReservedPhysicalStock(Constant.FlowType, UserAgent, Constant.ReservedPhysicalStock);
 
 	}
@@ -337,6 +325,7 @@ public class OMT_ActionKeywords_Renewal extends SetDriver {
 
 		String AddressDetails = RF.Validate_RegisteredAddressRenewal(Constant.OMT_RegAddressType);
 		Constant.dataMap.get().put("OMT_AddressDetails", AddressDetails);
+		RF.Validate_ShippingAddress(Constant.OMT_RegAddressType);
 		
 		RF.Validate_PrimaryAccountDetails();
 		RF.Validate_OrderDetails();
@@ -463,6 +452,29 @@ public class OMT_ActionKeywords_Renewal extends SetDriver {
 		// Signout
 		RF.Signout();
 	}
+	
+	public void VerifyOMTOrder_ForOrderCreation(String UserAgent) throws Exception {
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
+		RF.OrderStatusVerifyInDashboard(Constant.ForOrderCreation);
+	}
+	public void VerifyOMTOrderStatus_ForProcessing(String UserAgent) throws Exception {
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
+		RF.OrderStatusVerifyInDashboard(Constant.ForProcessing);
+	}
+	
+	public void VerifyOMTOrderStatus_RenewalCompleted(String UserAgent) throws Exception {
+		DriverManager.getDriver().quit();
+		LaunchBrowser_OMT();
+		String SCname = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.FlowIdColumnValue);
+		K.OMT_Role_Login(Constant.FlowType, UserAgent);
+		RF.OrderStatusVerifyInDashboard( Constant.Renewal_Completed);
+	}
 
 	
 	
@@ -531,7 +543,6 @@ public class OMT_ActionKeywords_Renewal extends SetDriver {
 
 		String CaseName = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.ScenarioColumn);
 
-		//String User16 = util.ReadFromRowExcel(SCName, "FlowDetails_Renewal", Constant.User16);
 
 		OMTOrderStatus_ForDelivery(Constant.FlowType, UserAgent, SCName, Constant.ForDelivery, CaseName);
 	}
@@ -932,9 +943,10 @@ DriverManager.getDriver().quit();
 		// *************************************************************************************//*
 
 		// download las
-		JavascriptExecutor jsL = (JavascriptExecutor) DriverManager.getDriver();
-		jsL.executeScript("arguments[0].click();", OMTAcqui.get_LAS());
-
+		/*
+		 * JavascriptExecutor jsL = (JavascriptExecutor) DriverManager.getDriver();
+		 * jsL.executeScript("arguments[0].click();", OMTAcqui.get_LAS());
+		 */
 		/*if (OMTAcqui.get_LAS().isDisplayed()) {
 			Constant.dataMap.set(Map);
 			Constant.dataMap.get().put("OMT_LAS", "Downloaded");
@@ -957,7 +969,7 @@ DriverManager.getDriver().quit();
 		// ********validate order
 		// tracker********************************OrderTracker_Fordispatch*******************
 
-		OrderTracker_GlobeOnline(CaseName, "For Dispatch");
+		//OrderTracker_GlobeOnline(CaseName, "For Dispatch");
 
 		// Signout
 		RF.Signout();
@@ -1295,7 +1307,7 @@ DriverManager.getDriver().quit();
 		 **************************************/
 
 		// open link
-		OrderTracker_GlobeOnline(CaseName, Status);
+		//OrderTracker_GlobeOnline(CaseName, Status);
 		// Signout
 		RF.Signout();
 
@@ -1319,7 +1331,7 @@ DriverManager.getDriver().quit();
 		// DriverManager.getDriver().manage().deleteAllCookies();
 
 		DriverManager.getDriver()
-				.get("https://edo-dev-data-engineering.globe.com.ph/omt-uat/bbsp-admin/application-entry");
+				.get("https://edo-data-engineering.globe.com.ph/omt/");
 	}
 	
 	public void OMTOrderStatus_ReDelivery1(String FlowType, String UserAgent, String Status, String CaseName)

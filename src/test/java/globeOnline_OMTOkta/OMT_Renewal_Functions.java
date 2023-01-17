@@ -8,15 +8,19 @@ import java.util.LinkedHashMap;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 
 import com.pages.ada.BasePage;
 import com.pages.omt.ACQUI_omt_page;
+import com.pages.omt.Renewal_OMT_page;
 
 import globeOnline_CommonMethods.DriverManager;
 
 import globeOnline_CommonMethods.util;
 //import globeOnline_OMT.Constant;
 import utility.Constant;
+import utility.Control;
+import utility.Generic;
 
 public class OMT_Renewal_Functions {
 
@@ -29,6 +33,8 @@ public class OMT_Renewal_Functions {
 	private BasePage BP = new BasePage();
 	//public Constant Constant = new Constant();
 	private ACQUI_omt_page OMTAcqui = new ACQUI_omt_page();
+	
+	private Renewal_OMT_page OMTRenew = new Renewal_OMT_page(); 
 
 	/*****
 	 * RONNIE SCRIPT STARTS HERE
@@ -116,12 +122,12 @@ public class OMT_Renewal_Functions {
 		// if(SearchResult = true) {
 		Thread.sleep(3000);
 		System.out.println("Order displayed in Dashboard as:" + "\n" + "Date Submitted: "
-				+ OMTAcqui.get_Dashboard_DateSubmitted().getText() + "\n" + "Reference Number: "
-				+ OMTAcqui.get_Dashboard_RefNum().getText() + "\n" + "Last Name: "
-				+ OMTAcqui.get_Dashboard_LName().getText() + "\n" + "First Name: "
-				+ OMTAcqui.get_Dashboard_FName().getText() + "\n" + "Plan Availed: "
-				+ OMTAcqui.get_Dashboard_PlanAvailed().getText() + "\n" + "Disposition Status: "
-				+ OMTAcqui.get_Dashboard_Dispo().getText() + "\n");
+				+ OMTRenew.get_Dashboard_DateSubmitted().getText() + "\n" + "Reference Number: "
+				+ OMTRenew.get_Dashboard_RefNum().getText() + "\n" + "Last Name: "
+				+ OMTRenew.get_Dashboard_LName().getText() + "\n" + "First Name: "
+				+ OMTRenew.get_Dashboard_FName().getText() + "\n" + "Plan Availed: "
+				+ OMTRenew.get_Dashboard_PlanAvailed().getText() + "\n" + "Disposition Status: "
+				+ OMTRenew.get_Dashboard_Dispo().getText() + "\n");
 
 		if(OMTAcqui.isElementExist("Dashboard Reason", "Dashboard_Reason", 10))
 		{
@@ -132,19 +138,60 @@ public class OMT_Renewal_Functions {
 			System.out.println("Reason: "+ OMTAcqui.get_Dashboard_Assignee().getText());
 
 		}
-		//System.out.println("hi");
-		// String Reason=OMTAcqui.get_Dashboard_Reason().getAttribute("value");
-		/*
-		 * if(OMTAcqui.get_Dashboard_Reason().isDisplayed()) {
-		 * System.out.println("Reason / Remarks: " +
-		 * OMTAcqui.get_Dashboard_Reason().getText()); }
-		 */
-		// "Reason / Remarks: " + OMTAcqui.get_Dashboard_Reason().getText()+"\n"
-		// "Assignee: " +
-		// OMTAcqui.get_Dashboard_Assignee().getAttribute("value")
+		if(OrderRefId.equalsIgnoreCase(OMTRenew.get_Dashboard_RefNum().getText())) {
+			Generic.WriteTestData("User should be able to see the searched order id: ", "", "", "should be able to see the searched order id in dash board","User is able to see the searched order id in dash board", "Passed");
+			Control.takeScreenshot();
+		}else {
+			Generic.WriteTestData("User should be able to see the searched order id: ", "", "", "should be able to see the searched order id in dash board","User is not able to see the searched order id in dash board", "Failed");
+			Control.takeScreenshot();
+		}
 		OMTAcqui.isElementExist("View Button", "ViewBtn", 10);
 		OMTAcqui.isElementExist("Edit Button", "EditBtn", 10);
 		// }
+	}
+	
+	public void OrderStatusVerifyInDashboard(String ExpStatus) throws Exception {
+
+		String OrderRefId = util.ReadFromRowExcel(Constant.RowValue, "Sheet1", Constant.OrderRefID);
+        
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_Entities());
+		OMTAcqui.javascript_clickOnElement(OMTAcqui.get_AppEntry());
+		
+		OMTAcqui.get_SearchField().sendKeys(OrderRefId);
+		Thread.sleep(5000L);
+		OMTAcqui.clickOnElement("Search button", "SearchBtn", "SearchBtn");
+		Thread.sleep(5000L);
+		// Boolean SearchResult = OMTAcqui.get_SearchError().isDisplayed();
+		// if(SearchResult = true) {
+		System.out.println("Order displayed in Dashboard as:" + "\n" + "Date Submitted: "
+				+ OMTAcqui.get_Dashboard_DateSubmitted().getText() + "\n" + "Reference Number: "
+				+ OMTAcqui.get_Dashboard_RefNum().getText() + "\n" + "Last Name: "
+				+ OMTAcqui.get_Dashboard_LName().getText() + "\n" + "First Name: "
+				+ OMTAcqui.get_Dashboard_FName().getText() + "\n" + "Plan Availed: "
+				+ OMTAcqui.get_Dashboard_PlanAvailed().getText() + "\n" + "Disposition Status: "
+				+ OMTAcqui.get_Dashboard_Dispo().getText() + "\n");
+		
+		// OMTAcqui.get_Dashboard_Assignee().getAttribute("value")
+		if(OrderRefId.equalsIgnoreCase(OMTAcqui.get_Dashboard_RefNum().getText())) {
+			Generic.WriteTestData("User should be able to see the searched order id: ", "", "", "should be able to see the searched order id in dash board","User is able to see the searched order id in dash board", "Passed");
+			Control.takeScreenshot();
+		}else {
+			Generic.WriteTestData("User should be able to see the searched order id: ", "", "", "should be able to see the searched order id in dash board","User is not able to see the searched order id in dash board", "Failed");
+			Control.takeScreenshot();
+		}
+		
+		if(ExpStatus.equalsIgnoreCase(OMTAcqui.get_Dashboard_Dispo().getText())) {
+			Generic.WriteTestData("Order Status Should change to:"+ExpStatus+" ", "", "", "Order Status Should change to:"+ExpStatus+"","Order Status changed to:"+ExpStatus+"", "Passed");
+			Control.takeScreenshot();
+		}else {
+			Generic.WriteTestData("Order Status Should change to:"+ExpStatus+" ", "", "", "Order Status Should change to:"+ExpStatus+"","Order Status is changed to:"+ExpStatus+"", "Failed");
+			Control.takeScreenshot();
+		}
+		WebElement a = DriverManager.getDriver().findElement(OMTAcqui.DispositionStatus);
+		String status = a.getText();
+		
+	   Signout();		
+		
 	}
 
 	public void OMTSearch_and_ValidateDashboard(String OrderRefId) throws Exception {
@@ -217,11 +264,14 @@ public class OMT_Renewal_Functions {
 		// }
 	}
 
-	public String Validate_ORDER(String OrderNumber, String OrderSubType, String FlowType, String Dispo) {
+	public String Validate_ORDER(String OrderNumber, String OrderSubType, String FlowType, String Dispo) throws Exception {
 		if (OrderNumber.equalsIgnoreCase(OMTAcqui.get_OMT_OrderID().getText())) {
 			System.out.println("Customer Order Details: " + "\n" +
 
 					"Order Type: " + OMTAcqui.get_OMT_OrderType().getAttribute("value"));
+			Generic.WriteTestData("User should be able to validate order Type", "", "", "User should be able to validate order Type as Renewal","User should be able to validate order Type as "+OMTAcqui.get_OMT_OrderType().getAttribute("value")+"", "Passed");
+			Control.takeScreenshot();
+			Thread.sleep(4000);
 		}
 		// "OrderID: " + OMTAcqui.get_OMT_OrderID().getAttribute("value") + "\n"
 		// +
@@ -249,12 +299,9 @@ public class OMT_Renewal_Functions {
 	}
 
 
-	public String Validate_PRIMARYCUSTOMERDETAILS() {
-		/*
-		 * System.out.println("PRIMARY CUSTOMER DETAILS: "); String
-		 * Fullname=OMTAcqui.get_Primary_Fname().getAttribute("");
-		 * System.out.println("Primary_Fname is:"+Fullname);
-		 */
+	public String Validate_PRIMARYCUSTOMERDETAILS() throws Exception {
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(
+		"arguments[0].scrollIntoView(true);", OMTAcqui.get_Customerdetails());
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_Customerdetails());
 
@@ -293,7 +340,10 @@ public class OMT_Renewal_Functions {
 				.println("Full Mother's Maiden Name: " + OMTAcqui.get_Primary_FullMothersname().getAttribute("value"));
 		System.out.println("Authorized Contact Person: " + OMTAcqui.get_Primary_RecipientName().getAttribute("value")
 				+ " | " + OMTAcqui.get_Primary_RecipientMobNum().getAttribute("value"));
+		Generic.WriteTestData("Omt customer details validation : ", "", "", "User should be able to validate customer details", "User is able to validate customer details", "Passed");
+		Control.takeScreenshot();
 		return CustomerDetails;
+		
 
 	}
 	
@@ -350,8 +400,8 @@ public class OMT_Renewal_Functions {
 		
 	}
 
-	public String Validate_RegisteredAddressRenewal(String House_Condo) {
-		BP.scroll_vertical(320);
+	public String Validate_RegisteredAddressRenewal(String House_Condo) throws Exception {
+		BP.scroll_vertical(520);
 		String a = OMTAcqui.get_PrimaryRegAdd_Brgy().getAttribute("value");
 
 		String BarangayProvCity=DetailsReturn();
@@ -367,6 +417,8 @@ public class OMT_Renewal_Functions {
 			String AddressDetails = OMTAcqui.get_PrimaryRegAdd_houseNo().getAttribute("value") + ","
 					+ OMTAcqui.get_PrimaryRegAdd_Street().getAttribute("value") + "," + BarangayProvCity +","
 					+ OMTAcqui.get_PrimaryRegAdd_VillageSubdi().getAttribute("value") + "," + OMTAcqui.get_PrimaryRegAdd_Zipcode().getAttribute("value");
+			Generic.WriteTestData("Omt Registered Address validation : ", "", "", "User should be able to validate Rigistered Address", "User is able to validate Rigistered Address", "Passed");
+            Control.takeScreenshot();
 			return AddressDetails;
 
 		}
@@ -383,13 +435,15 @@ public class OMT_Renewal_Functions {
 					+ OMTAcqui.get_PrimaryRegAdd_BuildingName().getAttribute("value") + "," + BarangayProvCity +","
 					+ OMTAcqui.get_PrimaryRegAdd_Street().getAttribute("value") + "," + Barangay + "," + City + ", "
 					+ Province + "," + OMTAcqui.get_PrimaryRegAdd_Zipcode().getAttribute("value");
+			Generic.WriteTestData("Omt Registered Address validation : ", "", "", "User should be able to validate Rigistered Address", "User is able to validate Rigistered Address", "Passed");
+            Control.takeScreenshot();
 			return AddressDetails;
 
 		}
 
 	}
 
-	public void Validate_ShippingAddress(String House_Condo_Sameasbilling) {
+	public void Validate_ShippingAddress(String House_Condo_Sameasbilling) throws Exception {
 		BP.scroll_vertical(300);
 
 		if (House_Condo_Sameasbilling.equalsIgnoreCase("House")) {
@@ -402,6 +456,8 @@ public class OMT_Renewal_Functions {
 					+ OMTAcqui.get_PrimaryShipAdd_ZipCode().getAttribute("value") + "\n" + "Longitude: "
 					+ OMTAcqui.get_PrimaryShipAdd_Longitude().getAttribute("value") + "\n" + "Latitude: "
 					+ OMTAcqui.get_PrimaryShipAdd_Latitude().getAttribute("value"));
+			Generic.WriteTestData("Omt shipping Address validation : ", "", "", "User should be able to validate shipping Address", "User is able to validate shipping Address", "Passed");
+            Control.takeScreenshot();
 
 		}
 
@@ -442,8 +498,9 @@ public class OMT_Renewal_Functions {
 		System.out.println("Amount Due: " + OMTAcqui.get_AmountDue().getAttribute("value"));
 	}
 
-	public void Validate_PrimaryAccountDetails() {
-		BP.scroll_vertical(360);
+	public void Validate_PrimaryAccountDetails() throws Exception {
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(
+		"arguments[0].scrollIntoView(true);", OMTAcqui.get_PrimaryAccDetails());
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_PrimaryAccDetails());
 
@@ -453,14 +510,19 @@ public class OMT_Renewal_Functions {
 		System.out.println("Last Renewal date: " + OMTAcqui.get_LastRenewalDate().getAttribute("value"));
 		System.out.println("Brand: " + OMTAcqui.get_Brand().getAttribute("value"));
 		System.out.println("CNDB Results: " + OMTAcqui.get_CNDBResults().getAttribute("value"));
+		Generic.WriteTestData("Omt primary Acount details validation : ", "", "", "User should be able to validate primary account details", "User is able to validate primary account details", "Passed");
+        Control.takeScreenshot();
+		BP.scroll_vertical(620);
+		Generic.WriteTestData("Omt CNDB result validation : ", "", "", "User should be able to validate CNDB result", "User is be able to validate CNDB result", "Passed");
+        Control.takeScreenshot();
 
-		
 	}
 
 	
-	public void Validate_OrderDetails() {
+	public void Validate_OrderDetails() throws Exception {
 
-		BP.scroll_vertical(380);
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(
+		"arguments[0].scrollIntoView(true);", OMTAcqui.get_orderdetails());	
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_orderdetails());
 
@@ -494,34 +556,32 @@ if(OMTAcqui.isElementExist("Device details in tabular format", "DeviceDetailsTab
 		{
 		System.out.println("Order Tagging: " + OMTAcqui.get_Channel().getAttribute("value") + " | "
 				+ OMTAcqui.get_SalesmanID().getAttribute("value"));
+		Generic.WriteTestData("Omt Order deails section validation : ", "", "", "User should be able to validate Order deails section", "User is able to validate Order deails section", "Passed");
+        Control.takeScreenshot();
+		BP.scroll_vertical(500);
+		Generic.WriteTestData("Omt Device deails validation : ", "", "", "User should be able to validate Device deails", "User is able to validate Device deails", "Passed");
+        Control.takeScreenshot();
 	}
 	}
 
-	public void Validate_DocumentSubmission() {
-		BP.scroll_vertical(400);
+	public void Validate_DocumentSubmission() throws Exception {
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(
+		"arguments[0].scrollIntoView(true);", OMTAcqui.get_doumentsub());	
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_doumentsub());
 
 		System.out.println("DOCUMENT SUBMISSION: ");
-		if(OMTAcqui.isElementExist("POID Img", "POID_Img", 10))
+		if(OMTRenew.isElementExist("POFC Img", "POFC_Img", 10))
 		{
-		System.out.println("POID Type: " + OMTAcqui.get_POID_Type().getAttribute("value"));
-		System.out.println("POID Number: " + OMTAcqui.get_POID_Number().getAttribute("value"));
-		System.out.println("POID Verification: " + OMTAcqui.get_POID_Verification().getAttribute("value"));
-		System.out.println("POID Reason: " + OMTAcqui.get_POID_Reason().getAttribute("value"));
-		System.out.println("POID Date Reviewed: " + OMTAcqui.get_POID_DateReviewed().getAttribute("value"));
+			OMTRenew.isElementExist("POFC Img", "POFC_Img", 10);
+		System.out.println("POFC Type: " + OMTRenew.get_POFC_Type().getAttribute("value"));
+		System.out.println("POFC Verification: " + OMTRenew.get_POFC_Verification().getAttribute("value"));
+		System.out.println("POFC Reason: " + OMTRenew.get_POFC_Reason().getAttribute("value"));
+		System.out.println("POFC Date Reviewed: " + OMTRenew.get_POFC_DateReviewed().getAttribute("value"));
 		System.out
-				.println("POID VERIFICATION FINDING:" + OMTAcqui.get_POID_Verficationfinding1().getAttribute("value"));
-		}
-		if(OMTAcqui.isElementExist("POFC Img", "POFC_Img", 10))
-		{
-		OMTAcqui.isElementExist("POFC Img", "POFC_Img", 10);
-		System.out.println("POFC Type: " + OMTAcqui.get_POFC_Type().getAttribute("value"));
-		System.out.println("POFC Verification: " + OMTAcqui.get_POFC_Verification().getAttribute("value"));
-		System.out.println("POFC Reason: " + OMTAcqui.get_POFC_Reason().getAttribute("value"));
-		System.out.println("POFC Date Reviewed: " + OMTAcqui.get_POFC_DateReviewed().getAttribute("value"));
-		System.out
-				.println("POFC VERIFICATION FINDING:" + OMTAcqui.get_POFC_Verficationfinding1().getAttribute("value"));
+				.println("POFC VERIFICATION FINDING:" + OMTRenew.get_POFC_Verficationfinding1().getAttribute("value"));
+		Generic.WriteTestData("Omt Document submission validation : ", "", "", "User should be able to validate Document submission", "User is able to Document submission", "Passed");
+        Control.takeScreenshot();
 	}
 	}
 
@@ -538,9 +598,10 @@ if(OMTAcqui.isElementExist("Device details in tabular format", "DeviceDetailsTab
 		System.out.println("Customer ID: " + OMTAcqui.get_CustDet_CustomerID().getAttribute("value"));
 	}
 
-	public void Validate_PaymentDetails() {
+	public void Validate_PaymentDetails() throws Exception {
 
-		BP.scroll_vertical(480);
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(
+		"arguments[0].scrollIntoView(true);", OMTAcqui.get_payment());	
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_payment());
 
@@ -568,10 +629,16 @@ if(OMTAcqui.isElementExist("Device details in tabular format", "DeviceDetailsTab
 		System.out.println("Posting Remarks: " + OMTAcqui.get_PostDet_PostingRemarks().getAttribute("value"));
 		System.out.println("Invoice ID: " + OMTAcqui.get_PostDet_InvoiceID().getAttribute("value"));
 		System.out.println("OR: " + OMTAcqui.get_PostDet_OR().getAttribute("value"));*/
+		Generic.WriteTestData("Omt Payment Details  validation : ", "", "", "User should be able to validate Payment Details", "User is able to validate Payment Details", "Passed");
+        Control.takeScreenshot();
+		BP.scroll_vertical(450);
+        Generic.WriteTestData("Omt Request Payment Details  validation : ", "", "", "User should be able to validate Request Payment Details", "User is able to validate Request Payment Details", "Passed");
+        Control.takeScreenshot();
 	}
 
-	public void Validate_FullfillmentDetails() {
-		BP.scroll_vertical(530);
+	public void Validate_FullfillmentDetails() throws Exception {
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(
+		"arguments[0].scrollIntoView(true);", OMTAcqui.get_fullfill());		
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_fullfill());
 
@@ -596,6 +663,8 @@ if(OMTAcqui.isElementExist("Device details in tabular format", "DeviceDetailsTab
 		System.out.println("Schedule: " + OMTAcqui.get_FulfillDet_Schedule().getAttribute("value"));
 		System.out.println("Status: " + OMTAcqui.get_FulfillDet_Status().getAttribute("value"));
 		System.out.println("Remarks: " + OMTAcqui.get_FulfillDet_Remarks().getAttribute("value"));
+		Generic.WriteTestData("Omt Fullfillment Details  validation : ", "", "", "User should be able to validate Fullfillment Details", "User is able to validate Fullfillment Details", "Passed");
+        Control.takeScreenshot(); 
 
 	}
 
@@ -610,8 +679,9 @@ if(OMTAcqui.isElementExist("Device details in tabular format", "DeviceDetailsTab
 
 	}
 
-	public void Validate_planeprovisioningdetails() {
-		BP.scroll_vertical(580);
+	public void Validate_planeprovisioningdetails() throws Exception {
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(
+		 "arguments[0].scrollIntoView(true);", OMTAcqui.get_planpro());	
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_planpro());
 
@@ -621,11 +691,14 @@ if(OMTAcqui.isElementExist("Device details in tabular format", "DeviceDetailsTab
 		System.out.println("timeOfOrderClosing: " + OMTAcqui.get_timeOfOrderClosing().getAttribute("value"));
 		System.out.println("startDateOfContract: " + OMTAcqui.get_startDateOfContract().getAttribute("value"));
 		System.out.println("endDateOfContract: " + OMTAcqui.get_endDateOfContract().getAttribute("value"));
+		Generic.WriteTestData("Omt Plan Provisioning Details  validation : ", "", "", "User should be able to validate Plan Provisioning", "User is able to validate Plan Provisioning", "Passed");
+        Control.takeScreenshot();
 
 	}
 
-	public void Validate_SEEDINGDETAILS() {
-		BP.scroll_vertical(600);
+	public void Validate_SEEDINGDETAILS() throws Exception {
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(
+		"arguments[0].scrollIntoView(true);", OMTAcqui.get_seeding());	
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_seeding());
 
@@ -633,25 +706,31 @@ if(OMTAcqui.isElementExist("Device details in tabular format", "DeviceDetailsTab
 		System.out.println("GCashTagging: " + OMTAcqui.get_GCashTagging().getAttribute("value"));
 		System.out.println("SeedingReference: " + OMTAcqui.get_SeedingReference().getAttribute("value"));
 		System.out.println("SeedingDate: " + OMTAcqui.get_SeedingDate().getAttribute("value"));
+		Generic.WriteTestData("Omt Seeding Details  validation : ", "", "", "User should be able to validate Seeding Details  ", "User is able to validate Seeding Details ", "Passed");
+        Control.takeScreenshot();
 
 	}
 
-	public void Validate_CALLOUTANDRECOVERY() {
-		BP.scroll_vertical(630);
+	public void Validate_CALLOUTANDRECOVERY() throws Exception {
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(
+		"arguments[0].scrollIntoView(true);", OMTAcqui.get_callout());	
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_callout());
-if(OMTAcqui.isElementExist("Callout Reason", "CalloutReason", 10))
-{
+       if(OMTAcqui.isElementExist("Callout Reason", "CalloutReason", 10))
+      {
 		System.out.println("CalloutReason: " + OMTAcqui.get_CalloutReason().getAttribute("value"));
 		System.out.println("CallAttempt: " + OMTAcqui.get_CallAttempt().getAttribute("value"));
 		System.out.println("CalloutData: " + OMTAcqui.get_CalloutData().getAttribute("value"));
 		System.out.println("CalloutDisposition: " + OMTAcqui.get_CalloutDisposition().getAttribute("value"));
 		System.out.println("CalloutNotes: " + OMTAcqui.get_CalloutNotes().getAttribute("value"));
-}
+      }
+       Generic.WriteTestData("Omt Callout and Recovery Details  validation : ", "", "", "User should be able to validate Callout and Recovery Details ", "User is able to validate Callout and Recovery Details ", "Passed");
+       Control.takeScreenshot();
 	}
 
-	public void Validate_REFUNDDETAILS() {
-		BP.scroll_vertical(650);
+	public void Validate_REFUNDDETAILS() throws Exception {
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(
+		"arguments[0].scrollIntoView(true);", OMTAcqui.get_refound());
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_refound());
 
@@ -664,10 +743,13 @@ if(OMTAcqui.isElementExist("Callout Reason", "CalloutReason", 10))
 				"Authorization_ApprovalCode: " + OMTAcqui.get_Authorization_ApprovalCode().getAttribute("value"));
 		System.out.println("Remarks: " + OMTAcqui.get_Remarks().getAttribute("value"));
 		System.out.println("RefundReference: " + OMTAcqui.get_RefundReference().getAttribute("value"));
+		Generic.WriteTestData("Omt Refund Details  validation : ", "", "", "User should be able to validate Refund Details", "User is able to validate Callout and Refund Details", "Passed");
+        Control.takeScreenshot();
 	}
 
 	public void Validate_ORDERHISTORY() throws Exception {
-		BP.scroll_vertical(690);
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(
+		"arguments[0].scrollIntoView(true);", OMTAcqui.get_orderh());	
 		JavascriptExecutor js1 = (JavascriptExecutor) DriverManager.getDriver();
 		js1.executeScript("arguments[0].click();", OMTAcqui.get_orderh());
 
@@ -699,6 +781,22 @@ if(OMTAcqui.isElementExist("Callout Reason", "CalloutReason", 10))
 			Constant.dataMap.get().put("OMT_UpdateDate", OMTAcqui.get_AutomaticUpdateDate().getText());
 			util.writeToExcelExistingRowFromMap("Sheet1", Constant.dataMap.get(),Constant.ScenarioName,1);
 		}
+		if (OMTAcqui.isElementExist("seeMoreBtn1", "seeMoreBtn1", 5)) {
+			JavascriptExecutor js2 = (JavascriptExecutor) DriverManager.getDriver();
+			js2.executeScript("arguments[0].click();", OMTAcqui.get_seeMoreBtn1());		
+		} 
+		if (OMTAcqui.isElementExist("seeMoreBtn1", "seeMoreBtn2", 5)) {
+			JavascriptExecutor js3 = (JavascriptExecutor) DriverManager.getDriver();
+			js3.executeScript("arguments[0].click();", OMTAcqui.get_seeMoreBtn2());		
+		} 
+		if (OMTAcqui.isElementExist("seeMoreBtn1", "seeMoreBtn3", 5)) {
+			JavascriptExecutor js4 = (JavascriptExecutor) DriverManager.getDriver();
+			js4.executeScript("arguments[0].click();", OMTAcqui.get_seeMoreBtn3());		
+		} 
+		BP.scroll_vertical(400);
+
+		Generic.WriteTestData("Omt Order History Details  validation : ", "", "", "User should be able to validate Order History Details", "User is able to validate Order History Details", "Passed");
+        Control.takeScreenshot();
 	}
 
 	/*********************************************************************************************/
@@ -1635,7 +1733,7 @@ if(OMTAcqui.isElementExist("Callout Reason", "CalloutReason", 10))
 
 	}
 
-	public String UpdateOrderStatus(String StatusUpdate) throws InterruptedException {
+	public String UpdateOrderStatus(String StatusUpdate) throws Exception {
 		switch (StatusUpdate) {
 		case "ONGOING VERIFICATION":
 			OrderStatusChange("Ongoing Verification");
@@ -1764,10 +1862,12 @@ if(OMTAcqui.isElementExist("Callout Reason", "CalloutReason", 10))
 
 	}
 	
-	public void OrderStatusChange(String Status) throws InterruptedException {
+	public void OrderStatusChange(String Status) throws Exception {
 		// Order
 		OMTAcqui.select_Approved(Status);
 		System.out.println("Updated Status to : " + Status);
+		Generic.WriteTestData("User should be able to Update status to"+Status+"", "", "", "User should be able to Update status to"+Status+"","User should be able to Update status to"+Status+"", "Passed");
+        Control.takeScreenshot(); 
 		Thread.sleep(2000L);
 
 		if (Status.equalsIgnoreCase("ONGOING VERIFICATION") || Status.equalsIgnoreCase("Completed")
@@ -2000,6 +2100,8 @@ if(OMTAcqui.isElementExist("Callout Reason", "CalloutReason", 10))
 		js2.executeScript("arguments[0].click();", OMTAcqui.get_Savebutton());
 
 		BP.scroll_vertical(690);
+		Generic.WriteTestData("User should be able to see confirm corret popup after click on save button", "", "", "User should be able to see confirm corret popup after click on save button","User is able to see confirm corret popup after click on save button", "Passed");
+        Control.takeScreenshot();
 		JavascriptExecutor js6 = (JavascriptExecutor) DriverManager.getDriver();
 		js6.executeScript("arguments[0].click();", OMTAcqui.get_confirmcorrect());
 
